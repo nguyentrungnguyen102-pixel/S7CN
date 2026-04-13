@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>S7CN - Sơ đồ đội hình</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #1a1a1a;
+    color: #eee;
+  }
+  header {
+    background: #111;
+    padding: 12px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    border-bottom: 2px solid #2a7f3e;
+  }
+  header h1 { margin: 0 12px 0 0; font-size: 18px; color: #4caf50; }
+  header input, header select, header button {
+    background: #222;
+    color: #eee;
+    border: 1px solid #444;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+  header button { cursor: pointer; }
+  header button:hover { background: #333; }
+  header button.primary { background: #2a7f3e; border-color: #2a7f3e; }
+  header button.primary:hover { background: #35a350; }
+  header button.danger { background: #8b2a2a; border-color: #8b2a2a; }
+  header button.danger:hover { background: #a83535; }
+
+  .container {
+    display: grid;
+    grid-template-columns: 280px 1fr 260px;
+    gap: 12px;
+    padding: 12px;
+    height: calc(100vh - 60px);
+  }
+  @media (max-width: 900px) {
+    .container { grid-template-columns: 1fr; height: auto; }
+  }
+
+  .panel {
+    background: #222;
+    border-radius: 8px;
+    padding: 12px;
+    overflow-y: auto;
+  }
+  .panel h2 {
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: #4caf50;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .panel h3 {
+    margin: 12px 0 6px;
+    font-size: 12px;
+    color: #aaa;
+    text-transform: uppercase;
+  }
+
+  .player {
+    padding: 6px 8px;
+    margin: 3px 0;
+    background: #2c2c2c;
+    border-radius: 4px;
+    cursor: grab;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 3px solid transparent;
+    user-select: none;
+  }
+  .player:active { cursor: grabbing; }
+  .player.present { border-left-color: #4caf50; background: #2f3a2f; }
+  .player.absent { opacity: 0.45; }
+  .player.placed { opacity: 0.35; text-decoration: line-through; cursor: not-allowed; }
+  .player .pos {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: #444;
+    color: #fff;
+  }
+  .player.FW .pos, .pos.FW { background: #c0392b; }
+  .player.MF .pos, .pos.MF { background: #2980b9; }
+  .player.DF .pos, .pos.DF { background: #27ae60; }
+  .player.GK .pos, .pos.GK { background: #f39c12; }
+
+  .attendance-controls {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .attendance-controls button {
+    flex: 1;
+    background: #333;
+    color: #eee;
+    border: 1px solid #555;
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 11px;
+  }
+  .attendance-controls button:hover { background: #444; }
+
+  .field-wrap {
+    background: #222;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+  .field {
+    position: relative;
+    flex: 1;
+    min-height: 600px;
+    background:
+      linear-gradient(to bottom,
+        #2d7a3e 0%, #2d7a3e 49%,
+        #2a7138 49%, #2a7138 51%,
+        #2d7a3e 51%, #2d7a3e 100%);
+    border: 3px solid #fff;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  /* field markings */
+  .field::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px; height: 100px;
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .field::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0; right: 0;
+    height: 2px;
+    background: rgba(255,255,255,0.6);
+  }
+  .penalty-box {
+    position: absolute;
+    left: 20%; right: 20%;
+    height: 15%;
+    border: 2px solid rgba(255,255,255,0.6);
+  }
+  .penalty-box.top { top: 0; border-top: none; }
+  .penalty-box.bottom { bottom: 0; border-bottom: none; }
+
+  .spot {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    text-align: center;
+    z-index: 2;
+  }
+  .circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: 2px dashed rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+    color: #fff;
+    margin: 0 auto;
+    cursor: pointer;
+    transition: all 0.15s;
+    word-break: break-word;
+    padding: 3px;
+    text-align: center;
+    line-height: 1.1;
+  }
+  .circle.filled {
+    background: #1e88e5;
+    border: 2px solid #fff;
+    font-size: 10px;
+  }
+  .circle.drag-over {
+    background: rgba(255,215,0,0.4);
+    border-color: #ffd700;
+    transform: scale(1.1);
+  }
+  .circle.active {
+    box-shadow: 0 0 0 3px #ffd700;
+  }
+  .slot-label {
+    font-size: 9px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 2px;
+    text-transform: uppercase;
+  }
+  .subs-list {
+    margin-top: 4px;
+    font-size: 10px;
+  }
+  .subs-list div {
+    background: rgba(0,0,0,0.5);
+    color: #ffd;
+    padding: 2px 4px;
+    border-radius: 3px;
+    margin: 2px 0;
+    cursor: pointer;
+  }
+  .subs-list div:hover { background: rgba(139,42,42,0.8); }
+
+  .saved-item {
+    padding: 8px;
+    margin: 4px 0;
+    background: #2c2c2c;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    border-left: 3px solid #2a7f3e;
+  }
+  .saved-item:hover { background: #353535; }
+  .saved-item .meta { color: #888; font-size: 10px; margin-top: 3px; }
+  .saved-item .actions {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+  }
+  .saved-item .actions button {
+    flex: 1;
+    background: #333;
+    color: #eee;
+    border: 1px solid #555;
+    padding: 3px 6px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+  }
+  .saved-item .actions button.del { background: #6b2020; border-color: #8b2a2a; }
+
+  .hint {
+    font-size: 11px;
+    color: #888;
+    margin: 6px 0;
+    font-style: italic;
+  }
+  .stats {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 8px;
+    padding: 6px;
+    background: #1a1a1a;
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚽ S7CN</h1>
+  <input id="matchName" placeholder="Tên trận (vd: vs FC Gà 13/4)" style="width:220px" />
+  <select id="formationSel">
+    <option value="442">4-4-2</option>
+    <option value="352">3-5-2</option>
+    <option value="451">4-5-1</option>
+    <option value="433">4-3-3</option>
+    <option value="343">3-4-3</option>
+  </select>
+  <button class="primary" onclick="saveLineup()">💾 Lưu sơ đồ</button>
+  <button onclick="newLineup()">🆕 Trận mới</button>
+  <button class="danger" onclick="clearField()">🧹 Xoá sân</button>
+  <button onclick="exportJSON()">📤 Export</button>
+  <button onclick="document.getElementById('importFile').click()">📥 Import</button>
+  <input id="importFile" type="file" accept=".json" style="display:none" onchange="importJSON(event)" />
+</header>
+
+<div class="container">
+
+  <!-- LEFT: Players + Attendance -->
+  <div class="panel">
+    <h2>👥 Điểm danh</h2>
+    <div class="attendance-controls">
+      <button onclick="markAll(true)">✅ Tất cả</button>
+      <button onclick="markAll(false)">❌ Bỏ hết</button>
+    </div>
+    <div class="hint">Click để đánh dấu có mặt. Kéo cầu thủ vào vị trí trên sân.</div>
+    <div id="statsBox" class="stats"></div>
+
+    <h3>Đội chính</h3>
+    <div id="mainPlayers"></div>
+
+    <h3>Dự bị / Tăng cường</h3>
+    <div id="subPlayers"></div>
+  </div>
+
+  <!-- CENTER: Field -->
+  <div class="field-wrap">
+    <div class="field" id="field">
+      <div class="penalty-box top"></div>
+      <div class="penalty-box bottom"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Saved lineups -->
+  <div class="panel">
+    <h2>📚 Sơ đồ đã lưu</h2>
+    <div class="hint">Click để xem lại sơ đồ các trận trước.</div>
+    <div id="savedList"></div>
+  </div>
+
+</div>
+
+<script>
+// ============ DATA ============
+const MAIN_PLAYERS = [
+  {id:1, name:"Mai Cồ Hiếu", pos:"FW"},
+  {id:2, name:"Văn Quang", pos:"FW"},
+  {id:3, name:"Nguyên Khôi", pos:"DF"},
+  {id:4, name:"Lucky Trần", pos:"MF"},
+  {id:5, name:"Quốc Long", pos:"MF"},
+  {id:6, name:"Hữu Duyên", pos:"DF"},
+  {id:7, name:"Nguyễn Hoàng", pos:"DF"},
+  {id:8, name:"Đức Khoa", pos:"GK"},
+  {id:9, name:"Dương Chí Hoàng", pos:"DF"},
+  {id:10, name:"Minh Hoàng", pos:"DF"},
+  {id:11, name:"Trung Nguyên", pos:"MF"},
+  {id:12, name:"Tài Củi", pos:"FW"},
+  {id:13, name:"Văn Chung", pos:"FW"},
+  {id:14, name:"Gia Lộc", pos:"MF"},
+  {id:15, name:"Phú Bình", pos:"DF"},
+  {id:16, name:"Văn Tới", pos:"GK"},
+  {id:17, name:"Khâm", pos:"FW"},
+  {id:18, name:"Cảm", pos:"FW"},
+  {id:19, name:"Hoàng Đại", pos:"FW"},
+];
+const SUB_PLAYERS = [
+  {id:101, name:"Anh Sơn", pos:"MF"},
+  {id:102, name:"Chí Quỹ", pos:"MF"},
+  {id:103, name:"Tiến", pos:"DF"},
+  {id:104, name:"An", pos:"DF"},
+  {id:105, name:"Tuấn", pos:"MF"},
+  {id:106, name:"Lâm", pos:"MF"},
+];
+
+const FORMATIONS = {
+  "442": [
+    {id:"gk",  top:"92%", left:"50%", label:"GK"},
+    {id:"lb",  top:"75%", left:"15%", label:"LB"},
+    {id:"cb1", top:"78%", left:"37%", label:"CB"},
+    {id:"cb2", top:"78%", left:"63%", label:"CB"},
+    {id:"rb",  top:"75%", left:"85%", label:"RB"},
+    {id:"lm",  top:"50%", left:"15%", label:"LM"},
+    {id:"cm1", top:"52%", left:"37%", label:"CM"},
+    {id:"cm2", top:"52%", left:"63%", label:"CM"},
+    {id:"rm",  top:"50%", left:"85%", label:"RM"},
+    {id:"st1", top:"22%", left:"38%", label:"ST"},
+    {id:"st2", top:"22%", left:"62%", label:"ST"},
+  ],
+  "352": [
+    {id:"gk",  top:"92%", left:"50%", label:"GK"},
+    {id:"cb1", top:"78%", left:"25%", label:"CB"},
+    {id:"cb2", top:"80%", left:"50%", label:"CB"},
+    {id:"cb3", top:"78%", left:"75%", label:"CB"},
+    {id:"lwb", top:"55%", left:"10%", label:"LWB"},
+    {id:"cm1", top:"55%", left:"32%", label:"CM"},
+    {id:"cdm", top:"62%", left:"50%", label:"CDM"},
+    {id:"cm2", top:"55%", left:"68%", label:"CM"},
+    {id:"rwb", top:"55%", left:"90%", label:"RWB"},
+    {id:"st1", top:"22%", left:"38%", label:"ST"},
+    {id:"st2", top:"22%", left:"62%", label:"ST"},
+  ],
+  "451": [
+    {id:"gk",  top:"92%", left:"50%", label:"GK"},
+    {id:"lb",  top:"75%", left:"15%", label:"LB"},
+    {id:"cb1", top:"78%", left:"37%", label:"CB"},
+    {id:"cb2", top:"78%", left:"63%", label:"CB"},
+    {id:"rb",  top:"75%", left:"85%", label:"RB"},
+    {id:"lm",  top:"50%", left:"15%", label:"LM"},
+    {id:"cm1", top:"52%", left:"35%", label:"CM"},
+    {id:"cdm", top:"60%", left:"50%", label:"CDM"},
+    {id:"cm2", top:"52%", left:"65%", label:"CM"},
+    {id:"rm",  top:"50%", left:"85%", label:"RM"},
+    {id:"st",  top:"22%", left:"50%", label:"ST"},
+  ],
+  "433": [
+    {id:"gk",  top:"92%", left:"50%", label:"GK"},
+    {id:"lb",  top:"75%", left:"15%", label:"LB"},
+    {id:"cb1", top:"78%", left:"37%", label:"CB"},
+    {id:"cb2", top:"78%", left:"63%", label:"CB"},
+    {id:"rb",  top:"75%", left:"85%", label:"RB"},
+    {id:"cm1", top:"55%", left:"28%", label:"CM"},
+    {id:"cdm", top:"60%", left:"50%", label:"CDM"},
+    {id:"cm2", top:"55%", left:"72%", label:"CM"},
+    {id:"lw",  top:"25%", left:"18%", label:"LW"},
+    {id:"st",  top:"20%", left:"50%", label:"ST"},
+    {id:"rw",  top:"25%", left:"82%", label:"RW"},
+  ],
+  "343": [
+    {id:"gk",  top:"92%", left:"50%", label:"GK"},
+    {id:"cb1", top:"78%", left:"25%", label:"CB"},
+    {id:"cb2", top:"80%", left:"50%", label:"CB"},
+    {id:"cb3", top:"78%", left:"75%", label:"CB"},
+    {id:"lm",  top:"55%", left:"12%", label:"LM"},
+    {id:"cm1", top:"58%", left:"38%", label:"CM"},
+    {id:"cm2", top:"58%", left:"62%", label:"CM"},
+    {id:"rm",  top:"55%", left:"88%", label:"RM"},
+    {id:"lw",  top:"25%", left:"20%", label:"LW"},
+    {id:"st",  top:"20%", left:"50%", label:"ST"},
+    {id:"rw",  top:"25%", left:"80%", label:"RW"},
+  ],
+};
+
+// ============ STATE ============
+let formation = "442";
+let lineup = {};          // { slotId: [player, sub1, sub2, ...] }
+let available = new Set(); // player ids có mặt
+const STORAGE_KEY = "s7cn_lineups_v1";
+
+// ============ HELPERS ============
+const allPlayers = () => [...MAIN_PLAYERS, ...SUB_PLAYERS];
+const findPlayer = (id) => allPlayers().find(p => p.id === id);
+const placedIds = () => {
+  const s = new Set();
+  Object.values(lineup).forEach(arr => arr.forEach(p => s.add(p.id)));
+  return s;
+};
+
+// ============ RENDER PLAYERS ============
+function renderPlayers() {
+  const placed = placedIds();
+  const renderList = (list, el) => {
+    el.innerHTML = "";
+    list.forEach(p => {
+      const div = document.createElement("div");
+      const isPresent = available.has(p.id);
+      const isPlaced = placed.has(p.id);
+      div.className = "player " + p.pos;
+      if (isPresent) div.classList.add("present");
+      else div.classList.add("absent");
+      if (isPlaced) div.classList.add("placed");
+
+      div.innerHTML = `
+        <span>${isPresent ? "✅" : "⬜"} ${p.name}</span>
+        <span class="pos ${p.pos}">${p.pos}</span>
+      `;
+
+      div.draggable = isPresent && !isPlaced;
+      div.ondragstart = (e) => {
+        if (!isPresent || isPlaced) { e.preventDefault(); return; }
+        e.dataTransfer.setData("text/plain", String(p.id));
+        e.dataTransfer.effectAllowed = "move";
+      };
+
+      // click để toggle điểm danh
+      div.querySelector("span").onclick = () => {
+        if (available.has(p.id)) {
+          available.delete(p.id);
+          // remove từ lineup nếu đã có
+          Object.keys(lineup).forEach(sid => {
+            lineup[sid] = lineup[sid].filter(x => x.id !== p.id);
+            if (lineup[sid].length === 0) delete lineup[sid];
+          });
+        } else {
+          available.add(p.id);
+        }
+        render();
+      };
+
+      el.appendChild(div);
+    });
+  };
+  renderList(MAIN_PLAYERS, document.getElementById("mainPlayers"));
+  renderList(SUB_PLAYERS, document.getElementById("subPlayers"));
+
+  // stats
+  const present = available.size;
+  const placed2 = placedIds().size;
+  document.getElementById("statsBox").innerHTML =
+    `Có mặt: <b>${present}</b> / ${allPlayers().length} &nbsp;|&nbsp; Đã xếp: <b>${placed2}</b>`;
+}
+
+// ============ RENDER FIELD ============
+function renderField() {
+  const field = document.getElementById("field");
+  // xoá spot cũ (giữ lại penalty box)
+  field.querySelectorAll(".spot").forEach(el => el.remove());
+
+  FORMATIONS[formation].forEach(s => {
+    const spot = document.createElement("div");
+    spot.className = "spot";
+    spot.style.top = s.top;
+    spot.style.left = s.left;
+
+    const circle = document.createElement("div");
+    circle.className = "circle";
+    const players = lineup[s.id] || [];
+    if (players[0]) {
+      circle.classList.add("filled");
+      circle.innerText = players[0].name;
+      circle.title = "Click để xoá khỏi vị trí này";
+      circle.onclick = () => {
+        lineup[s.id] = players.slice(1);
+        if (lineup[s.id].length === 0) delete lineup[s.id];
+        render();
+      };
+    } else {
+      circle.innerText = s.label;
+    }
+
+    // drag & drop targets
+    circle.ondragover = (e) => {
+      e.preventDefault();
+      circle.classList.add("drag-over");
+    };
+    circle.ondragleave = () => circle.classList.remove("drag-over");
+    circle.ondrop = (e) => {
+      e.preventDefault();
+      circle.classList.remove("drag-over");
+      const pid = parseInt(e.dataTransfer.getData("text/plain"));
+      const p = findPlayer(pid);
+      if (!p || !available.has(pid)) return;
+      // gỡ khỏi slot cũ nếu có
+      Object.keys(lineup).forEach(sid => {
+        lineup[sid] = lineup[sid].filter(x => x.id !== pid);
+        if (lineup[sid].length === 0) delete lineup[sid];
+      });
+      if (!lineup[s.id]) lineup[s.id] = [];
+      if (lineup[s.id].length >= 4) return;
+      lineup[s.id].push(p);
+      render();
+    };
+
+    spot.appendChild(circle);
+
+    const lbl = document.createElement("div");
+    lbl.className = "slot-label";
+    lbl.innerText = s.label;
+    spot.appendChild(lbl);
+
+    // subs
+    if (players.length > 1) {
+      const subs = document.createElement("div");
+      subs.className = "subs-list";
+      players.slice(1).forEach((p, idx) => {
+        const d = document.createElement("div");
+        d.innerText = "↻ " + p.name;
+        d.title = "Click để xoá dự bị này";
+        d.onclick = (e) => {
+          e.stopPropagation();
+          lineup[s.id].splice(idx + 1, 1);
+          render();
+        };
+        subs.appendChild(d);
+      });
+      spot.appendChild(subs);
+    }
+
+    field.appendChild(spot);
+  });
+}
+
+// ============ SAVE / LOAD ============
+function getSaved() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); }
+  catch { return []; }
+}
+function setSaved(list) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+}
+
+function saveLineup() {
+  const name = document.getElementById("matchName").value.trim();
+  if (!name) { alert("Nhập tên trận đấu trước khi lưu!"); return; }
+  const list = getSaved();
+  const entry = {
+    id: Date.now(),
+    name,
+    date: new Date().toISOString(),
+    formation,
+    lineup,
+    available: [...available],
+  };
+  // nếu trùng tên thì update
+  const existingIdx = list.findIndex(x => x.name === name);
+  if (existingIdx >= 0) {
+    if (!confirm(`Đã có sơ đồ "${name}". Ghi đè?`)) return;
+    list[existingIdx] = entry;
+  } else {
+    list.unshift(entry);
+  }
+  setSaved(list);
+  renderSaved();
+  alert("Đã lưu ✔");
+}
+
+function loadLineup(id) {
+  const entry = getSaved().find(x => x.id === id);
+  if (!entry) return;
+  document.getElementById("matchName").value = entry.name;
+  formation = entry.formation;
+  document.getElementById("formationSel").value = formation;
+  lineup = entry.lineup || {};
+  available = new Set(entry.available || []);
+  render();
+}
+
+function deleteLineup(id) {
+  if (!confirm("Xoá sơ đồ này?")) return;
+  setSaved(getSaved().filter(x => x.id !== id));
+  renderSaved();
+}
+
+function renderSaved() {
+  const el = document.getElementById("savedList");
+  const list = getSaved();
+  if (list.length === 0) {
+    el.innerHTML = '<div class="hint">Chưa có sơ đồ nào được lưu.</div>';
+    return;
+  }
+  el.innerHTML = "";
+  list.forEach(entry => {
+    const d = document.createElement("div");
+    d.className = "saved-item";
+    const date = new Date(entry.date);
+    const dateStr = date.toLocaleDateString("vi-VN") + " " +
+                    date.toLocaleTimeString("vi-VN", {hour:"2-digit", minute:"2-digit"});
+    const count = Object.values(entry.lineup || {}).reduce((s,a)=>s+a.length,0);
+    d.innerHTML = `
+      <div><b>${entry.name}</b></div>
+      <div class="meta">${entry.formation} • ${count} cầu thủ • ${dateStr}</div>
+      <div class="actions">
+        <button onclick="loadLineup(${entry.id})">📂 Mở</button>
+        <button class="del" onclick="deleteLineup(${entry.id})">🗑 Xoá</button>
+      </div>
+    `;
+    el.appendChild(d);
+  });
+}
+
+// ============ UTILITIES ============
+function markAll(on) {
+  if (on) allPlayers().forEach(p => available.add(p.id));
+  else {
+    available.clear();
+    lineup = {};
+  }
+  render();
+}
+
+function clearField() {
+  if (!confirm("Xoá hết cầu thủ khỏi sân?")) return;
+  lineup = {};
+  render();
+}
+
+function newLineup() {
+  if (Object.keys(lineup).length > 0 && !confirm("Bắt đầu trận mới? (Dữ liệu hiện tại sẽ mất nếu chưa lưu)")) return;
+  document.getElementById("matchName").value = "";
+  lineup = {};
+  available.clear();
+  render();
+}
+
+function exportJSON() {
+  const data = {
+    exported: new Date().toISOString(),
+    lineups: getSaved(),
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "s7cn-lineups-" + Date.now() + ".json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importJSON(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      const list = data.lineups || data;
+      if (!Array.isArray(list)) throw new Error("Invalid format");
+      if (confirm(`Import ${list.length} sơ đồ? (Gộp với dữ liệu hiện có)`)) {
+        const existing = getSaved();
+        const existingIds = new Set(existing.map(x => x.id));
+        const merged = [...existing, ...list.filter(x => !existingIds.has(x.id))];
+        setSaved(merged);
+        renderSaved();
+        alert("Import xong ✔");
+      }
+    } catch (err) {
+      alert("File không hợp lệ: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = "";
+}
+
+// ============ EVENTS ============
+document.getElementById("formationSel").addEventListener("change", (e) => {
+  formation = e.target.value;
+  lineup = {};
+  renderField();
+});
+
+function render() {
+  renderPlayers();
+  renderField();
+}
+
+// ============ INIT ============
+render();
+renderSaved();
+</script>
+
+</body>
+</html>
