@@ -124,7 +124,7 @@ tr.clickable:hover{background:rgba(232,118,43,.12)!important}
 <div class="container">
 <header>
   <h1>S7-CN FC</h1>
-  <div class="sub">Thống kê mùa giải 2026 | Cập nhật sau 13 trận</div>
+  <div class="sub">Thống kê mùa giải 2026 | Cập nhật sau 14 trận</div>
   <div class="logo-text">SINCE 2018</div>
 </header>
 
@@ -182,7 +182,7 @@ tr.clickable:hover{background:rgba(232,118,43,.12)!important}
 
 </div>
 <script>
-const T={m:13,gf:47,ga:31,gd:16,w:7,d:4,l:2,form:["W","D","L","W","W"]};
+const T={m:14,gf:48,ga:33,gd:15,w:7,d:4,l:3,form:["D","L","W","W","L"]};
 T.ppg=(T.w*3+T.d)/T.m;
 
 const M=[
@@ -198,33 +198,34 @@ const M=[
   {wk:15,dt:"12/04",vs:"Huyền Thoại FC",gf:4,ga:4,r:"D",v:"Lotus Tân Sơn",a:17},
   {wk:16,dt:"19/04",vs:"ĐH TDTT",gf:3,ga:4,r:"L",v:"ĐH TDTT",a:14},
   {wk:19,dt:"10/05",vs:"Sân Cáp",gf:5,ga:3,r:"W",v:"ĐH TDTT",a:13},
-  {wk:20,dt:"17/05",vs:"Lên Bia FC",gf:8,ga:2,r:"W",v:"Dĩ An",a:15},
+  {wk:20,dt:"17/05",vs:"Lên Bia FC",gf:8,ga:2,r:"W",v:"Dĩ An",a:16},
+  {wk:21,dt:"24/05",vs:"AE Bình Định",gf:1,ga:2,r:"L",v:"Giga Arena",a:16},
 ];
 
 const P=[
-  {n:"Mai Cồ Hiếu",p:"FW",no:"23",g:3,m:13,mp:1,wp:.538,fa:["W","D","L","W","W"],pi:1.92,w:7,d:4,l:2,gf:47,ga:31,gd:16,t:"main"},
-  {n:"Văn Quang",p:"FW",no:"10",g:1,m:9,mp:.69,wp:.667,fa:["W","D","N","N","W"],pi:2.22,w:6,d:2,l:1,gf:33,ga:18,gd:15,t:"main"},
-  {n:"Nguyên Khôi",p:"DF",no:"19",g:0,m:8,mp:.62,wp:.625,fa:["N","N","N","W","W"],pi:2.13,w:5,d:2,l:1,gf:29,ga:17,gd:12,t:"main"},
-  {n:"Lucky Trần",p:"MF",no:"11",g:0,m:10,mp:.77,wp:.6,fa:["W","N","L","N","W"],pi:2.1,w:6,d:3,l:1,gf:38,ga:22,gd:16,t:"main"},
-  {n:"Quốc Long",p:"MF",no:"8",g:4,m:10,mp:.77,wp:.6,fa:["W","D","L","N","W"],pi:2,w:6,d:2,l:2,gf:36,ga:22,gd:14,t:"main"},
-  {n:"Hữu Duyên",p:"DF",no:"47",g:1,m:12,mp:.92,wp:.5,fa:["N","D","L","W","W"],pi:1.83,w:6,d:4,l:2,gf:42,ga:29,gd:13,t:"main"},
-  {n:"Nguyễn Hoàng",p:"DF",no:"39",g:0,m:11,mp:.85,wp:.636,fa:["W","D","N","W","W"],pi:2.18,w:7,d:3,l:1,gf:41,ga:24,gd:17,t:"main"},
-  {n:"Đức Khoa",p:"GK",no:"01",g:0,m:10,mp:.77,wp:.5,fa:["W","D","L","N","N"],pi:1.8,w:5,d:3,l:2,gf:31,ga:23,gd:8,t:"main"},
-  {n:"D.Chí Hoàng",p:"DF",no:"24",g:0,m:8,mp:.62,wp:.5,fa:["N","D","L","W","N"],pi:1.88,w:4,d:3,l:1,gf:28,ga:21,gd:7,t:"main"},
-  {n:"Minh Hoàng",p:"DF",no:"12",g:0,m:8,mp:.62,wp:.625,fa:["W","N","N","W","W"],pi:2.13,w:5,d:2,l:1,gf:32,ga:19,gd:13,t:"main"},
-  {n:"Trung Nguyên",p:"MF",no:"14",g:2,m:12,mp:.92,wp:.5,fa:["W","D","L","W","W"],pi:1.83,w:6,d:4,l:2,gf:43,ga:29,gd:14,t:"main"},
-  {n:"Tài Củi",p:"FW",no:"30",g:1,m:11,mp:.85,wp:.455,fa:["W","D","L","N","W"],pi:1.73,w:5,d:4,l:2,gf:38,ga:26,gd:12,t:"main"},
-  {n:"Văn Chung",p:"FW",no:"6",g:7,m:8,mp:.62,wp:.5,fa:["W","D","L","W","N"],pi:1.75,w:4,d:2,l:2,gf:27,ga:21,gd:6,t:"main"},
-  {n:"Gia Lộc",p:"MF",no:"75",g:2,m:9,mp:.69,wp:.556,fa:["N","D","L","W","W"],pi:1.89,w:5,d:2,l:2,gf:32,ga:21,gd:11,t:"main"},
-  {n:"Phú Bình",p:"DF",no:"15",g:0,m:4,mp:.31,wp:.5,fa:["N","N","L","N","N"],pi:1.75,w:2,d:1,l:1,gf:11,ga:8,gd:3,t:"main"},
-  {n:"Khâm",p:"FW",no:"22",g:7,m:9,mp:.69,wp:.556,fa:["N","N","L","W","W"],pi:1.89,w:5,d:2,l:2,gf:31,ga:20,gd:11,t:"main"},
-  {n:"Cảm",p:"FW",no:"7",g:13,m:11,mp:.85,wp:.455,fa:["W","D","L","W","W"],pi:1.73,w:5,d:4,l:2,gf:40,ga:28,gd:12,t:"main"},
-  {n:"Hoàng Đại",p:"FW",no:"",g:1,m:3,mp:.23,wp:.333,fa:["N","D","N","N","W"],pi:1.67,w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"main"},
-  {n:"Lâm",p:"MF",no:"",g:3,m:6,mp:.46,wp:.5,fa:["W","D","L","W","W"],pi:1.83,w:3,d:2,l:1,gf:28,ga:18,gd:10,t:"main"},
-  {n:"Anh Sơn",p:"MF",no:"",g:0,m:3,mp:.23,wp:.333,fa:["N","D","N","N","N"],pi:1.67,w:1,d:2,l:0,gf:11,ga:9,gd:2,t:"sub"},
-  {n:"Chí Quỹ",p:"MF",no:"4",g:0,m:2,mp:.15,wp:.5,fa:["N","N","N","N","N"],pi:2,w:1,d:1,l:0,gf:7,ga:5,gd:2,t:"sub"},
-  {n:"Tiến",p:"DF",no:"",g:0,m:3,mp:.23,wp:.333,fa:["N","D","N","N","W"],pi:1.67,w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"sub"},
-  {n:"Mới",p:"MF",no:"",g:1,m:2,mp:.15,wp:.5,fa:["W","D","N","N","N"],pi:2,w:1,d:1,l:0,gf:9,ga:6,gd:3,t:"sub"},
+  {n:"Mai Cồ Hiếu",p:"FW",no:"23",g:3,m:14,mp:1,wp:.5,fa:["D","L","W","W","L"],pi:1.79,w:7,d:4,l:3,gf:48,ga:33,gd:15,t:"main"},
+  {n:"Văn Quang",p:"FW",no:"10",g:1,m:10,mp:.71,wp:.6,fa:["D","N","N","W","L"],pi:2,w:6,d:2,l:2,gf:34,ga:20,gd:14,t:"main"},
+  {n:"Nguyên Khôi",p:"DF",no:"19",g:0,m:9,mp:.64,wp:.556,fa:["N","N","W","W","L"],pi:1.89,w:5,d:2,l:2,gf:30,ga:19,gd:11,t:"main"},
+  {n:"Lucky Trần",p:"MF",no:"11",g:0,m:11,mp:.79,wp:.545,fa:["N","L","N","W","L"],pi:1.91,w:6,d:3,l:2,gf:39,ga:24,gd:15,t:"main"},
+  {n:"Quốc Long",p:"MF",no:"8",g:4,m:11,mp:.79,wp:.545,fa:["D","L","N","W","L"],pi:1.82,w:6,d:2,l:3,gf:37,ga:24,gd:13,t:"main"},
+  {n:"Hữu Duyên",p:"DF",no:"47",g:1,m:13,mp:.93,wp:.462,fa:["D","L","W","W","L"],pi:1.69,w:6,d:4,l:3,gf:43,ga:31,gd:12,t:"main"},
+  {n:"Nguyễn Hoàng",p:"DF",no:"39",g:0,m:12,mp:.86,wp:.583,fa:["D","N","W","W","L"],pi:2,w:7,d:3,l:2,gf:42,ga:26,gd:16,t:"main"},
+  {n:"Đức Khoa",p:"GK",no:"01",g:0,m:11,mp:.79,wp:.455,fa:["D","L","N","N","L"],pi:1.64,w:5,d:3,l:3,gf:32,ga:25,gd:7,t:"main"},
+  {n:"D.Chí Hoàng",p:"DF",no:"24",g:0,m:9,mp:.64,wp:.444,fa:["D","L","W","N","L"],pi:1.67,w:4,d:3,l:2,gf:29,ga:23,gd:6,t:"main"},
+  {n:"Minh Hoàng",p:"DF",no:"12",g:0,m:9,mp:.64,wp:.556,fa:["N","N","W","W","L"],pi:1.89,w:5,d:2,l:2,gf:33,ga:21,gd:12,t:"main"},
+  {n:"Trung Nguyên",p:"MF",no:"14",g:2,m:13,mp:.93,wp:.462,fa:["D","L","W","W","L"],pi:1.69,w:6,d:4,l:3,gf:44,ga:31,gd:13,t:"main"},
+  {n:"Tài Củi",p:"FW",no:"30",g:1,m:12,mp:.86,wp:.417,fa:["D","L","N","W","L"],pi:1.58,w:5,d:4,l:3,gf:39,ga:28,gd:11,t:"main"},
+  {n:"Văn Chung",p:"FW",no:"6",g:8,m:9,mp:.64,wp:.444,fa:["D","L","W","N","L"],pi:1.56,w:4,d:2,l:3,gf:28,ga:23,gd:5,t:"main"},
+  {n:"Gia Lộc",p:"MF",no:"75",g:2,m:10,mp:.71,wp:.5,fa:["D","L","W","W","L"],pi:1.7,w:5,d:2,l:3,gf:33,ga:23,gd:10,t:"main"},
+  {n:"Phú Bình",p:"DF",no:"15",g:0,m:4,mp:.29,wp:.5,fa:["N","L","N","N","N"],pi:1.75,w:2,d:1,l:1,gf:11,ga:8,gd:3,t:"main"},
+  {n:"Khâm",p:"FW",no:"22",g:7,m:10,mp:.71,wp:.5,fa:["N","L","W","W","L"],pi:1.7,w:5,d:2,l:3,gf:32,ga:22,gd:10,t:"main"},
+  {n:"Cảm",p:"FW",no:"7",g:13,m:12,mp:.86,wp:.417,fa:["D","L","W","W","L"],pi:1.58,w:5,d:4,l:3,gf:41,ga:30,gd:11,t:"main"},
+  {n:"Hoàng Đại",p:"FW",no:"",g:1,m:3,mp:.21,wp:.333,fa:["D","N","N","W","N"],pi:1.67,w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"main"},
+  {n:"Lâm",p:"MF",no:"",g:3,m:6,mp:.43,wp:.5,fa:["D","L","W","W","N"],pi:1.83,w:3,d:2,l:1,gf:28,ga:18,gd:10,t:"main"},
+  {n:"Anh Sơn",p:"MF",no:"",g:0,m:3,mp:.21,wp:.333,fa:["D","N","N","N","N"],pi:1.67,w:1,d:2,l:0,gf:11,ga:9,gd:2,t:"sub"},
+  {n:"Chí Quỹ",p:"MF",no:"4",g:0,m:2,mp:.14,wp:.5,fa:["N","N","N","N","N"],pi:2,w:1,d:1,l:0,gf:7,ga:5,gd:2,t:"sub"},
+  {n:"Tiến",p:"DF",no:"",g:0,m:3,mp:.21,wp:.333,fa:["D","N","N","W","N"],pi:1.67,w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"sub"},
+  {n:"Mới",p:"MF",no:"",g:1,m:2,mp:.14,wp:.5,fa:["D","N","N","N","N"],pi:2,w:1,d:1,l:0,gf:9,ga:6,gd:3,t:"sub"},
 ];
 
 const S25={m:22,w:14,d:2,l:6,gf:82,ga:57,gd:25,pts:44,ppg:2.00,wp:.636,
@@ -232,29 +233,29 @@ const S25={m:22,w:14,d:2,l:6,gf:82,ga:57,gd:25,pts:44,ppg:2.00,wp:.636,
   away:{m:7,w:2,d:1,l:4,gf:21,ga:33,gd:-12}};
 
 const PM={
-  "Mai Cồ Hiếu":[0,0,0,1,0,0,0,0,0,0,0,0,2],
-  "Văn Quang":[1,0,0,0,0,null,0,null,0,0,null,null,0],
-  "Nguyên Khôi":[0,0,0,0,null,0,null,0,null,null,null,0,0],
-  "Lucky Trần":[0,0,null,0,0,0,0,0,0,null,0,null,0],
-  "Quốc Long":[1,0,0,1,0,null,0,null,0,0,2,null,0],
-  "Hữu Duyên":[0,0,0,0,1,0,0,0,null,0,0,0,0],
-  "Nguyễn Hoàng":[0,0,0,0,0,null,0,0,0,0,null,0,0],
-  "Đức Khoa":[0,0,0,0,0,0,null,0,0,0,0,null,null],
-  "D.Chí Hoàng":[0,0,null,0,null,0,null,0,null,0,0,0,null],
-  "Minh Hoàng":[0,0,0,null,null,null,0,0,0,null,null,0,0],
-  "Trung Nguyên":[null,1,0,0,0,0,0,0,0,1,0,0,0],
-  "Tài Củi":[null,0,0,0,0,0,0,1,0,0,0,null,0],
-  "Văn Chung":[1,null,0,null,1,2,null,null,0,0,1,2,null],
-  "Gia Lộc":[1,null,0,0,0,null,null,0,null,null,1,null,0],
-  "Phú Bình":[null,null,null,0,0,null,0,null,null,null,0,null,null],
-  "Khâm":[null,2,0,0,1,1,2,null,null,null,0,0,1],
-  "Cảm":[null,1,0,0,null,0,1,2,3,1,0,2,3],
-  "Hoàng Đại":[null,null,null,null,null,null,null,0,null,0,null,null,1],
-  "Lâm":[null,null,null,null,null,null,null,0,1,1,0,0,1],
-  "Anh Sơn":[0,null,null,null,null,0,null,null,null,0,null,null,null],
-  "Chí Quỹ":[null,0,null,null,null,null,0,null,null,null,null,null,null],
-  "Tiến":[null,null,null,null,null,null,null,0,null,0,null,null,0],
-  "Mới":[null,null,null,null,null,null,null,null,1,0,null,null,null],
+  "Mai Cồ Hiếu":[0,0,0,1,0,0,0,0,0,0,0,0,2,0],
+  "Văn Quang":[1,0,0,0,0,null,0,null,0,0,null,null,0,0],
+  "Nguyên Khôi":[0,0,0,0,null,0,null,0,null,null,null,0,0,0],
+  "Lucky Trần":[0,0,null,0,0,0,0,0,0,null,0,null,0,0],
+  "Quốc Long":[1,0,0,1,0,null,0,null,0,0,2,null,0,0],
+  "Hữu Duyên":[0,0,0,0,1,0,0,0,null,0,0,0,0,0],
+  "Nguyễn Hoàng":[0,0,0,0,0,null,0,0,0,0,null,0,0,0],
+  "Đức Khoa":[0,0,0,0,0,0,null,0,0,0,0,null,null,0],
+  "D.Chí Hoàng":[0,0,null,0,null,0,null,0,null,0,0,0,null,0],
+  "Minh Hoàng":[0,0,0,null,null,null,0,0,0,null,null,0,0,0],
+  "Trung Nguyên":[null,1,0,0,0,0,0,0,0,1,0,0,0,0],
+  "Tài Củi":[null,0,0,0,0,0,0,1,0,0,0,null,0,0],
+  "Văn Chung":[1,null,0,null,1,2,null,null,0,0,1,2,null,1],
+  "Gia Lộc":[1,null,0,0,0,null,null,0,null,null,1,null,0,0],
+  "Phú Bình":[null,null,null,0,0,null,0,null,null,null,0,null,null,null],
+  "Khâm":[null,2,0,0,1,1,2,null,null,null,0,0,1,0],
+  "Cảm":[null,1,0,0,null,0,1,2,3,1,0,2,3,0],
+  "Hoàng Đại":[null,null,null,null,null,null,null,0,null,0,null,null,1,null],
+  "Lâm":[null,null,null,null,null,null,null,0,1,1,0,0,1,null],
+  "Anh Sơn":[0,null,null,null,null,0,null,null,null,0,null,null,null,null],
+  "Chí Quỹ":[null,0,null,null,null,null,0,null,null,null,null,null,null,null],
+  "Tiến":[null,null,null,null,null,null,null,0,null,0,null,null,0,null],
+  "Mới":[null,null,null,null,null,null,null,null,1,0,null,null,null,null],
 };
 
 function absent(p){const m=T.m-p.m;if(!m)return null;const w=T.w-p.w,d=T.d-p.d,l=T.l-p.l,gf=T.gf-p.gf,ga=T.ga-p.ga;return{m,w,d,l,gf,ga,gd:gf-ga,wp:w/m,ppg:(w*3+d)/m,agf:gf/m,aga:ga/m}}
