@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>S7CN - Thống kê 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#0f1923;color:#e0e0e0;line-height:1.5}
+.container{max-width:1400px;margin:0 auto;padding:16px}
+header{background:linear-gradient(135deg,#1a2a3a,#0d1b2a);padding:24px;border-radius:12px;margin-bottom:20px;text-align:center;border:1px solid #1e3a5f}
+header h1{font-size:28px;color:#4fc3f7;margin-bottom:4px}
+header p{color:#78909c;font-size:14px}
+
+.grid{display:grid;gap:16px;margin-bottom:20px}
+.grid-4{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(400px,1fr))}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+
+.card{background:#1a2a3a;border-radius:10px;padding:20px;border:1px solid #1e3a5f}
+.card h2{font-size:15px;color:#4fc3f7;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:8px}
+
+.stat-card{text-align:center;padding:20px 16px}
+.stat-card .number{font-size:36px;font-weight:bold;color:#fff}
+.stat-card .label{font-size:12px;color:#78909c;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.stat-card.win .number{color:#66bb6a}
+.stat-card.draw .number{color:#ffa726}
+.stat-card.lose .number{color:#ef5350}
+.stat-card.goals .number{color:#4fc3f7}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#0d1b2a;color:#4fc3f7;padding:10px 8px;text-align:left;position:sticky;top:0;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap}
+td{padding:8px;border-bottom:1px solid #1e3a5f;white-space:nowrap}
+tr:hover{background:rgba(79,195,247,0.05)}
+.pos-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:bold;color:#fff}
+.pos-FW{background:#c0392b}
+.pos-MF{background:#2980b9}
+.pos-DF{background:#27ae60}
+.pos-GK{background:#f39c12}
+
+.form-dots{display:flex;gap:3px;align-items:center}
+.form-dot{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px}
+.form-W{background:#66bb6a}
+.form-D{background:#ffa726}
+.form-L{background:#ef5350}
+.form-N{background:#444}
+
+.bar-wrap{height:20px;background:#0d1b2a;border-radius:4px;overflow:hidden;position:relative;min-width:80px}
+.bar{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 6px;font-size:10px;font-weight:bold;color:#fff;min-width:fit-content}
+.bar-green{background:linear-gradient(90deg,#2e7d32,#66bb6a)}
+.bar-blue{background:linear-gradient(90deg,#1565c0,#42a5f5)}
+.bar-red{background:linear-gradient(90deg,#c62828,#ef5350)}
+.bar-orange{background:linear-gradient(90deg,#e65100,#ff9800)}
+
+.match-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #1e3a5f}
+.match-row:last-child{border:none}
+.match-date{width:90px;font-size:12px;color:#78909c}
+.match-vs{flex:1;font-weight:500}
+.match-score{font-size:18px;font-weight:bold;min-width:60px;text-align:center}
+.match-result{padding:3px 10px;border-radius:4px;font-size:11px;font-weight:bold;min-width:50px;text-align:center}
+.result-W{background:#2e7d32;color:#fff}
+.result-D{background:#e65100;color:#fff}
+.result-L{background:#c62828;color:#fff}
+.match-venue{font-size:11px;color:#607d8b;min-width:120px;text-align:right}
+
+.top-scorer{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #1e3a5f}
+.top-scorer:last-child{border:none}
+.scorer-rank{width:28px;height:28px;border-radius:50%;background:#1e3a5f;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold}
+.scorer-rank.gold{background:#ffd700;color:#000}
+.scorer-rank.silver{background:#c0c0c0;color:#000}
+.scorer-rank.bronze{background:#cd7f32;color:#000}
+.scorer-name{flex:1}
+.scorer-goals{font-size:22px;font-weight:bold;color:#4fc3f7}
+
+.tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:8px 16px;border-radius:6px;background:#1e3a5f;color:#78909c;cursor:pointer;font-size:13px;border:none}
+.tab.active{background:#4fc3f7;color:#0d1b2a;font-weight:bold}
+
+.impact-val{font-weight:bold;font-size:12px}
+.impact-pos{color:#66bb6a}
+.impact-neg{color:#ef5350}
+.impact-neu{color:#ffa726}
+
+.scroll-x{overflow-x:auto}
+
+.legend{display:flex;gap:16px;margin:12px 0;font-size:11px;color:#78909c;flex-wrap:wrap}
+.legend span{display:flex;align-items:center;gap:4px}
+.legend .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+
+.chart-bar-h{display:flex;align-items:center;gap:8px;margin:6px 0}
+.chart-bar-h .name{width:100px;font-size:12px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chart-bar-h .bar-wrap{flex:1}
+.chart-bar-h .val{width:30px;font-size:12px;font-weight:bold;color:#4fc3f7}
+
+.win-rate-circle{width:80px;height:80px;border-radius:50%;border:4px solid #1e3a5f;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 8px}
+.win-rate-circle .pct{font-size:20px;font-weight:bold;color:#66bb6a}
+.win-rate-circle .lbl{font-size:9px;color:#78909c}
+
+.gd-bar{display:flex;height:24px;border-radius:4px;overflow:hidden;margin:8px 0}
+.gd-gf{background:#66bb6a;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+.gd-ga{background:#ef5350;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+
+@media(max-width:600px){
+  .grid-4{grid-template-columns:repeat(2,1fr)}
+  .grid-2,.grid-3{grid-template-columns:1fr}
+  .match-venue{display:none}
+  table{font-size:11px}
+  th,td{padding:6px 4px}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <h1>S7CN - Thống kê mùa giải 2026</h1>
+  <p>Cập nhật sau 12 trận (Tuần 1 - Tuần 19)</p>
+</header>
+
+<!-- OVERVIEW CARDS -->
+<div class="grid grid-4" id="overviewCards"></div>
+
+<!-- ROW 2: Win Rate + Goals + Form -->
+<div class="grid grid-3">
+  <div class="card">
+    <h2>Tỷ lệ thắng/hòa/thua</h2>
+    <div id="winRateViz"></div>
+  </div>
+  <div class="card">
+    <h2>Bàn thắng / Bàn thua</h2>
+    <div id="goalsViz"></div>
+  </div>
+  <div class="card">
+    <h2>Phong độ 5 trận gần nhất</h2>
+    <div id="formViz"></div>
+    <div class="legend">
+      <span><span class="dot" style="background:#66bb6a"></span> Thắng</span>
+      <span><span class="dot" style="background:#ffa726"></span> Hòa</span>
+      <span><span class="dot" style="background:#ef5350"></span> Thua</span>
+    </div>
+  </div>
+</div>
+
+<!-- MATCHES + TOP SCORERS -->
+<div class="grid grid-2">
+  <div class="card">
+    <h2>Lịch sử trận đấu</h2>
+    <div id="matchHistory"></div>
+  </div>
+  <div class="card">
+    <h2>Vua phá lưới</h2>
+    <div id="topScorers"></div>
+  </div>
+</div>
+
+<!-- PLAYER TABLE -->
+<div class="card">
+  <h2>Thống kê cầu thủ chi tiết</h2>
+  <div class="tabs" id="posTabs"></div>
+  <div class="scroll-x">
+    <table id="playerTable">
+      <thead><tr id="playerThead"></tr></thead>
+      <tbody id="playerTbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ATTENDANCE + IMPACT -->
+<div class="grid grid-2">
+  <div class="card">
+    <h2>Tỷ lệ tham gia (% Match)</h2>
+    <div id="attendanceChart"></div>
+  </div>
+  <div class="card">
+    <h2>Point Impact (Ảnh hưởng đến kết quả đội)</h2>
+    <div id="impactChart"></div>
+  </div>
+</div>
+
+<!-- GOAL CONTRIBUTION -->
+<div class="card">
+  <h2>Đóng góp bàn thắng theo vị trí</h2>
+  <div class="grid grid-2">
+    <div id="goalsByPos"></div>
+    <div id="goalsPerMatch"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+const TEAM = {
+  matches:12, winPct:0.5, totalGoals:37, gf:39, ga:29, gd:10,
+  w:6, d:4, l:2, avgGF:3.25, avgGA:2.42,
+  form:["D","W","D","L","W"] // 5 trận gần nhất: 🟡🟢🟡🔴🟢
+};
+
+const MATCHES = [
+  {week:1, date:"04/01",vs:"Thiết Bị Việt FC",gf:4,ga:2,r:"W",venue:"Etihad Q12",attend:13},
+  {week:2, date:"11/01",vs:"Long Xuyên FC",gf:4,ga:2,r:"W",venue:"Giga Arena",attend:15},
+  {week:3, date:"18/01",vs:"Vườn Mai Phương Bình FC",gf:0,ga:2,r:"L",venue:"Giga Arena",attend:14},
+  {week:4, date:"25/01",vs:"Long Xuyên FC",gf:2,ga:0,r:"W",venue:"Giga Arena",attend:15},
+  {week:9, date:"01/03",vs:"Liên Quân FC",gf:3,ga:1,r:"W",venue:"Etihad Q12",attend:13},
+  {week:10,date:"08/03",vs:"Sân Cáp",gf:3,ga:3,r:"D",venue:"Giga Arena",attend:12},
+  {week:11,date:"15/03",vs:"Long Xuyên FC",gf:3,ga:3,r:"D",venue:"Giga Arena",attend:13},
+  {week:12,date:"22/03",vs:"Friends FC",gf:3,ga:3,r:"D",venue:"Etihad Q12",attend:15},
+  {week:14,date:"05/04",vs:"Nhật Huy FC",gf:5,ga:2,r:"W",venue:"Giga Arena",attend:13},
+  {week:15,date:"12/04",vs:"Huyền Thoại FC",gf:4,ga:4,r:"D",venue:"Lotus Tân Sơn",attend:17},
+  {week:16,date:"19/04",vs:"ĐH TDTT",gf:3,ga:4,r:"L",venue:"ĐH TDTT",attend:14},
+  {week:19,date:"10/05",vs:"Sân Cáp",gf:5,ga:3,r:"W",venue:"ĐH TDTT",attend:13},
+];
+
+const PLAYERS = [
+  {id:1, name:"Mai Cồ Hiếu",fullName:"Mai Hiếu",pos:"FW",no:"23",goals:1,matches:12,matchPct:1,winPct:0.5,form:"🟡🟢🟡🔴🟢",formArr:["D","W","D","L","W"],pointImpact:1.83,w:6,d:4,l:2,gf:39,ga:29,gd:10,type:"main"},
+  {id:2, name:"Văn Quang",fullName:"Văn Quang",pos:"FW",no:"10",goals:1,matches:8,matchPct:0.67,winPct:0.625,form:"⚪🟢🟡⚪⚪",formArr:["N","W","D","N","N"],pointImpact:2.13,w:5,d:2,l:1,gf:25,ga:16,gd:9,type:"main"},
+  {id:3, name:"Nguyên Khôi",fullName:"Nguyên Khôi",pos:"DF",no:"19",goals:0,matches:7,matchPct:0.58,winPct:0.571,form:"🟡⚪⚪⚪🟢",formArr:["D","N","N","N","W"],pointImpact:2,w:4,d:2,l:1,gf:21,ga:15,gd:6,type:"main"},
+  {id:4, name:"Lucky Trần",fullName:"Trần Giao Hòa",pos:"MF",no:"11",goals:0,matches:9,matchPct:0.75,winPct:0.556,form:"🟡🟢⚪🔴⚪",formArr:["D","W","N","L","N"],pointImpact:2,w:5,d:3,l:1,gf:30,ga:20,gd:10,type:"main"},
+  {id:5, name:"Quốc Long",fullName:"Quốc Long",pos:"MF",no:"8",goals:4,matches:9,matchPct:0.75,winPct:0.556,form:"⚪🟢🟡🔴⚪",formArr:["N","W","D","L","N"],pointImpact:1.89,w:5,d:2,l:2,gf:28,ga:20,gd:8,type:"main"},
+  {id:6, name:"Hữu Duyên",fullName:"Hữu Duyên",pos:"DF",no:"47",goals:1,matches:11,matchPct:0.92,winPct:0.455,form:"🟡⚪🟡🔴🟢",formArr:["D","N","D","L","W"],pointImpact:1.73,w:5,d:4,l:2,gf:34,ga:27,gd:7,type:"main"},
+  {id:7, name:"Nguyễn Hoàng",fullName:"Nguyễn Hoàng",pos:"DF",no:"39",goals:0,matches:10,matchPct:0.83,winPct:0.6,form:"🟡🟢🟡⚪🟢",formArr:["D","W","D","N","W"],pointImpact:2.1,w:6,d:3,l:1,gf:33,ga:22,gd:11,type:"main"},
+  {id:8, name:"Đức Khoa",fullName:"Đức Khoa",pos:"GK",no:"01",goals:0,matches:10,matchPct:0.83,winPct:0.5,form:"🟡🟢🟡🔴⚪",formArr:["D","W","D","L","N"],pointImpact:1.8,w:5,d:3,l:2,gf:31,ga:23,gd:8,type:"main"},
+  {id:9, name:"Dương Chí Hoàng",fullName:"Dương Chí Hoàng",pos:"DF",no:"24",goals:0,matches:8,matchPct:0.67,winPct:0.5,form:"🟡⚪🟡🔴🟢",formArr:["D","N","D","L","W"],pointImpact:1.88,w:4,d:3,l:1,gf:28,ga:21,gd:7,type:"main"},
+  {id:10,name:"Minh Hoàng",fullName:"Minh Hoàng",pos:"DF",no:"12",goals:0,matches:7,matchPct:0.58,winPct:0.571,form:"🟡🟢⚪⚪🟢",formArr:["D","W","N","N","W"],pointImpact:2,w:4,d:2,l:1,gf:24,ga:17,gd:7,type:"main"},
+  {id:11,name:"Trung Nguyên",fullName:"Trung Nguyên",pos:"MF",no:"14",goals:2,matches:11,matchPct:0.92,winPct:0.455,form:"🟡🟢🟡🔴🟢",formArr:["D","W","D","L","W"],pointImpact:1.73,w:5,d:4,l:2,gf:35,ga:27,gd:8,type:"main"},
+  {id:12,name:"Tài Củi",fullName:"Ngọc Tài",pos:"FW",no:"30",goals:1,matches:10,matchPct:0.83,winPct:0.4,form:"🟡🟢🟡🔴⚪",formArr:["D","W","D","L","N"],pointImpact:1.6,w:4,d:4,l:2,gf:30,ga:24,gd:6,type:"main"},
+  {id:13,name:"Văn Chung",fullName:"Văn Chung",pos:"FW",no:"6",goals:7,matches:8,matchPct:0.67,winPct:0.5,form:"⚪🟢🟡🔴🟢",formArr:["N","W","D","L","W"],pointImpact:1.75,w:4,d:2,l:2,gf:27,ga:21,gd:6,type:"main"},
+  {id:14,name:"Gia Lộc",fullName:"Gia Lộc",pos:"MF",no:"75",goals:2,matches:8,matchPct:0.67,winPct:0.5,form:"🟡⚪🟡🔴🟢",formArr:["D","N","D","L","W"],pointImpact:1.75,w:4,d:2,l:2,gf:24,ga:19,gd:5,type:"main"},
+  {id:15,name:"Phú Bình",fullName:"Phú Bình",pos:"DF",no:"15",goals:0,matches:4,matchPct:0.33,winPct:0.5,form:"⚪⚪⚪🔴⚪",formArr:["N","N","N","L","N"],pointImpact:1.75,w:2,d:1,l:1,gf:11,ga:8,gd:3,type:"main"},
+  {id:16,name:"Văn Tới",fullName:"Văn Tới",pos:"GK",no:"22",goals:0,matches:0,matchPct:0,winPct:0,form:"",formArr:[],pointImpact:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,type:"main",note:"Nhà tài trợ"},
+  {id:17,name:"Khâm",fullName:"Nguyễn Quốc Khâm",pos:"FW",no:"22",goals:6,matches:8,matchPct:0.67,winPct:0.5,form:"⚪⚪⚪🔴🟢",formArr:["N","N","N","L","W"],pointImpact:1.75,w:4,d:2,l:2,gf:23,ga:18,gd:5,type:"main"},
+  {id:18,name:"Cảm",fullName:"Phan Cảm",pos:"FW",no:"7",goals:10,matches:10,matchPct:0.83,winPct:0.4,form:"🟡🟢🟡🔴🟢",formArr:["D","W","D","L","W"],pointImpact:1.6,w:4,d:4,l:2,gf:32,ga:26,gd:6,type:"main"},
+  {id:19,name:"Hoàng Đại",fullName:"Hoàng Đại",pos:"FW",no:"",goals:0,matches:2,matchPct:0.17,winPct:0,form:"🟡⚪🟡⚪⚪",formArr:["D","N","D","N","N"],pointImpact:1,w:0,d:2,l:0,gf:7,ga:7,gd:0,type:"main"},
+  {id:20,name:"Lâm",fullName:"Lâm",pos:"MF",no:"",goals:2,matches:5,matchPct:0.42,winPct:0.4,form:"🟡🟢🟡🔴🟢",formArr:["D","W","D","L","W"],pointImpact:1.6,w:2,d:2,l:1,gf:20,ga:16,gd:4,type:"main"},
+  {id:21,name:"Anh Sơn",fullName:"Anh Sơn",pos:"MF",no:"",goals:0,matches:3,matchPct:0.25,winPct:0.333,form:"⚪⚪🟡⚪⚪",formArr:["N","N","D","N","N"],pointImpact:1.67,w:1,d:2,l:0,gf:11,ga:9,gd:2,type:"sub"},
+  {id:22,name:"Chí Quỹ",fullName:"Phạm Lê Chí Quỹ",pos:"MF",no:"4",goals:0,matches:2,matchPct:0.17,winPct:0.5,form:"⚪⚪⚪⚪⚪",formArr:["N","N","N","N","N"],pointImpact:2,w:1,d:1,l:0,gf:7,ga:5,gd:2,type:"sub"},
+  {id:23,name:"Tiến",fullName:"Tiến",pos:"DF",no:"",goals:0,matches:2,matchPct:0.17,winPct:0,form:"🟡⚪🟡⚪⚪",formArr:["D","N","D","N","N"],pointImpact:1,w:0,d:2,l:0,gf:7,ga:7,gd:0,type:"sub"},
+  {id:24,name:"Mới",fullName:"Mới",pos:"MF",no:"",goals:1,matches:2,matchPct:0.17,winPct:0.5,form:"⚪🟢🟡⚪⚪",formArr:["N","W","D","N","N"],pointImpact:2,w:1,d:1,l:0,gf:9,ga:6,gd:3,type:"sub"},
+];
+
+// ========== RENDER ==========
+
+// Overview Cards
+function renderOverview(){
+  const el=document.getElementById("overviewCards");
+  const cards=[
+    {n:TEAM.matches,l:"Trận đã đấu",cls:""},
+    {n:TEAM.w,l:"Thắng",cls:"win"},
+    {n:TEAM.d,l:"Hòa",cls:"draw"},
+    {n:TEAM.l,l:"Thua",cls:"lose"},
+    {n:TEAM.gf,l:"Bàn thắng (GF)",cls:"goals"},
+    {n:TEAM.ga,l:"Bàn thua (GA)",cls:"lose"},
+    {n:"+"+TEAM.gd,l:"Hiệu số (GD)",cls:"win"},
+    {n:TEAM.totalGoals,l:"Tổng bàn trong trận",cls:""},
+  ];
+  el.innerHTML=cards.map(c=>`
+    <div class="card stat-card ${c.cls}">
+      <div class="number">${c.n}</div>
+      <div class="label">${c.l}</div>
+    </div>
+  `).join("");
+}
+
+// Win Rate
+function renderWinRate(){
+  const el=document.getElementById("winRateViz");
+  const total=TEAM.w+TEAM.d+TEAM.l;
+  const wp=((TEAM.w/total)*100).toFixed(0);
+  const dp=((TEAM.d/total)*100).toFixed(0);
+  const lp=((TEAM.l/total)*100).toFixed(0);
+  el.innerHTML=`
+    <div class="win-rate-circle"><span class="pct">${wp}%</span><span class="lbl">WIN RATE</span></div>
+    <div class="gd-bar">
+      <div class="gd-gf" style="width:${wp}%">W ${TEAM.w}</div>
+      <div style="background:#ffa726;flex:0 0 ${dp}%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold">D ${TEAM.d}</div>
+      <div class="gd-ga" style="width:${lp}%">L ${TEAM.l}</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:#78909c">
+      <span>Trung bình GF: <b style="color:#66bb6a">${TEAM.avgGF}</b></span>
+      <span>Trung bình GA: <b style="color:#ef5350">${TEAM.avgGA}</b></span>
+    </div>
+  `;
+}
+
+// Goals viz
+function renderGoals(){
+  const el=document.getElementById("goalsViz");
+  const maxG=Math.max(TEAM.gf,TEAM.ga);
+  el.innerHTML=`
+    <div style="margin:12px 0">
+      <div style="font-size:12px;color:#78909c;margin-bottom:4px">Bàn thắng (GF)</div>
+      <div class="bar-wrap"><div class="bar bar-green" style="width:${(TEAM.gf/maxG*100)}%">${TEAM.gf}</div></div>
+    </div>
+    <div style="margin:12px 0">
+      <div style="font-size:12px;color:#78909c;margin-bottom:4px">Bàn thua (GA)</div>
+      <div class="bar-wrap"><div class="bar bar-red" style="width:${(TEAM.ga/maxG*100)}%">${TEAM.ga}</div></div>
+    </div>
+    <div style="margin:12px 0">
+      <div style="font-size:12px;color:#78909c;margin-bottom:4px">Hiệu số (GD)</div>
+      <div class="bar-wrap"><div class="bar bar-blue" style="width:${(TEAM.gd/maxG*100)}%">+${TEAM.gd}</div></div>
+    </div>
+    <div style="margin-top:16px;text-align:center">
+      <span style="font-size:28px;font-weight:bold;color:#66bb6a">${TEAM.gf}</span>
+      <span style="font-size:14px;color:#78909c;margin:0 8px">-</span>
+      <span style="font-size:28px;font-weight:bold;color:#ef5350">${TEAM.ga}</span>
+    </div>
+  `;
+}
+
+// Form
+function renderForm(){
+  const el=document.getElementById("formViz");
+  const labels={W:"T",D:"H",L:"B"};
+  el.innerHTML=`<div class="form-dots" style="justify-content:center;gap:8px;margin:16px 0">
+    ${TEAM.form.map(f=>`<div class="form-dot form-${f}" style="width:36px;height:36px;font-size:14px">${labels[f]||"?"}</div>`).join("")}
+  </div>
+  <div style="text-align:center;color:#78909c;font-size:12px;margin-top:8px">
+    Kết quả: ${TEAM.form.map(f=>f==="W"?"Thắng":f==="D"?"Hòa":"Thua").join(" → ")}
+  </div>`;
+}
+
+// Match History
+function renderMatches(){
+  const el=document.getElementById("matchHistory");
+  el.innerHTML=MATCHES.slice().reverse().map(m=>`
+    <div class="match-row">
+      <div class="match-date">T${m.week} - ${m.date}</div>
+      <div class="match-vs">${m.vs}</div>
+      <div class="match-score">${m.gf} - ${m.ga}</div>
+      <div class="match-result result-${m.r}">${m.r==="W"?"Thắng":m.r==="D"?"Hòa":"Thua"}</div>
+      <div class="match-venue">${m.venue}</div>
+    </div>
+  `).join("");
+}
+
+// Top Scorers
+function renderTopScorers(){
+  const el=document.getElementById("topScorers");
+  const sorted=PLAYERS.filter(p=>p.goals>0).sort((a,b)=>b.goals-a.goals);
+  const maxG=sorted[0]?.goals||1;
+  el.innerHTML=sorted.map((p,i)=>{
+    const rankCls=i===0?"gold":i===1?"silver":i===2?"bronze":"";
+    return `<div class="top-scorer">
+      <div class="scorer-rank ${rankCls}">${i+1}</div>
+      <span class="pos-badge pos-${p.pos}">${p.pos}</span>
+      <div class="scorer-name">${p.name}</div>
+      <div style="flex:1">
+        <div class="bar-wrap"><div class="bar bar-blue" style="width:${(p.goals/maxG*100)}%">${p.goals}</div></div>
+      </div>
+      <div class="scorer-goals">${p.goals}</div>
+    </div>`;
+  }).join("");
+}
+
+// Player Table
+let currentFilter="ALL";
+function renderPlayerTable(){
+  const headers=["#","Tên","Pos","Số áo","Trận","% Trận","Bàn","% Thắng","Phong độ","W","D","L","GF","GA","GD","P.Impact"];
+  document.getElementById("playerThead").innerHTML=headers.map(h=>`<th>${h}</th>`).join("");
+
+  const filtered=currentFilter==="ALL"?PLAYERS.filter(p=>p.matches>0):PLAYERS.filter(p=>p.pos===currentFilter&&p.matches>0);
+  const sorted=filtered.sort((a,b)=>b.matches-a.matches||b.goals-a.goals);
+  const labels={W:"T",D:"H",L:"B",N:"-"};
+
+  document.getElementById("playerTbody").innerHTML=sorted.map((p,i)=>{
+    const formHtml=p.formArr.map(f=>`<div class="form-dot form-${f}">${labels[f]}</div>`).join("");
+    const impactCls=p.pointImpact>1.83?"impact-pos":p.pointImpact<1.6?"impact-neg":"impact-neu";
+    return `<tr>
+      <td>${i+1}</td>
+      <td><b>${p.name}</b>${p.type==="sub"?' <span style="font-size:10px;color:#ffa726">(Sub)</span>':""}</td>
+      <td><span class="pos-badge pos-${p.pos}">${p.pos}</span></td>
+      <td>${p.no||"-"}</td>
+      <td>${p.matches}</td>
+      <td>${(p.matchPct*100).toFixed(0)}%</td>
+      <td><b style="color:#4fc3f7">${p.goals}</b></td>
+      <td>${(p.winPct*100).toFixed(0)}%</td>
+      <td><div class="form-dots">${formHtml}</div></td>
+      <td>${p.w}</td><td>${p.d}</td><td>${p.l}</td>
+      <td>${p.gf}</td><td>${p.ga}</td>
+      <td style="color:${p.gd>0?"#66bb6a":p.gd<0?"#ef5350":"#ffa726"}">${p.gd>0?"+":""}${p.gd}</td>
+      <td><span class="${impactCls} impact-val">${p.pointImpact.toFixed(2)}</span></td>
+    </tr>`;
+  }).join("");
+}
+
+function renderPosTabs(){
+  const tabs=["ALL","FW","MF","DF","GK"];
+  const names={ALL:"Tất cả",FW:"Tiền đạo",MF:"Tiền vệ",DF:"Hậu vệ",GK:"Thủ môn"};
+  document.getElementById("posTabs").innerHTML=tabs.map(t=>
+    `<button class="tab ${t===currentFilter?"active":""}" onclick="currentFilter='${t}';renderPosTabs();renderPlayerTable()">${names[t]}</button>`
+  ).join("");
+}
+
+// Attendance Chart
+function renderAttendance(){
+  const el=document.getElementById("attendanceChart");
+  const sorted=PLAYERS.filter(p=>p.matches>0).sort((a,b)=>b.matchPct-a.matchPct);
+  el.innerHTML=sorted.map(p=>`
+    <div class="chart-bar-h">
+      <div class="name">${p.name}</div>
+      <div class="bar-wrap"><div class="bar bar-green" style="width:${(p.matchPct*100)}%">${(p.matchPct*100).toFixed(0)}%</div></div>
+      <div class="val">${p.matches}</div>
+    </div>
+  `).join("");
+}
+
+// Impact Chart
+function renderImpact(){
+  const el=document.getElementById("impactChart");
+  const sorted=PLAYERS.filter(p=>p.matches>0&&p.pointImpact>0).sort((a,b)=>b.pointImpact-a.pointImpact);
+  const max=Math.max(...sorted.map(p=>p.pointImpact));
+  el.innerHTML=`<div style="font-size:11px;color:#78909c;margin-bottom:8px">Point Impact = trung bình điểm/trận khi cầu thủ tham gia (3đ thắng, 1đ hòa, 0 thua). Trung bình đội: 1.83</div>`+
+  sorted.map(p=>{
+    const color=p.pointImpact>=1.83?"bar-green":p.pointImpact>=1.6?"bar-orange":"bar-red";
+    return `<div class="chart-bar-h">
+      <div class="name">${p.name}</div>
+      <div class="bar-wrap"><div class="bar ${color}" style="width:${(p.pointImpact/max*100)}%">${p.pointImpact.toFixed(2)}</div></div>
+    </div>`;
+  }).join("");
+}
+
+// Goals by position
+function renderGoalsByPos(){
+  const posGoals={FW:0,MF:0,DF:0,GK:0};
+  PLAYERS.forEach(p=>{if(posGoals[p.pos]!==undefined)posGoals[p.pos]+=p.goals});
+  const total=Object.values(posGoals).reduce((a,b)=>a+b,0)||1;
+  const el=document.getElementById("goalsByPos");
+  el.innerHTML=`<h3 style="font-size:13px;color:#78909c;margin-bottom:12px">Bàn thắng theo vị trí</h3>`+
+  Object.entries(posGoals).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).map(([pos,g])=>`
+    <div class="chart-bar-h">
+      <div class="name"><span class="pos-badge pos-${pos}">${pos}</span></div>
+      <div class="bar-wrap"><div class="bar bar-blue" style="width:${(g/total*100)}%">${g} bàn (${(g/total*100).toFixed(0)}%)</div></div>
+    </div>
+  `).join("");
+
+  const el2=document.getElementById("goalsPerMatch");
+  const scorers=PLAYERS.filter(p=>p.goals>0&&p.matches>0).map(p=>({...p,gpm:(p.goals/p.matches).toFixed(2)})).sort((a,b)=>b.gpm-a.gpm);
+  const maxGpm=Math.max(...scorers.map(s=>parseFloat(s.gpm)));
+  el2.innerHTML=`<h3 style="font-size:13px;color:#78909c;margin-bottom:12px">Bàn thắng / trận (hiệu suất)</h3>`+
+  scorers.map(p=>`
+    <div class="chart-bar-h">
+      <div class="name">${p.name}</div>
+      <div class="bar-wrap"><div class="bar bar-orange" style="width:${(parseFloat(p.gpm)/maxGpm*100)}%">${p.gpm}</div></div>
+      <div class="val">${p.goals}</div>
+    </div>
+  `).join("");
+}
+
+// INIT
+renderOverview();
+renderWinRate();
+renderGoals();
+renderForm();
+renderMatches();
+renderTopScorers();
+renderPosTabs();
+renderPlayerTable();
+renderAttendance();
+renderImpact();
+renderGoalsByPos();
+</script>
+</body>
+</html>
