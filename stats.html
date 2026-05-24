@@ -13,391 +13,350 @@ header{background:linear-gradient(135deg,#12223a,#0a1628);padding:24px;border-ra
 header h1{font-size:28px;color:var(--orange);margin-bottom:4px}
 header .sub{color:#8a9bb5;font-size:14px}
 header .logo-text{font-size:11px;color:var(--navy4);margin-top:4px;letter-spacing:2px}
-
 .grid{display:grid;gap:16px;margin-bottom:20px}
 .grid-4{grid-template-columns:repeat(auto-fit,minmax(155px,1fr))}
-.grid-2{grid-template-columns:repeat(auto-fit,minmax(400px,1fr))}
-.grid-3{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(380px,1fr))}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 .card{background:var(--navy2);border-radius:10px;padding:20px;border:1px solid var(--navy4)}
 .card h2{font-size:14px;color:var(--orange);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:8px}
-
-.stat-card{text-align:center;padding:20px 16px}
-.stat-card .number{font-size:36px;font-weight:bold;color:#fff}
-.stat-card .label{font-size:11px;color:#8a9bb5;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.stat-card{text-align:center;padding:18px 14px}
+.stat-card .number{font-size:34px;font-weight:bold;color:#fff}
+.stat-card .label{font-size:10px;color:#8a9bb5;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
 .stat-card.win .number{color:#4caf50}
 .stat-card.draw .number{color:var(--orange)}
 .stat-card.lose .number{color:#ef5350}
 .stat-card.goals .number{color:var(--orange2)}
-
 table{width:100%;border-collapse:collapse;font-size:12px}
-th{background:#0d1a2e;color:var(--orange);padding:10px 6px;text-align:left;position:sticky;top:0;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;z-index:2}
-td{padding:7px 6px;border-bottom:1px solid var(--navy4);white-space:nowrap}
-tr:hover{background:rgba(232,118,43,0.06)}
-.pos-badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:bold;color:#fff}
-.pos-FW{background:#c0392b}
-.pos-MF{background:#2471a3}
-.pos-DF{background:#27ae60}
-.pos-GK{background:var(--orange)}
-
+th{background:#0d1a2e;color:var(--orange);padding:8px 5px;text-align:left;position:sticky;top:0;font-size:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;z-index:2}
+td{padding:6px 5px;border-bottom:1px solid var(--navy4);white-space:nowrap}
+tr:hover{background:rgba(232,118,43,.06)}
+.pos-badge{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:bold;color:#fff}
+.pos-FW{background:#c0392b}.pos-MF{background:#2471a3}.pos-DF{background:#27ae60}.pos-GK{background:var(--orange)}
 .form-dots{display:flex;gap:2px;align-items:center}
-.form-dot{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold}
-.form-W{background:#4caf50}
-.form-D{background:var(--orange)}
-.form-L{background:#ef5350}
-.form-N{background:#2a3a50}
-
-.bar-wrap{height:18px;background:#0d1a2e;border-radius:4px;overflow:hidden;position:relative;min-width:60px}
+.form-dot{width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold}
+.form-W{background:#4caf50}.form-D{background:var(--orange)}.form-L{background:#ef5350}.form-N{background:#2a3a50}
+.bar-wrap{height:18px;background:#0d1a2e;border-radius:4px;overflow:hidden;min-width:60px}
 .bar{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 6px;font-size:10px;font-weight:bold;color:#fff;min-width:fit-content}
-.bar-green{background:linear-gradient(90deg,#1b5e20,#4caf50)}
-.bar-blue{background:linear-gradient(90deg,#14365a,var(--navy4))}
-.bar-red{background:linear-gradient(90deg,#b71c1c,#ef5350)}
-.bar-orange{background:linear-gradient(90deg,#b35a1a,var(--orange))}
-
-.match-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--navy4)}
+.bar-green{background:linear-gradient(90deg,#1b5e20,#4caf50)}.bar-red{background:linear-gradient(90deg,#b71c1c,#ef5350)}.bar-orange{background:linear-gradient(90deg,#b35a1a,var(--orange))}
+.match-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--navy4)}
 .match-row:last-child{border:none}
-.match-date{width:85px;font-size:11px;color:#8a9bb5}
-.match-vs{flex:1;font-weight:500;font-size:13px}
-.match-score{font-size:18px;font-weight:bold;min-width:55px;text-align:center}
-.match-result{padding:3px 10px;border-radius:4px;font-size:11px;font-weight:bold;min-width:48px;text-align:center}
-.result-W{background:#1b5e20;color:#fff}
-.result-D{background:#b35a1a;color:#fff}
-.result-L{background:#b71c1c;color:#fff}
-.match-venue{font-size:11px;color:#607d8b;min-width:110px;text-align:right}
-
-.top-scorer{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--navy4)}
+.match-date{width:80px;font-size:11px;color:#8a9bb5}.match-vs{flex:1;font-weight:500;font-size:13px}
+.match-score{font-size:17px;font-weight:bold;min-width:50px;text-align:center}
+.match-result{padding:3px 9px;border-radius:4px;font-size:11px;font-weight:bold;min-width:46px;text-align:center}
+.result-W{background:#1b5e20;color:#fff}.result-D{background:#b35a1a;color:#fff}.result-L{background:#b71c1c;color:#fff}
+.match-venue{font-size:11px;color:#607d8b;min-width:100px;text-align:right}
+.top-scorer{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--navy4)}
 .top-scorer:last-child{border:none}
-.scorer-rank{width:26px;height:26px;border-radius:50%;background:var(--navy3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
-.scorer-rank.gold{background:#ffd700;color:#000}
-.scorer-rank.silver{background:#c0c0c0;color:#000}
-.scorer-rank.bronze{background:#cd7f32;color:#fff}
-.scorer-name{flex:1;font-size:13px}
-.scorer-goals{font-size:20px;font-weight:bold;color:var(--orange)}
-
+.scorer-rank{width:25px;height:25px;border-radius:50%;background:var(--navy3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+.scorer-rank.gold{background:#ffd700;color:#000}.scorer-rank.silver{background:#c0c0c0;color:#000}.scorer-rank.bronze{background:#cd7f32;color:#fff}
+.scorer-name{flex:1;font-size:13px}.scorer-goals{font-size:20px;font-weight:bold;color:var(--orange)}
 .tabs{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap}
 .tab{padding:7px 14px;border-radius:6px;background:var(--navy3);color:#8a9bb5;cursor:pointer;font-size:12px;border:none;transition:all .15s}
-.tab:hover{background:var(--navy4)}
-.tab.active{background:var(--orange);color:#fff;font-weight:bold}
-
-.impact-val{font-weight:bold;font-size:11px}
-.impact-pos{color:#4caf50}
-.impact-neg{color:#ef5350}
-.impact-neu{color:var(--orange)}
-
+.tab:hover{background:var(--navy4)}.tab.active{background:var(--orange);color:#fff;font-weight:bold}
+.impact-pos{color:#4caf50;font-weight:bold}.impact-neg{color:#ef5350;font-weight:bold}.impact-neu{color:var(--orange);font-weight:bold}
 .scroll-x{overflow-x:auto}
-
 .legend{display:flex;gap:14px;margin:10px 0;font-size:11px;color:#8a9bb5;flex-wrap:wrap}
 .legend span{display:flex;align-items:center;gap:4px}
 .legend .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
-
 .chart-bar-h{display:flex;align-items:center;gap:8px;margin:5px 0}
-.chart-bar-h .name{width:95px;font-size:11px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chart-bar-h .bar-wrap{flex:1}
-.chart-bar-h .val{width:28px;font-size:11px;font-weight:bold;color:var(--orange)}
-
-.win-rate-circle{width:80px;height:80px;border-radius:50%;border:4px solid var(--navy4);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 8px}
-.win-rate-circle .pct{font-size:20px;font-weight:bold;color:#4caf50}
-.win-rate-circle .lbl{font-size:9px;color:#8a9bb5}
-
+.chart-bar-h .name{width:90px;font-size:11px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chart-bar-h .bar-wrap{flex:1}.chart-bar-h .val{width:28px;font-size:11px;font-weight:bold;color:var(--orange)}
+.win-rate-circle{width:78px;height:78px;border-radius:50%;border:4px solid var(--navy4);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 8px}
+.win-rate-circle .pct{font-size:20px;font-weight:bold;color:#4caf50}.win-rate-circle .lbl{font-size:9px;color:#8a9bb5}
 .gd-bar{display:flex;height:22px;border-radius:4px;overflow:hidden;margin:8px 0}
 .gd-gf{background:#4caf50;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
 .gd-ga{background:#ef5350;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
-
-.absent-section th{background:#1a1510;color:var(--orange2)}
-.absent-good{color:#4caf50;font-weight:bold}
-.absent-bad{color:#ef5350;font-weight:bold}
-.absent-neutral{color:var(--orange);font-weight:bold}
-.mini-bar{display:inline-block;height:8px;border-radius:4px;vertical-align:middle;margin-left:4px}
-
+.absent-bad{color:#ef5350;font-weight:bold}.absent-good{color:#4caf50;font-weight:bold}.absent-neutral{color:var(--orange);font-weight:bold}
 .hint{font-size:11px;color:#607d8b;font-style:italic;margin:6px 0}
-.stats-summary{font-size:11px;color:#8a9bb5;margin-top:8px;padding:6px;background:var(--navy);border-radius:4px}
+
+/* Awards */
+.award-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.award{background:var(--navy);border:1px solid var(--navy4);border-radius:10px;padding:16px;text-align:center;position:relative;overflow:hidden}
+.award::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange),var(--orange2))}
+.award .icon{font-size:36px;margin-bottom:6px}
+.award .title{font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.award .player-name{font-size:20px;font-weight:bold;color:#fff;margin-bottom:2px}
+.award .stat{font-size:13px;color:var(--orange2);font-weight:bold}
+.award .detail{font-size:11px;color:#8a9bb5;margin-top:4px}
+
+/* Formation */
+.formation-tabs{display:flex;gap:6px;margin-bottom:16px;justify-content:center}
+.formation-tab{padding:8px 20px;border-radius:6px;background:var(--navy3);color:#8a9bb5;cursor:pointer;font-size:14px;font-weight:bold;border:2px solid transparent;transition:all .15s}
+.formation-tab:hover{border-color:var(--navy4)}.formation-tab.active{background:var(--orange);color:#fff;border-color:var(--orange)}
+.pitch{position:relative;width:100%;max-width:500px;margin:0 auto;aspect-ratio:3/4;background:linear-gradient(180deg,#1e6b35 0%,#1e6b35 49.5%,#1a5f2e 49.5%,#1a5f2e 50.5%,#1e6b35 50.5%);border:3px solid rgba(255,255,255,.7);border-radius:8px;overflow:hidden}
+.pitch::before{content:'';position:absolute;top:50%;left:50%;width:80px;height:80px;border:2px solid rgba(255,255,255,.5);border-radius:50%;transform:translate(-50%,-50%)}
+.pitch::after{content:'';position:absolute;top:50%;left:0;right:0;height:2px;background:rgba(255,255,255,.5)}
+.pitch-box{position:absolute;left:20%;right:20%;height:14%;border:2px solid rgba(255,255,255,.5)}
+.pitch-box.top{top:0;border-top:none}.pitch-box.bottom{bottom:0;border-bottom:none}
+.pitch-player{position:absolute;transform:translate(-50%,-50%);text-align:center;z-index:2}
+.pitch-circle{width:48px;height:48px;border-radius:50%;background:rgba(232,118,43,.9);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold;color:#fff;margin:0 auto;line-height:1.1;padding:2px}
+.pitch-label{font-size:9px;color:rgba(255,255,255,.8);margin-top:2px;text-shadow:0 1px 2px rgba(0,0,0,.8)}
+.pitch-circle.gk{background:var(--orange)}
+.pitch-circle.df{background:#27ae60}
+.pitch-circle.mf{background:#2471a3}
+.pitch-circle.fw{background:#c0392b}
 
 @media(max-width:600px){
-  .grid-4{grid-template-columns:repeat(2,1fr)}
-  .grid-2,.grid-3{grid-template-columns:1fr}
-  .match-venue{display:none}
-  table{font-size:10px}
-  th,td{padding:5px 3px}
+  .grid-4{grid-template-columns:repeat(2,1fr)}.grid-2,.grid-3{grid-template-columns:1fr}
+  .match-venue{display:none}table{font-size:10px}th,td{padding:4px 3px}
+  .award-grid{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
 <body>
 <div class="container">
-
 <header>
   <h1>S7-CN FC</h1>
-  <div class="sub">Thống kê mùa giải 2026 | Cập nhật sau 13 trận (Tuần 1 - Tuần 20)</div>
+  <div class="sub">Thống kê mùa giải 2026 | Cập nhật sau 13 trận</div>
   <div class="logo-text">SINCE 2018</div>
 </header>
 
 <div class="grid grid-4" id="overviewCards"></div>
 
 <div class="grid grid-3">
-  <div class="card">
-    <h2>Tỷ lệ thắng/hòa/thua</h2>
-    <div id="winRateViz"></div>
+  <div class="card"><h2>Tỷ lệ thắng/hòa/thua</h2><div id="winRateViz"></div></div>
+  <div class="card"><h2>Bàn thắng / Bàn thua</h2><div id="goalsViz"></div></div>
+  <div class="card"><h2>Phong độ 5 trận gần nhất</h2><div id="formViz"></div>
+    <div class="legend"><span><span class="dot" style="background:#4caf50"></span> Thắng</span><span><span class="dot" style="background:var(--orange)"></span> Hòa</span><span><span class="dot" style="background:#ef5350"></span> Thua</span></div>
   </div>
-  <div class="card">
-    <h2>Bàn thắng / Bàn thua</h2>
-    <div id="goalsViz"></div>
-  </div>
-  <div class="card">
-    <h2>Phong độ 5 trận gần nhất</h2>
-    <div id="formViz"></div>
-    <div class="legend">
-      <span><span class="dot" style="background:#4caf50"></span> Thắng</span>
-      <span><span class="dot" style="background:var(--orange)"></span> Hòa</span>
-      <span><span class="dot" style="background:#ef5350"></span> Thua</span>
-    </div>
-  </div>
+</div>
+
+<!-- VINH DANH -->
+<div class="card"><h2>Vinh danh mùa giải 2026</h2><div class="award-grid" id="awards"></div></div>
+
+<!-- ĐỘI HÌNH TIÊU BIỂU -->
+<div class="card">
+  <h2>Đội hình tiêu biểu</h2>
+  <div class="formation-tabs" id="fTabs"></div>
+  <div id="pitchWrap"></div>
 </div>
 
 <div class="grid grid-2">
-  <div class="card">
-    <h2>Lịch sử trận đấu</h2>
-    <div id="matchHistory"></div>
-  </div>
-  <div class="card">
-    <h2>Vua phá lưới</h2>
-    <div id="topScorers"></div>
-  </div>
+  <div class="card"><h2>Lịch sử trận đấu</h2><div id="matchHistory"></div></div>
+  <div class="card"><h2>Vua phá lưới</h2><div id="topScorers"></div></div>
 </div>
 
-<div class="card">
-  <h2>Thống kê cầu thủ chi tiết</h2>
-  <div class="tabs" id="posTabs"></div>
-  <div class="scroll-x">
-    <table id="playerTable">
-      <thead><tr id="playerThead"></tr></thead>
-      <tbody id="playerTbody"></tbody>
-    </table>
-  </div>
+<div class="card"><h2>Thống kê cầu thủ chi tiết</h2><div class="tabs" id="posTabs"></div>
+  <div class="scroll-x"><table><thead><tr id="playerThead"></tr></thead><tbody id="playerTbody"></tbody></table></div>
 </div>
 
-<div class="card">
-  <h2>Ảnh hưởng khi cầu thủ vắng mặt</h2>
+<div class="card"><h2>Ảnh hưởng khi cầu thủ vắng mặt</h2>
   <p class="hint">So sánh thành tích đội khi có vs không có cầu thủ. Đỏ = đội yếu hơn khi vắng, Xanh = đội mạnh hơn khi vắng.</p>
-  <div class="scroll-x">
-    <table>
-      <thead><tr id="absentThead"></tr></thead>
-      <tbody id="absentTbody"></tbody>
-    </table>
-  </div>
+  <div class="scroll-x"><table><thead><tr id="absentThead"></tr></thead><tbody id="absentTbody"></tbody></table></div>
 </div>
 
 <div class="grid grid-2">
-  <div class="card">
-    <h2>Tỷ lệ tham gia (% Match)</h2>
-    <div id="attendanceChart"></div>
-  </div>
-  <div class="card">
-    <h2>Point Impact khi thi đấu</h2>
-    <div id="impactChart"></div>
-  </div>
+  <div class="card"><h2>Tỷ lệ tham gia</h2><div id="attendanceChart"></div></div>
+  <div class="card"><h2>Điểm / trận khi thi đấu</h2><div id="impactChart"></div></div>
 </div>
 
-<div class="card">
-  <h2>Đóng góp bàn thắng theo vị trí</h2>
-  <div class="grid grid-2">
-    <div id="goalsByPos"></div>
-    <div id="goalsPerMatch"></div>
-  </div>
-</div>
+<div class="card"><h2>Bàn thắng theo vị trí & hiệu suất</h2><div class="grid grid-2"><div id="goalsByPos"></div><div id="goalsPerMatch"></div></div></div>
 
 </div>
-
 <script>
-const TEAM={matches:13,winPct:0.538,totalGoals:44,gf:47,ga:31,gd:16,w:7,d:4,l:2,avgGF:3.62,avgGA:2.38,ppg:((7*3+4)/13),form:["W","D","L","W","W"]};
+const T={m:13,gf:47,ga:31,gd:16,w:7,d:4,l:2,form:["W","D","L","W","W"]};
+T.ppg=(T.w*3+T.d)/T.m;
 
-const MATCHES=[
-  {week:1,date:"04/01",vs:"Thiết Bị Việt FC",gf:4,ga:2,r:"W",venue:"Etihad Q12",attend:13},
-  {week:2,date:"11/01",vs:"Long Xuyên FC",gf:4,ga:2,r:"W",venue:"Giga Arena",attend:15},
-  {week:3,date:"18/01",vs:"Vườn Mai Phương Bình FC",gf:0,ga:2,r:"L",venue:"Giga Arena",attend:14},
-  {week:4,date:"25/01",vs:"Long Xuyên FC",gf:2,ga:0,r:"W",venue:"Giga Arena",attend:15},
-  {week:9,date:"01/03",vs:"Liên Quân FC",gf:3,ga:1,r:"W",venue:"Etihad Q12",attend:13},
-  {week:10,date:"08/03",vs:"Sân Cáp",gf:3,ga:3,r:"D",venue:"Giga Arena",attend:12},
-  {week:11,date:"15/03",vs:"Long Xuyên FC",gf:3,ga:3,r:"D",venue:"Giga Arena",attend:13},
-  {week:12,date:"22/03",vs:"Friends FC",gf:3,ga:3,r:"D",venue:"Etihad Q12",attend:15},
-  {week:14,date:"05/04",vs:"Nhật Huy FC",gf:5,ga:2,r:"W",venue:"Giga Arena",attend:13},
-  {week:15,date:"12/04",vs:"Huyền Thoại FC",gf:4,ga:4,r:"D",venue:"Lotus Tân Sơn",attend:17},
-  {week:16,date:"19/04",vs:"ĐH TDTT",gf:3,ga:4,r:"L",venue:"ĐH TDTT",attend:14},
-  {week:19,date:"10/05",vs:"Sân Cáp",gf:5,ga:3,r:"W",venue:"ĐH TDTT",attend:13},
-  {week:20,date:"17/05",vs:"Lên Bia FC",gf:8,ga:2,r:"W",venue:"Dĩ An",attend:15},
+const M=[
+  {wk:1,dt:"04/01",vs:"Thiết Bị Việt FC",gf:4,ga:2,r:"W",v:"Etihad Q12",a:13},
+  {wk:2,dt:"11/01",vs:"Long Xuyên FC",gf:4,ga:2,r:"W",v:"Giga Arena",a:15},
+  {wk:3,dt:"18/01",vs:"Vườn Mai Phương Bình FC",gf:0,ga:2,r:"L",v:"Giga Arena",a:14},
+  {wk:4,dt:"25/01",vs:"Long Xuyên FC",gf:2,ga:0,r:"W",v:"Giga Arena",a:15},
+  {wk:9,dt:"01/03",vs:"Liên Quân FC",gf:3,ga:1,r:"W",v:"Etihad Q12",a:13},
+  {wk:10,dt:"08/03",vs:"Sân Cáp",gf:3,ga:3,r:"D",v:"Giga Arena",a:12},
+  {wk:11,dt:"15/03",vs:"Long Xuyên FC",gf:3,ga:3,r:"D",v:"Giga Arena",a:13},
+  {wk:12,dt:"22/03",vs:"Friends FC",gf:3,ga:3,r:"D",v:"Etihad Q12",a:15},
+  {wk:14,dt:"05/04",vs:"Nhật Huy FC",gf:5,ga:2,r:"W",v:"Giga Arena",a:13},
+  {wk:15,dt:"12/04",vs:"Huyền Thoại FC",gf:4,ga:4,r:"D",v:"Lotus Tân Sơn",a:17},
+  {wk:16,dt:"19/04",vs:"ĐH TDTT",gf:3,ga:4,r:"L",v:"ĐH TDTT",a:14},
+  {wk:19,dt:"10/05",vs:"Sân Cáp",gf:5,ga:3,r:"W",v:"ĐH TDTT",a:13},
+  {wk:20,dt:"17/05",vs:"Lên Bia FC",gf:8,ga:2,r:"W",v:"Dĩ An",a:15},
 ];
 
-const PLAYERS=[
-  {id:1,name:"Mai Cồ Hiếu",pos:"FW",no:"23",goals:3,matches:13,matchPct:1,winPct:0.538,formArr:["W","D","L","W","W"],pointImpact:1.92,w:7,d:4,l:2,gf:47,ga:31,gd:16,type:"main"},
-  {id:2,name:"Văn Quang",pos:"FW",no:"10",goals:1,matches:9,matchPct:0.69,winPct:0.667,formArr:["W","D","N","N","W"],pointImpact:2.22,w:6,d:2,l:1,gf:33,ga:18,gd:15,type:"main"},
-  {id:3,name:"Nguyên Khôi",pos:"DF",no:"19",goals:0,matches:8,matchPct:0.62,winPct:0.625,formArr:["N","N","N","W","W"],pointImpact:2.13,w:5,d:2,l:1,gf:29,ga:17,gd:12,type:"main"},
-  {id:4,name:"Lucky Trần",pos:"MF",no:"11",goals:0,matches:10,matchPct:0.77,winPct:0.6,formArr:["W","N","L","N","W"],pointImpact:2.1,w:6,d:3,l:1,gf:38,ga:22,gd:16,type:"main"},
-  {id:5,name:"Quốc Long",pos:"MF",no:"8",goals:4,matches:10,matchPct:0.77,winPct:0.6,formArr:["W","D","L","N","W"],pointImpact:2,w:6,d:2,l:2,gf:36,ga:22,gd:14,type:"main"},
-  {id:6,name:"Hữu Duyên",pos:"DF",no:"47",goals:1,matches:12,matchPct:0.92,winPct:0.5,formArr:["N","D","L","W","W"],pointImpact:1.83,w:6,d:4,l:2,gf:42,ga:29,gd:13,type:"main"},
-  {id:7,name:"Nguyễn Hoàng",pos:"DF",no:"39",goals:0,matches:11,matchPct:0.85,winPct:0.636,formArr:["W","D","N","W","W"],pointImpact:2.18,w:7,d:3,l:1,gf:41,ga:24,gd:17,type:"main"},
-  {id:8,name:"Đức Khoa",pos:"GK",no:"01",goals:0,matches:10,matchPct:0.77,winPct:0.5,formArr:["W","D","L","N","N"],pointImpact:1.8,w:5,d:3,l:2,gf:31,ga:23,gd:8,type:"main"},
-  {id:9,name:"D.Chí Hoàng",pos:"DF",no:"24",goals:0,matches:8,matchPct:0.62,winPct:0.5,formArr:["N","D","L","W","N"],pointImpact:1.88,w:4,d:3,l:1,gf:28,ga:21,gd:7,type:"main"},
-  {id:10,name:"Minh Hoàng",pos:"DF",no:"12",goals:0,matches:8,matchPct:0.62,winPct:0.625,formArr:["W","N","N","W","W"],pointImpact:2.13,w:5,d:2,l:1,gf:32,ga:19,gd:13,type:"main"},
-  {id:11,name:"Trung Nguyên",pos:"MF",no:"14",goals:2,matches:12,matchPct:0.92,winPct:0.5,formArr:["W","D","L","W","W"],pointImpact:1.83,w:6,d:4,l:2,gf:43,ga:29,gd:14,type:"main"},
-  {id:12,name:"Tài Củi",pos:"FW",no:"30",goals:1,matches:11,matchPct:0.85,winPct:0.455,formArr:["W","D","L","N","W"],pointImpact:1.73,w:5,d:4,l:2,gf:38,ga:26,gd:12,type:"main"},
-  {id:13,name:"Văn Chung",pos:"FW",no:"6",goals:7,matches:8,matchPct:0.62,winPct:0.5,formArr:["W","D","L","W","N"],pointImpact:1.75,w:4,d:2,l:2,gf:27,ga:21,gd:6,type:"main"},
-  {id:14,name:"Gia Lộc",pos:"MF",no:"75",goals:2,matches:9,matchPct:0.69,winPct:0.556,formArr:["N","D","L","W","W"],pointImpact:1.89,w:5,d:2,l:2,gf:32,ga:21,gd:11,type:"main"},
-  {id:15,name:"Phú Bình",pos:"DF",no:"15",goals:0,matches:4,matchPct:0.31,winPct:0.5,formArr:["N","N","L","N","N"],pointImpact:1.75,w:2,d:1,l:1,gf:11,ga:8,gd:3,type:"main"},
-  {id:16,name:"Khâm",pos:"FW",no:"22",goals:7,matches:9,matchPct:0.69,winPct:0.556,formArr:["N","N","L","W","W"],pointImpact:1.89,w:5,d:2,l:2,gf:31,ga:20,gd:11,type:"main"},
-  {id:17,name:"Cảm",pos:"FW",no:"7",goals:13,matches:11,matchPct:0.85,winPct:0.455,formArr:["W","D","L","W","W"],pointImpact:1.73,w:5,d:4,l:2,gf:40,ga:28,gd:12,type:"main"},
-  {id:18,name:"Hoàng Đại",pos:"FW",no:"",goals:1,matches:3,matchPct:0.23,winPct:0.333,formArr:["N","D","N","N","W"],pointImpact:1.67,w:1,d:2,l:0,gf:15,ga:9,gd:6,type:"main"},
-  {id:19,name:"Lâm",pos:"MF",no:"",goals:2,matches:6,matchPct:0.46,winPct:0.5,formArr:["W","D","L","W","W"],pointImpact:1.83,w:3,d:2,l:1,gf:28,ga:18,gd:10,type:"main"},
-  {id:20,name:"Anh Sơn",pos:"MF",no:"",goals:0,matches:3,matchPct:0.23,winPct:0.333,formArr:["N","D","N","N","N"],pointImpact:1.67,w:1,d:2,l:0,gf:11,ga:9,gd:2,type:"sub"},
-  {id:21,name:"Chí Quỹ",pos:"MF",no:"4",goals:0,matches:2,matchPct:0.15,winPct:0.5,formArr:["N","N","N","N","N"],pointImpact:2,w:1,d:1,l:0,gf:7,ga:5,gd:2,type:"sub"},
-  {id:22,name:"Tiến",pos:"DF",no:"",goals:0,matches:2,matchPct:0.15,winPct:0,formArr:["N","D","N","N","N"],pointImpact:1,w:0,d:2,l:0,gf:7,ga:7,gd:0,type:"sub"},
-  {id:23,name:"Mới",pos:"MF",no:"",goals:1,matches:2,matchPct:0.15,winPct:0.5,formArr:["W","D","N","N","N"],pointImpact:2,w:1,d:1,l:0,gf:9,ga:6,gd:3,type:"sub"},
+const P=[
+  {n:"Mai Cồ Hiếu",p:"FW",no:"23",g:3,m:13,mp:1,wp:.538,fa:["W","D","L","W","W"],pi:1.92,w:7,d:4,l:2,gf:47,ga:31,gd:16,t:"main"},
+  {n:"Văn Quang",p:"FW",no:"10",g:1,m:9,mp:.69,wp:.667,fa:["W","D","N","N","W"],pi:2.22,w:6,d:2,l:1,gf:33,ga:18,gd:15,t:"main"},
+  {n:"Nguyên Khôi",p:"DF",no:"19",g:0,m:8,mp:.62,wp:.625,fa:["N","N","N","W","W"],pi:2.13,w:5,d:2,l:1,gf:29,ga:17,gd:12,t:"main"},
+  {n:"Lucky Trần",p:"MF",no:"11",g:0,m:10,mp:.77,wp:.6,fa:["W","N","L","N","W"],pi:2.1,w:6,d:3,l:1,gf:38,ga:22,gd:16,t:"main"},
+  {n:"Quốc Long",p:"MF",no:"8",g:4,m:10,mp:.77,wp:.6,fa:["W","D","L","N","W"],pi:2,w:6,d:2,l:2,gf:36,ga:22,gd:14,t:"main"},
+  {n:"Hữu Duyên",p:"DF",no:"47",g:1,m:12,mp:.92,wp:.5,fa:["N","D","L","W","W"],pi:1.83,w:6,d:4,l:2,gf:42,ga:29,gd:13,t:"main"},
+  {n:"Nguyễn Hoàng",p:"DF",no:"39",g:0,m:11,mp:.85,wp:.636,fa:["W","D","N","W","W"],pi:2.18,w:7,d:3,l:1,gf:41,ga:24,gd:17,t:"main"},
+  {n:"Đức Khoa",p:"GK",no:"01",g:0,m:10,mp:.77,wp:.5,fa:["W","D","L","N","N"],pi:1.8,w:5,d:3,l:2,gf:31,ga:23,gd:8,t:"main"},
+  {n:"D.Chí Hoàng",p:"DF",no:"24",g:0,m:8,mp:.62,wp:.5,fa:["N","D","L","W","N"],pi:1.88,w:4,d:3,l:1,gf:28,ga:21,gd:7,t:"main"},
+  {n:"Minh Hoàng",p:"DF",no:"12",g:0,m:8,mp:.62,wp:.625,fa:["W","N","N","W","W"],pi:2.13,w:5,d:2,l:1,gf:32,ga:19,gd:13,t:"main"},
+  {n:"Trung Nguyên",p:"MF",no:"14",g:2,m:12,mp:.92,wp:.5,fa:["W","D","L","W","W"],pi:1.83,w:6,d:4,l:2,gf:43,ga:29,gd:14,t:"main"},
+  {n:"Tài Củi",p:"FW",no:"30",g:1,m:11,mp:.85,wp:.455,fa:["W","D","L","N","W"],pi:1.73,w:5,d:4,l:2,gf:38,ga:26,gd:12,t:"main"},
+  {n:"Văn Chung",p:"FW",no:"6",g:7,m:8,mp:.62,wp:.5,fa:["W","D","L","W","N"],pi:1.75,w:4,d:2,l:2,gf:27,ga:21,gd:6,t:"main"},
+  {n:"Gia Lộc",p:"MF",no:"75",g:2,m:9,mp:.69,wp:.556,fa:["N","D","L","W","W"],pi:1.89,w:5,d:2,l:2,gf:32,ga:21,gd:11,t:"main"},
+  {n:"Phú Bình",p:"DF",no:"15",g:0,m:4,mp:.31,wp:.5,fa:["N","N","L","N","N"],pi:1.75,w:2,d:1,l:1,gf:11,ga:8,gd:3,t:"main"},
+  {n:"Khâm",p:"FW",no:"22",g:7,m:9,mp:.69,wp:.556,fa:["N","N","L","W","W"],pi:1.89,w:5,d:2,l:2,gf:31,ga:20,gd:11,t:"main"},
+  {n:"Cảm",p:"FW",no:"7",g:13,m:11,mp:.85,wp:.455,fa:["W","D","L","W","W"],pi:1.73,w:5,d:4,l:2,gf:40,ga:28,gd:12,t:"main"},
+  {n:"Hoàng Đại",p:"FW",no:"",g:1,m:3,mp:.23,wp:.333,fa:["N","D","N","N","W"],pi:1.67,w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"main"},
+  {n:"Lâm",p:"MF",no:"",g:3,m:6,mp:.46,wp:.5,fa:["W","D","L","W","W"],pi:1.83,w:3,d:2,l:1,gf:28,ga:18,gd:10,t:"main"},
+  {n:"Anh Sơn",p:"MF",no:"",g:0,m:3,mp:.23,wp:.333,fa:["N","D","N","N","N"],pi:1.67,w:1,d:2,l:0,gf:11,ga:9,gd:2,t:"sub"},
+  {n:"Chí Quỹ",p:"MF",no:"4",g:0,m:2,mp:.15,wp:.5,fa:["N","N","N","N","N"],pi:2,w:1,d:1,l:0,gf:7,ga:5,gd:2,t:"sub"},
+  {n:"Tiến",p:"DF",no:"",g:0,m:3,mp:.23,wp:.333,fa:["N","D","N","N","W"],pi:1.67,w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"sub"},
+  {n:"Mới",p:"MF",no:"",g:1,m:2,mp:.15,wp:.5,fa:["W","D","N","N","N"],pi:2,w:1,d:1,l:0,gf:9,ga:6,gd:3,t:"sub"},
 ];
 
-function absentStats(p){
-  const m=TEAM.matches-p.matches;
-  if(m===0) return {m:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,winPct:0,ppg:0,avgGF:0,avgGA:0};
-  const w=TEAM.w-p.w, d=TEAM.d-p.d, l=TEAM.l-p.l;
-  const gf=TEAM.gf-p.gf, ga=TEAM.ga-p.ga;
-  return {m,w,d,l,gf,ga,gd:gf-ga,winPct:m?w/m:0,ppg:m?(w*3+d)/m:0,avgGF:m?gf/m:0,avgGA:m?ga/m:0};
-}
+function absent(p){const m=T.m-p.m;if(!m)return null;const w=T.w-p.w,d=T.d-p.d,l=T.l-p.l,gf=T.gf-p.gf,ga=T.ga-p.ga;return{m,w,d,l,gf,ga,gd:gf-ga,wp:w/m,ppg:(w*3+d)/m,agf:gf/m,aga:ga/m}}
 
+// ============ FORMATIONS ============
+const BEST_XI={
+  "4-4-2":[
+    {n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},
+    {n:"Minh Hoàng",p:"DF",top:"73%",left:"15%"},
+    {n:"Nguyễn Hoàng",p:"DF",top:"76%",left:"37%"},
+    {n:"Hữu Duyên",p:"DF",top:"76%",left:"63%"},
+    {n:"Nguyên Khôi",p:"DF",top:"73%",left:"85%"},
+    {n:"Quốc Long",p:"MF",top:"50%",left:"15%"},
+    {n:"Lucky Trần",p:"MF",top:"52%",left:"37%"},
+    {n:"Trung Nguyên",p:"MF",top:"52%",left:"63%"},
+    {n:"Gia Lộc",p:"MF",top:"50%",left:"85%"},
+    {n:"Cảm",p:"FW",top:"24%",left:"38%"},
+    {n:"Văn Chung",p:"FW",top:"24%",left:"62%"},
+  ],
+  "3-5-2":[
+    {n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},
+    {n:"Nguyễn Hoàng",p:"DF",top:"76%",left:"25%"},
+    {n:"Hữu Duyên",p:"DF",top:"78%",left:"50%"},
+    {n:"Minh Hoàng",p:"DF",top:"76%",left:"75%"},
+    {n:"Lâm",p:"MF",top:"53%",left:"8%"},
+    {n:"Quốc Long",p:"MF",top:"55%",left:"30%"},
+    {n:"Trung Nguyên",p:"MF",top:"62%",left:"50%"},
+    {n:"Lucky Trần",p:"MF",top:"55%",left:"70%"},
+    {n:"Gia Lộc",p:"MF",top:"53%",left:"92%"},
+    {n:"Cảm",p:"FW",top:"24%",left:"38%"},
+    {n:"Khâm",p:"FW",top:"24%",left:"62%"},
+  ],
+  "4-5-1":[
+    {n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},
+    {n:"Minh Hoàng",p:"DF",top:"73%",left:"15%"},
+    {n:"Nguyễn Hoàng",p:"DF",top:"76%",left:"37%"},
+    {n:"Hữu Duyên",p:"DF",top:"76%",left:"63%"},
+    {n:"Nguyên Khôi",p:"DF",top:"73%",left:"85%"},
+    {n:"Quốc Long",p:"MF",top:"48%",left:"12%"},
+    {n:"Lucky Trần",p:"MF",top:"50%",left:"32%"},
+    {n:"Trung Nguyên",p:"MF",top:"58%",left:"50%"},
+    {n:"Gia Lộc",p:"MF",top:"50%",left:"68%"},
+    {n:"Lâm",p:"MF",top:"48%",left:"88%"},
+    {n:"Cảm",p:"FW",top:"22%",left:"50%"},
+  ],
+};
+
+let curF="4-4-2";
+
+// ============ RENDER ============
 function renderOverview(){
   const el=document.getElementById("overviewCards");
-  const ppg=((TEAM.w*3+TEAM.d)/TEAM.matches).toFixed(2);
-  const cards=[
-    {n:TEAM.matches,l:"Trận đấu",cls:""},{n:TEAM.w,l:"Thắng",cls:"win"},
-    {n:TEAM.d,l:"Hòa",cls:"draw"},{n:TEAM.l,l:"Thua",cls:"lose"},
-    {n:TEAM.gf,l:"Bàn thắng",cls:"goals"},{n:TEAM.ga,l:"Bàn thua",cls:"lose"},
-    {n:"+"+TEAM.gd,l:"Hiệu số",cls:"win"},{n:ppg,l:"Điểm / trận",cls:"goals"},
-  ];
-  el.innerHTML=cards.map(c=>`<div class="card stat-card ${c.cls}"><div class="number">${c.n}</div><div class="label">${c.l}</div></div>`).join("");
+  const cards=[{n:T.m,l:"Trận",c:""},{n:T.w,l:"Thắng",c:"win"},{n:T.d,l:"Hòa",c:"draw"},{n:T.l,l:"Thua",c:"lose"},{n:T.gf,l:"Bàn thắng",c:"goals"},{n:T.ga,l:"Bàn thua",c:"lose"},{n:"+"+T.gd,l:"Hiệu số",c:"win"},{n:T.ppg.toFixed(2),l:"Điểm/trận",c:"goals"}];
+  el.innerHTML=cards.map(c=>`<div class="card stat-card ${c.c}"><div class="number">${c.n}</div><div class="label">${c.l}</div></div>`).join("");
 }
 
 function renderWinRate(){
-  const el=document.getElementById("winRateViz");
-  const t=TEAM.w+TEAM.d+TEAM.l;
-  const wp=((TEAM.w/t)*100).toFixed(0),dp=((TEAM.d/t)*100).toFixed(0),lp=((TEAM.l/t)*100).toFixed(0);
-  el.innerHTML=`<div class="win-rate-circle"><span class="pct">${wp}%</span><span class="lbl">WIN RATE</span></div>
-    <div class="gd-bar"><div class="gd-gf" style="width:${wp}%">W ${TEAM.w}</div><div style="background:var(--orange);flex:0 0 ${dp}%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold">D ${TEAM.d}</div><div class="gd-ga" style="width:${lp}%">L ${TEAM.l}</div></div>
-    <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:#8a9bb5"><span>TB GF: <b style="color:#4caf50">${TEAM.avgGF}</b></span><span>TB GA: <b style="color:#ef5350">${TEAM.avgGA}</b></span></div>`;
+  const el=document.getElementById("winRateViz"),t=T.w+T.d+T.l,wp=((T.w/t)*100).toFixed(0),dp=((T.d/t)*100).toFixed(0),lp=((T.l/t)*100).toFixed(0);
+  el.innerHTML=`<div class="win-rate-circle"><span class="pct">${wp}%</span><span class="lbl">WIN RATE</span></div><div class="gd-bar"><div class="gd-gf" style="width:${wp}%">W ${T.w}</div><div style="background:var(--orange);flex:0 0 ${dp}%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold">D ${T.d}</div><div class="gd-ga" style="width:${lp}%">L ${T.l}</div></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:#8a9bb5"><span>TB GF: <b style="color:#4caf50">${(T.gf/T.m).toFixed(2)}</b></span><span>TB GA: <b style="color:#ef5350">${(T.ga/T.m).toFixed(2)}</b></span></div>`;
 }
 
 function renderGoals(){
-  const el=document.getElementById("goalsViz");
-  const mx=Math.max(TEAM.gf,TEAM.ga);
-  el.innerHTML=`<div style="margin:10px 0"><div style="font-size:11px;color:#8a9bb5;margin-bottom:3px">Bàn thắng (GF)</div><div class="bar-wrap"><div class="bar bar-green" style="width:${TEAM.gf/mx*100}%">${TEAM.gf}</div></div></div>
-    <div style="margin:10px 0"><div style="font-size:11px;color:#8a9bb5;margin-bottom:3px">Bàn thua (GA)</div><div class="bar-wrap"><div class="bar bar-red" style="width:${TEAM.ga/mx*100}%">${TEAM.ga}</div></div></div>
-    <div style="margin-top:14px;text-align:center"><span style="font-size:28px;font-weight:bold;color:#4caf50">${TEAM.gf}</span><span style="font-size:14px;color:#8a9bb5;margin:0 8px">-</span><span style="font-size:28px;font-weight:bold;color:#ef5350">${TEAM.ga}</span></div>`;
+  const el=document.getElementById("goalsViz"),mx=Math.max(T.gf,T.ga);
+  el.innerHTML=`<div style="margin:10px 0"><div style="font-size:11px;color:#8a9bb5;margin-bottom:3px">Bàn thắng</div><div class="bar-wrap"><div class="bar bar-green" style="width:${T.gf/mx*100}%">${T.gf}</div></div></div><div style="margin:10px 0"><div style="font-size:11px;color:#8a9bb5;margin-bottom:3px">Bàn thua</div><div class="bar-wrap"><div class="bar bar-red" style="width:${T.ga/mx*100}%">${T.ga}</div></div></div><div style="margin-top:14px;text-align:center"><span style="font-size:28px;font-weight:bold;color:#4caf50">${T.gf}</span><span style="font-size:14px;color:#8a9bb5;margin:0 8px">-</span><span style="font-size:28px;font-weight:bold;color:#ef5350">${T.ga}</span></div>`;
 }
 
 function renderForm(){
-  const el=document.getElementById("formViz");
-  const lb={W:"T",D:"H",L:"B"};
-  el.innerHTML=`<div class="form-dots" style="justify-content:center;gap:8px;margin:14px 0">${TEAM.form.map(f=>`<div class="form-dot form-${f}" style="width:36px;height:36px;font-size:14px">${lb[f]}</div>`).join("")}</div>
-    <div style="text-align:center;color:#8a9bb5;font-size:12px">${TEAM.form.map(f=>f==="W"?"Thắng":f==="D"?"Hòa":"Thua").join(" → ")}</div>`;
+  const el=document.getElementById("formViz"),lb={W:"T",D:"H",L:"B"};
+  el.innerHTML=`<div class="form-dots" style="justify-content:center;gap:8px;margin:14px 0">${T.form.map(f=>`<div class="form-dot form-${f}" style="width:36px;height:36px;font-size:14px">${lb[f]}</div>`).join("")}</div><div style="text-align:center;color:#8a9bb5;font-size:12px">${T.form.map(f=>f==="W"?"Thắng":f==="D"?"Hòa":"Thua").join(" → ")}</div>`;
+}
+
+function renderAwards(){
+  const el=document.getElementById("awards");
+  const topScorer=P.slice().sort((a,b)=>b.g-a.g)[0];
+  const bestGpm=P.filter(p=>p.m>=3&&p.g>0).map(p=>({...p,gpm:p.g/p.m})).sort((a,b)=>b.gpm-a.gpm)[0];
+  const mvp=P.filter(p=>p.m>=5).map(p=>({...p,score:p.wp*40+(p.m/T.m)*20+(p.gd/p.m)*10+p.g*2})).sort((a,b)=>b.score-a.score)[0];
+  const ironMan=P.slice().sort((a,b)=>b.mp-a.mp||b.m-a.m)[0];
+  const bestDef=P.filter(p=>p.p==="DF"&&p.m>=4).sort((a,b)=>(b.gd/b.m)-(a.gd/a.m))[0];
+  const bestMid=P.filter(p=>p.p==="MF"&&p.m>=5).sort((a,b)=>{const sa=a.wp*30+a.g*10+(a.m/T.m)*15;const sb=b.wp*30+b.g*10+(b.m/T.m)*15;return sb-sa})[0];
+  const mostMissed=P.filter(p=>p.m<T.m&&p.m>=4).map(p=>{const a=absent(p);return{...p,drop:p.wp-a.wp}}).sort((a,b)=>b.drop-a.drop)[0];
+
+  const awards=[
+    {icon:"🏆",title:"Cầu thủ xuất sắc nhất (MVP)",name:mvp.n,stat:`Win% ${(mvp.wp*100).toFixed(0)}% · ${mvp.g} bàn · ${mvp.m} trận`,detail:"Tổng hợp: tỷ lệ thắng, số trận, hiệu số, bàn thắng"},
+    {icon:"⚽",title:"Vua phá lưới",name:topScorer.n,stat:`${topScorer.g} bàn / ${topScorer.m} trận`,detail:`Hiệu suất: ${(topScorer.g/topScorer.m).toFixed(2)} bàn/trận`},
+    {icon:"🔥",title:"Hiệu suất ghi bàn cao nhất",name:bestGpm.n,stat:`${bestGpm.gpm.toFixed(2)} bàn/trận (${bestGpm.g} bàn / ${bestGpm.m} trận)`,detail:"Tối thiểu 3 trận tham gia"},
+    {icon:"💪",title:"Chiến binh thép (Chuyên cần)",name:ironMan.n,stat:`${ironMan.m}/${T.m} trận (${(ironMan.mp*100).toFixed(0)}%)`,detail:"Không bỏ lỡ trận nào"},
+    {icon:"🛡️",title:"Hậu vệ xuất sắc nhất",name:bestDef.n,stat:`Win% ${(bestDef.wp*100).toFixed(0)}% · GD +${(bestDef.gd/bestDef.m).toFixed(1)}/trận`,detail:`${bestDef.m} trận · ${bestDef.w}W ${bestDef.d}D ${bestDef.l}L`},
+    {icon:"🎯",title:"Tiền vệ xuất sắc nhất",name:bestMid.n,stat:`Win% ${(bestMid.wp*100).toFixed(0)}% · ${bestMid.g} bàn · ${bestMid.m} trận`,detail:"Tổng hợp: tỷ lệ thắng, bàn thắng, tham gia"},
+    {icon:"❤️",title:"Không thể thiếu (Thiếu = yếu)",name:mostMissed.n,stat:`Khi vắng: Win% giảm ${(mostMissed.drop*100).toFixed(0)}%`,detail:`Có mặt ${(mostMissed.wp*100).toFixed(0)}% win → Vắng ${((mostMissed.wp-mostMissed.drop)*100).toFixed(0)}% win`},
+  ];
+  el.innerHTML=awards.map(a=>`<div class="award"><div class="icon">${a.icon}</div><div class="title">${a.title}</div><div class="player-name">${a.name}</div><div class="stat">${a.stat}</div><div class="detail">${a.detail}</div></div>`).join("");
+}
+
+function renderFormation(){
+  const tabs=document.getElementById("fTabs");
+  tabs.innerHTML=Object.keys(BEST_XI).map(f=>`<div class="formation-tab ${f===curF?"active":""}" onclick="curF='${f}';renderFormation()">${f}</div>`).join("");
+  const wrap=document.getElementById("pitchWrap");
+  const xi=BEST_XI[curF];
+  const posClass={GK:"gk",DF:"df",MF:"mf",FW:"fw"};
+  wrap.innerHTML=`<div class="pitch"><div class="pitch-box top"></div><div class="pitch-box bottom"></div>${xi.map(s=>`<div class="pitch-player" style="top:${s.top};left:${s.left}"><div class="pitch-circle ${posClass[s.p]}">${s.n}</div><div class="pitch-label">${s.p}</div></div>`).join("")}</div>
+  <div style="margin-top:12px;text-align:center"><div class="legend" style="justify-content:center"><span><span class="dot" style="background:var(--orange)"></span> GK</span><span><span class="dot" style="background:#27ae60"></span> DF</span><span><span class="dot" style="background:#2471a3"></span> MF</span><span><span class="dot" style="background:#c0392b"></span> FW</span></div><p class="hint">Tiêu chí: tỷ lệ thắng khi có mặt, hiệu số/trận, số trận thi đấu, bàn thắng cá nhân, phong độ.</p></div>`;
 }
 
 function renderMatches(){
-  const el=document.getElementById("matchHistory");
-  el.innerHTML=MATCHES.slice().reverse().map(m=>`<div class="match-row"><div class="match-date">T${m.week} · ${m.date}</div><div class="match-vs">${m.vs}</div><div class="match-score">${m.gf} - ${m.ga}</div><div class="match-result result-${m.r}">${m.r==="W"?"Thắng":m.r==="D"?"Hòa":"Thua"}</div><div class="match-venue">${m.venue}</div></div>`).join("");
+  document.getElementById("matchHistory").innerHTML=M.slice().reverse().map(m=>`<div class="match-row"><div class="match-date">T${m.wk} · ${m.dt}</div><div class="match-vs">${m.vs}</div><div class="match-score">${m.gf} - ${m.ga}</div><div class="match-result result-${m.r}">${m.r==="W"?"Thắng":m.r==="D"?"Hòa":"Thua"}</div><div class="match-venue">${m.v}</div></div>`).join("");
 }
 
 function renderTopScorers(){
-  const el=document.getElementById("topScorers");
-  const sorted=PLAYERS.filter(p=>p.goals>0).sort((a,b)=>b.goals-a.goals);
-  const mx=sorted[0]?.goals||1;
-  el.innerHTML=sorted.map((p,i)=>{
-    const rc=i===0?"gold":i===1?"silver":i===2?"bronze":"";
-    return `<div class="top-scorer"><div class="scorer-rank ${rc}">${i+1}</div><span class="pos-badge pos-${p.pos}">${p.pos}</span><div class="scorer-name">${p.name}</div><div style="flex:1"><div class="bar-wrap"><div class="bar bar-orange" style="width:${p.goals/mx*100}%">${p.goals}</div></div></div><div class="scorer-goals">${p.goals}</div></div>`;
-  }).join("");
+  const sorted=P.filter(p=>p.g>0).sort((a,b)=>b.g-a.g);const mx=sorted[0]?.g||1;
+  document.getElementById("topScorers").innerHTML=sorted.map((p,i)=>`<div class="top-scorer"><div class="scorer-rank ${i===0?"gold":i===1?"silver":i===2?"bronze":""}">${i+1}</div><span class="pos-badge pos-${p.p}">${p.p}</span><div class="scorer-name">${p.n}</div><div style="flex:1"><div class="bar-wrap"><div class="bar bar-orange" style="width:${p.g/mx*100}%">${p.g}</div></div></div><div class="scorer-goals">${p.g}</div></div>`).join("");
 }
 
-let currentFilter="ALL";
+let curPos="ALL";
 function renderPlayerTable(){
-  const headers=["#","Tên","Pos","Áo","Trận","%Trận","Bàn","%Thắng","Phong độ","W","D","L","GF","GA","GD","Đ/Trận"];
-  document.getElementById("playerThead").innerHTML=headers.map(h=>`<th>${h}</th>`).join("");
-  const filtered=currentFilter==="ALL"?PLAYERS.filter(p=>p.matches>0):PLAYERS.filter(p=>p.pos===currentFilter&&p.matches>0);
-  const sorted=filtered.sort((a,b)=>b.matches-a.matches||b.goals-a.goals);
-  const lb={W:"T",D:"H",L:"B",N:"·"};
-  document.getElementById("playerTbody").innerHTML=sorted.map((p,i)=>{
-    const formH=p.formArr.map(f=>`<div class="form-dot form-${f}">${lb[f]}</div>`).join("");
-    const ppg=p.matches?(p.w*3+p.d)/p.matches:0;
-    const cls=ppg>=TEAM.ppg?"impact-pos":ppg>=1.5?"impact-neu":"impact-neg";
-    return `<tr><td>${i+1}</td><td><b>${p.name}</b>${p.type==="sub"?' <span style="font-size:9px;color:var(--orange)">(Sub)</span>':""}</td><td><span class="pos-badge pos-${p.pos}">${p.pos}</span></td><td>${p.no||"-"}</td><td>${p.matches}</td><td>${(p.matchPct*100).toFixed(0)}%</td><td><b style="color:var(--orange)">${p.goals}</b></td><td>${(p.winPct*100).toFixed(0)}%</td><td><div class="form-dots">${formH}</div></td><td>${p.w}</td><td>${p.d}</td><td>${p.l}</td><td>${p.gf}</td><td>${p.ga}</td><td style="color:${p.gd>0?"#4caf50":p.gd<0?"#ef5350":"var(--orange)"}">${p.gd>0?"+":""}${p.gd}</td><td><span class="${cls} impact-val">${ppg.toFixed(2)}</span></td></tr>`;
+  const h=["#","Tên","Pos","Áo","Trận","%Trận","Bàn","%Thắng","Phong độ","W","D","L","GF","GA","GD","Đ/Trận"];
+  document.getElementById("playerThead").innerHTML=h.map(x=>`<th>${x}</th>`).join("");
+  const f=curPos==="ALL"?P.filter(p=>p.m>0):P.filter(p=>p.p===curPos&&p.m>0);
+  const s=f.sort((a,b)=>b.m-a.m||b.g-a.g);const lb={W:"T",D:"H",L:"B",N:"·"};
+  document.getElementById("playerTbody").innerHTML=s.map((p,i)=>{
+    const ppg=p.m?(p.w*3+p.d)/p.m:0;const cls=ppg>=T.ppg?"impact-pos":ppg>=1.5?"impact-neu":"impact-neg";
+    return `<tr><td>${i+1}</td><td><b>${p.n}</b>${p.t==="sub"?' <span style="font-size:9px;color:var(--orange)">(Sub)</span>':""}</td><td><span class="pos-badge pos-${p.p}">${p.p}</span></td><td>${p.no||"-"}</td><td>${p.m}</td><td>${(p.mp*100).toFixed(0)}%</td><td><b style="color:var(--orange)">${p.g}</b></td><td>${(p.wp*100).toFixed(0)}%</td><td><div class="form-dots">${p.fa.map(f=>`<div class="form-dot form-${f}">${lb[f]}</div>`).join("")}</div></td><td>${p.w}</td><td>${p.d}</td><td>${p.l}</td><td>${p.gf}</td><td>${p.ga}</td><td style="color:${p.gd>0?"#4caf50":"var(--orange)"}">${p.gd>0?"+":""}${p.gd}</td><td><span class="${cls}" style="font-weight:bold;font-size:11px">${ppg.toFixed(2)}</span></td></tr>`;
   }).join("");
 }
 
 function renderPosTabs(){
-  const tabs=["ALL","FW","MF","DF","GK"];
-  const names={ALL:"Tất cả",FW:"Tiền đạo",MF:"Tiền vệ",DF:"Hậu vệ",GK:"Thủ môn"};
-  document.getElementById("posTabs").innerHTML=tabs.map(t=>`<button class="tab ${t===currentFilter?"active":""}" onclick="currentFilter='${t}';renderPosTabs();renderPlayerTable()">${names[t]}</button>`).join("");
+  const tabs=["ALL","FW","MF","DF","GK"],names={ALL:"Tất cả",FW:"Tiền đạo",MF:"Tiền vệ",DF:"Hậu vệ",GK:"Thủ môn"};
+  document.getElementById("posTabs").innerHTML=tabs.map(t=>`<button class="tab ${t===curPos?"active":""}" onclick="curPos='${t}';renderPosTabs();renderPlayerTable()">${names[t]}</button>`).join("");
 }
 
 function renderAbsentTable(){
-  const headers=["Tên","Pos","Đá","Vắng","Có mặt<br>%Thắng","Vắng mặt<br>%Thắng","Chênh lệch<br>%Thắng","Có mặt<br>Đ/Trận","Vắng mặt<br>Đ/Trận","Chênh lệch<br>Đ/Trận","Vắng mặt<br>GF/Trận","Vắng mặt<br>GA/Trận","Vắng mặt<br>W-D-L","Đánh giá"];
-  document.getElementById("absentThead").innerHTML=headers.map(h=>`<th>${h}</th>`).join("");
-
-  const list=PLAYERS.filter(p=>p.matches>0&&p.matches<TEAM.matches).map(p=>{
-    const a=absentStats(p);
-    const withPpg=p.matches?(p.w*3+p.d)/p.matches:0;
-    const diffWin=p.winPct-a.winPct;
-    const diffPpg=withPpg-a.ppg;
-    return {...p,absent:a,withPpg,diffWin,diffPpg};
-  }).sort((a,b)=>b.diffPpg-a.diffPpg);
-
+  const h=["Tên","Pos","Đá","Vắng","Có mặt<br>%W","Vắng<br>%W","Chênh<br>%W","Có mặt<br>Đ/T","Vắng<br>Đ/T","Chênh<br>Đ/T","Vắng<br>GF/T","Vắng<br>GA/T","Vắng<br>W-D-L","Đánh giá"];
+  document.getElementById("absentThead").innerHTML=h.map(x=>`<th>${x}</th>`).join("");
+  const list=P.filter(p=>p.m>0&&p.m<T.m).map(p=>{const a=absent(p);const ppgW=(p.w*3+p.d)/p.m;const dw=p.wp-a.wp;const dp=ppgW-a.ppg;return{...p,a,ppgW,dw,dp}}).sort((a,b)=>b.dp-a.dp);
   document.getElementById("absentTbody").innerHTML=list.map(p=>{
-    const a=p.absent;
-    const dwCls=p.diffWin>0.05?"absent-bad":p.diffWin<-0.05?"absent-good":"absent-neutral";
-    const dpCls=p.diffPpg>0.2?"absent-bad":p.diffPpg<-0.2?"absent-good":"absent-neutral";
-    const verdict=p.diffPpg>0.3?"Thiếu = yếu hơn":p.diffPpg<-0.3?"Thiếu = mạnh hơn":"Ảnh hưởng ít";
-    const vCls=p.diffPpg>0.3?"absent-bad":p.diffPpg<-0.3?"absent-good":"absent-neutral";
-    return `<tr>
-      <td><b>${p.name}</b></td>
-      <td><span class="pos-badge pos-${p.pos}">${p.pos}</span></td>
-      <td>${p.matches}</td><td>${a.m}</td>
-      <td>${(p.winPct*100).toFixed(0)}%</td>
-      <td>${(a.winPct*100).toFixed(0)}%</td>
-      <td class="${dwCls}">${p.diffWin>0?"+":""}${(p.diffWin*100).toFixed(0)}%</td>
-      <td>${p.withPpg.toFixed(2)}</td>
-      <td>${a.ppg.toFixed(2)}</td>
-      <td class="${dpCls}">${p.diffPpg>0?"+":""}${p.diffPpg.toFixed(2)}</td>
-      <td>${a.avgGF.toFixed(1)}</td>
-      <td>${a.avgGA.toFixed(1)}</td>
-      <td>${a.w}-${a.d}-${a.l}</td>
-      <td class="${vCls}" style="font-size:11px">${verdict}</td>
-    </tr>`;
+    const a=p.a;const dwC=p.dw>0.05?"absent-bad":p.dw<-0.05?"absent-good":"absent-neutral";
+    const dpC=p.dp>0.2?"absent-bad":p.dp<-0.2?"absent-good":"absent-neutral";
+    const v=p.dp>0.3?"Thiếu = yếu hơn":p.dp<-0.3?"Thiếu ≠ ảnh hưởng":"Ảnh hưởng ít";
+    const vC=p.dp>0.3?"absent-bad":p.dp<-0.3?"absent-good":"absent-neutral";
+    return `<tr><td><b>${p.n}</b></td><td><span class="pos-badge pos-${p.p}">${p.p}</span></td><td>${p.m}</td><td>${a.m}</td><td>${(p.wp*100).toFixed(0)}%</td><td>${(a.wp*100).toFixed(0)}%</td><td class="${dwC}">${p.dw>0?"+":""}${(p.dw*100).toFixed(0)}%</td><td>${p.ppgW.toFixed(2)}</td><td>${a.ppg.toFixed(2)}</td><td class="${dpC}">${p.dp>0?"+":""}${p.dp.toFixed(2)}</td><td>${a.agf.toFixed(1)}</td><td>${a.aga.toFixed(1)}</td><td>${a.w}-${a.d}-${a.l}</td><td class="${vC}" style="font-size:11px">${v}</td></tr>`;
   }).join("");
 }
 
 function renderAttendance(){
-  const el=document.getElementById("attendanceChart");
-  const sorted=PLAYERS.filter(p=>p.matches>0).sort((a,b)=>b.matchPct-a.matchPct);
-  el.innerHTML=sorted.map(p=>`<div class="chart-bar-h"><div class="name">${p.name}</div><div class="bar-wrap"><div class="bar bar-orange" style="width:${p.matchPct*100}%">${(p.matchPct*100).toFixed(0)}%</div></div><div class="val">${p.matches}</div></div>`).join("");
+  const sorted=P.filter(p=>p.m>0).sort((a,b)=>b.mp-a.mp);
+  document.getElementById("attendanceChart").innerHTML=sorted.map(p=>`<div class="chart-bar-h"><div class="name">${p.n}</div><div class="bar-wrap"><div class="bar bar-orange" style="width:${p.mp*100}%">${(p.mp*100).toFixed(0)}%</div></div><div class="val">${p.m}</div></div>`).join("");
 }
 
 function renderImpact(){
-  const el=document.getElementById("impactChart");
-  const sorted=PLAYERS.filter(p=>p.matches>0).map(p=>({...p,ppg:p.matches?(p.w*3+p.d)/p.matches:0})).sort((a,b)=>b.ppg-a.ppg);
-  const mx=Math.max(...sorted.map(p=>p.ppg));
-  el.innerHTML=`<div style="font-size:11px;color:#8a9bb5;margin-bottom:8px">Điểm/trận khi cầu thủ thi đấu (3đ thắng, 1đ hòa). TB đội: ${TEAM.ppg.toFixed(2)}</div>`+
-  sorted.map(p=>{
-    const c=p.ppg>=TEAM.ppg?"bar-green":p.ppg>=1.5?"bar-orange":"bar-red";
-    return `<div class="chart-bar-h"><div class="name">${p.name}</div><div class="bar-wrap"><div class="bar ${c}" style="width:${p.ppg/mx*100}%">${p.ppg.toFixed(2)}</div></div></div>`;
-  }).join("");
+  const sorted=P.filter(p=>p.m>0).map(p=>({...p,ppg:p.m?(p.w*3+p.d)/p.m:0})).sort((a,b)=>b.ppg-a.ppg);const mx=Math.max(...sorted.map(p=>p.ppg));
+  document.getElementById("impactChart").innerHTML=`<div style="font-size:11px;color:#8a9bb5;margin-bottom:8px">Điểm/trận khi cầu thủ thi đấu. TB đội: ${T.ppg.toFixed(2)}</div>`+sorted.map(p=>{const c=p.ppg>=T.ppg?"bar-green":p.ppg>=1.5?"bar-orange":"bar-red";return`<div class="chart-bar-h"><div class="name">${p.n}</div><div class="bar-wrap"><div class="bar ${c}" style="width:${p.ppg/mx*100}%">${p.ppg.toFixed(2)}</div></div></div>`}).join("");
 }
 
 function renderGoalsByPos(){
-  const pg={FW:0,MF:0,DF:0,GK:0};
-  PLAYERS.forEach(p=>{if(pg[p.pos]!==undefined)pg[p.pos]+=p.goals});
-  const tot=Object.values(pg).reduce((a,b)=>a+b,0)||1;
-  document.getElementById("goalsByPos").innerHTML=`<h3 style="font-size:12px;color:#8a9bb5;margin-bottom:10px">Bàn thắng theo vị trí</h3>`+
-  Object.entries(pg).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).map(([pos,g])=>`<div class="chart-bar-h"><div class="name"><span class="pos-badge pos-${pos}">${pos}</span></div><div class="bar-wrap"><div class="bar bar-orange" style="width:${g/tot*100}%">${g} (${(g/tot*100).toFixed(0)}%)</div></div></div>`).join("");
-
-  const scorers=PLAYERS.filter(p=>p.goals>0&&p.matches>0).map(p=>({...p,gpm:p.goals/p.matches})).sort((a,b)=>b.gpm-a.gpm);
-  const mx=Math.max(...scorers.map(s=>s.gpm));
-  document.getElementById("goalsPerMatch").innerHTML=`<h3 style="font-size:12px;color:#8a9bb5;margin-bottom:10px">Hiệu suất ghi bàn / trận</h3>`+
-  scorers.map(p=>`<div class="chart-bar-h"><div class="name">${p.name}</div><div class="bar-wrap"><div class="bar bar-orange" style="width:${p.gpm/mx*100}%">${p.gpm.toFixed(2)}</div></div><div class="val">${p.goals}</div></div>`).join("");
+  const pg={FW:0,MF:0,DF:0,GK:0};P.forEach(p=>{if(pg[p.p]!==undefined)pg[p.p]+=p.g});const tot=Object.values(pg).reduce((a,b)=>a+b,0)||1;
+  document.getElementById("goalsByPos").innerHTML=`<h3 style="font-size:12px;color:#8a9bb5;margin-bottom:10px">Bàn thắng theo vị trí</h3>`+Object.entries(pg).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).map(([pos,g])=>`<div class="chart-bar-h"><div class="name"><span class="pos-badge pos-${pos}">${pos}</span></div><div class="bar-wrap"><div class="bar bar-orange" style="width:${g/tot*100}%">${g} (${(g/tot*100).toFixed(0)}%)</div></div></div>`).join("");
+  const sc=P.filter(p=>p.g>0&&p.m>0).map(p=>({...p,gpm:p.g/p.m})).sort((a,b)=>b.gpm-a.gpm);const mx=Math.max(...sc.map(s=>s.gpm));
+  document.getElementById("goalsPerMatch").innerHTML=`<h3 style="font-size:12px;color:#8a9bb5;margin-bottom:10px">Hiệu suất ghi bàn / trận</h3>`+sc.map(p=>`<div class="chart-bar-h"><div class="name">${p.n}</div><div class="bar-wrap"><div class="bar bar-orange" style="width:${p.gpm/mx*100}%">${p.gpm.toFixed(2)}</div></div><div class="val">${p.g}</div></div>`).join("");
 }
 
-renderOverview();renderWinRate();renderGoals();renderForm();renderMatches();renderTopScorers();renderPosTabs();renderPlayerTable();renderAbsentTable();renderAttendance();renderImpact();renderGoalsByPos();
+renderOverview();renderWinRate();renderGoals();renderForm();renderAwards();renderFormation();renderMatches();renderTopScorers();renderPosTabs();renderPlayerTable();renderAbsentTable();renderAttendance();renderImpact();renderGoalsByPos();
 </script>
 </body>
 </html>
