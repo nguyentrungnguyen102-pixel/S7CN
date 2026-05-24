@@ -102,6 +102,16 @@ tr:hover{background:rgba(232,118,43,.06)}
 .detail-absent{opacity:.35}
 tr.clickable{cursor:pointer}
 tr.clickable:hover{background:rgba(232,118,43,.12)!important}
+.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.cmp-card{background:var(--navy);border-radius:8px;padding:16px;border:1px solid var(--navy4);text-align:center}
+.cmp-year{font-size:13px;color:var(--orange);font-weight:bold;margin-bottom:10px;letter-spacing:1px}
+.cmp-big{font-size:24px;font-weight:bold;color:#fff;margin:4px 0}
+.cmp-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--navy4);font-size:12px}
+.cmp-row:last-child{border:none}
+.cmp-label{color:#8a9bb5;width:100px;text-align:left}
+.cmp-val{font-weight:bold;width:80px;text-align:center}
+.cmp-better{color:#4caf50}.cmp-worse{color:#ef5350}.cmp-same{color:var(--orange)}
+.cmp-arrow{font-size:16px;width:30px;text-align:center}
 
 @media(max-width:600px){
   .grid-4{grid-template-columns:repeat(2,1fr)}.grid-2,.grid-3{grid-template-columns:1fr}
@@ -128,7 +138,10 @@ tr.clickable:hover{background:rgba(232,118,43,.12)!important}
   </div>
 </div>
 
-<!-- VINH DANH -->
+<div class="card">
+  <h2>So sánh 2025 vs 2026 (Sân 11)</h2>
+  <div id="compareSection"></div>
+</div>
 <div class="card"><h2>Vinh danh mùa giải 2026</h2><div class="award-grid" id="awards"></div></div>
 
 <div class="grid grid-2">
@@ -213,6 +226,10 @@ const P=[
   {n:"Tiến",p:"DF",no:"",g:0,m:3,mp:.23,wp:.333,fa:["N","D","N","N","W"],pi:1.67,w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"sub"},
   {n:"Mới",p:"MF",no:"",g:1,m:2,mp:.15,wp:.5,fa:["W","D","N","N","N"],pi:2,w:1,d:1,l:0,gf:9,ga:6,gd:3,t:"sub"},
 ];
+
+const S25={m:22,w:14,d:2,l:6,gf:82,ga:57,gd:25,pts:44,ppg:2.00,wp:.636,
+  home:{m:15,w:12,d:1,l:2,gf:61,ga:24,gd:37},
+  away:{m:7,w:2,d:1,l:4,gf:21,ga:33,gd:-12}};
 
 const PM={
   "Mai Cồ Hiếu":[0,0,0,1,0,0,0,0,0,0,0,0,2],
@@ -428,7 +445,38 @@ function renderSummary(){
   document.getElementById("seasonSummary").innerHTML=`<div style="line-height:1.8;font-size:13px"><h3 style="color:var(--orange);font-size:15px;margin-bottom:10px">Chốt kỳ 2026</h3><p><b style="color:#4caf50">Tấn công:</b> TB ${(T.gf/T.m).toFixed(1)} bàn/trận — hỏa lực mạnh nhờ bộ ba Cảm (13 bàn), Khâm & Văn Chung (7 bàn mỗi người). Quốc Long đóng góp 4 bàn từ tuyến giữa.</p><p style="margin-top:8px"><b style="color:#ef5350">Phòng ngự:</b> TB ${(T.ga/T.m).toFixed(1)} bàn thua/trận — hàng thủ cần cải thiện. Nguyễn Hoàng (${P.find(p=>p.n==="Nguyễn Hoàng").wp*100|0}% win khi ra sân) là trụ cột phòng ngự đáng tin cậy nhất.</p><p style="margin-top:8px"><b style="color:var(--orange)">Chuyển hóa:</b> ${T.d} trận hòa (${(T.d/T.m*100).toFixed(0)}%) — tỷ lệ cao. Cần tìm cách giải quyết trận đấu dứt khoát hơn.</p><p style="margin-top:8px"><b style="color:#fff">Nhân sự:</b> ${P.filter(p=>p.m>=8).length} cầu thủ đá từ 8 trận — chiều sâu đội hình tốt. Lucky Trần (MVP) ổn định với chỉ 1 trận thua khi ra sân. Mai Cồ Hiếu ra sân 100% — tinh thần chiến binh.</p><p style="margin-top:8px"><b style="color:#fff">Sân nhà vs Sân khách:</b> Sân khách ${(aw/am.length*100).toFixed(0)}% win (${aw}W/${am.length} trận) tốt hơn sân nhà Giga Arena ${(hw/hm.length*100).toFixed(0)}% win (${hw}W/${hm.length} trận).</p><h3 style="color:var(--orange);font-size:15px;margin:18px 0 10px">Mục tiêu kỳ tiếp theo</h3><ul style="padding-left:20px;color:#ccc"><li>Giảm bàn thua: mục tiêu TB ≤ 2.0 bàn/trận (hiện tại ${(T.ga/T.m).toFixed(1)})</li><li>Biến hòa thành thắng: giảm tỷ lệ hòa từ ${(T.d/T.m*100).toFixed(0)}% xuống dưới 20%</li><li>Nâng cao thành tích sân nhà Giga Arena — cần thắng ổn định hơn tại sân nhà</li><li>Duy trì lực lượng tấn công — phát huy Cảm, Khâm, Văn Chung</li><li>Tăng sự gắn kết: tạo cơ hội cho cầu thủ dự bị hòa nhập nhiều hơn</li></ul></div>`;
 }
 
-renderOverview();renderWinRate();renderGoals();renderForm();renderAwards();renderMatches();renderTopScorers();renderPosTabs();renderPlayerTable();renderAbsentTable();renderAttendance();renderImpact();renderGoalsByPos();renderVenue();renderOpponents();renderFormation();renderSummary();
+function renderCompare(){
+  const hm=M.filter(m=>m.v==="Giga Arena"),am=M.filter(m=>m.v!=="Giga Arena");
+  const S26={m:T.m,w:T.w,d:T.d,l:T.l,gf:T.gf,ga:T.ga,gd:T.gd,pts:T.w*3+T.d,ppg:T.ppg,wp:T.w/T.m,
+    home:{m:hm.length,w:hm.filter(m=>m.r==="W").length,d:hm.filter(m=>m.r==="D").length,l:hm.filter(m=>m.r==="L").length,gf:hm.reduce((s,m)=>s+m.gf,0),ga:hm.reduce((s,m)=>s+m.ga,0)},
+    away:{m:am.length,w:am.filter(m=>m.r==="W").length,d:am.filter(m=>m.r==="D").length,l:am.filter(m=>m.r==="L").length,gf:am.reduce((s,m)=>s+m.gf,0),ga:am.reduce((s,m)=>s+m.ga,0)}};
+  S26.home.gd=S26.home.gf-S26.home.ga;S26.away.gd=S26.away.gf-S26.away.ga;
+  function cmp(a,b,inv){const d=a-b;if(Math.abs(d)<0.01)return{cls:"cmp-same",arr:"="};return inv?(d>0?{cls:"cmp-worse",arr:"▲"}:{cls:"cmp-better",arr:"▼"}):(d>0?{cls:"cmp-better",arr:"▲"}:{cls:"cmp-worse",arr:"▼"})}
+  function row(label,v25,v26,fmt,inv){const c=cmp(v26,v25,inv);return`<div class="cmp-row"><div class="cmp-label">${label}</div><div class="cmp-val">${fmt(v25)}</div><div class="cmp-arrow ${c.cls}">${c.arr}</div><div class="cmp-val ${c.cls}">${fmt(v26)}</div></div>`}
+  const n=v=>v,f1=v=>v.toFixed(1),f2=v=>v.toFixed(2),pct=v=>(v*100).toFixed(1)+"%",wdl=o=>`${o.w}W ${o.d}D ${o.l}L`;
+  const el=document.getElementById("compareSection");
+  el.innerHTML=`<p class="hint" style="margin-bottom:12px">Chỉ tính trận Sân 11. Xanh = cải thiện, Đỏ = giảm so với 2025.</p>
+  <div class="cmp-grid">
+    <div class="cmp-card"><div class="cmp-year">2025</div><div class="cmp-big">${S25.w}W ${S25.d}D ${S25.l}L</div><div style="font-size:12px;color:#8a9bb5">${S25.m} trận · ${(S25.wp*100).toFixed(1)}% win</div></div>
+    <div class="cmp-card"><div class="cmp-year">2026</div><div class="cmp-big">${S26.w}W ${S26.d}D ${S26.l}L</div><div style="font-size:12px;color:#8a9bb5">${S26.m} trận · ${(S26.wp*100).toFixed(1)}% win</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+    <div class="cmp-card"><div style="font-size:11px;color:var(--orange);margin-bottom:8px;font-weight:bold">TỔNG QUAN</div>
+      <div class="cmp-row"><div class="cmp-label"></div><div class="cmp-val" style="color:var(--orange)">2025</div><div class="cmp-arrow"></div><div class="cmp-val" style="color:var(--orange)">2026</div></div>
+      ${row("Trận",S25.m,S26.m,n)}${row("% Thắng",S25.wp,S26.wp,pct)}${row("Điểm/trận",S25.ppg,S26.ppg,f2)}${row("Tổng điểm",S25.pts,S26.pts,n)}${row("GF",S25.gf,S26.gf,n)}${row("GA",S25.ga,S26.ga,n,true)}${row("GD",S25.gd,S26.gd,n)}${row("GF/trận",S25.gf/S25.m,S26.gf/S26.m,f1)}${row("GA/trận",S25.ga/S25.m,S26.ga/S26.m,f1,true)}
+    </div>
+    <div class="cmp-card"><div style="font-size:11px;color:var(--orange);margin-bottom:8px;font-weight:bold">SÂN NHÀ (GIGA ARENA)</div>
+      <div class="cmp-row"><div class="cmp-label"></div><div class="cmp-val" style="color:var(--orange)">2025</div><div class="cmp-arrow"></div><div class="cmp-val" style="color:var(--orange)">2026</div></div>
+      ${row("Trận",S25.home.m,S26.home.m,n)}${row("Thắng",S25.home.w,S26.home.w,n)}${row("Hòa",S25.home.d,S26.home.d,n)}${row("Thua",S25.home.l,S26.home.l,n,true)}${row("% Thắng",S25.home.w/S25.home.m,S26.home.w/S26.home.m,pct)}${row("GF",S25.home.gf,S26.home.gf,n)}${row("GA",S25.home.ga,S26.home.ga,n,true)}${row("GD",S25.home.gd,S26.home.gd,n)}${row("GF/trận",S25.home.gf/S25.home.m,S26.home.gf/S26.home.m,f1)}${row("GA/trận",S25.home.ga/S25.home.m,S26.home.ga/S26.home.m,f1,true)}
+    </div>
+    <div class="cmp-card"><div style="font-size:11px;color:var(--orange);margin-bottom:8px;font-weight:bold">SÂN KHÁCH</div>
+      <div class="cmp-row"><div class="cmp-label"></div><div class="cmp-val" style="color:var(--orange)">2025</div><div class="cmp-arrow"></div><div class="cmp-val" style="color:var(--orange)">2026</div></div>
+      ${row("Trận",S25.away.m,S26.away.m,n)}${row("% Thắng",S25.away.w/S25.away.m,S26.away.w/S26.away.m,pct)}${row("GF",S25.away.gf,S26.away.gf,n)}${row("GA",S25.away.ga,S26.away.ga,n,true)}${row("GD",S25.away.gd,S26.away.gd,n)}${row("GF/trận",S25.away.gf/S25.away.m,S26.away.gf/S26.away.m,f1)}${row("GA/trận",S25.away.ga/S25.away.m,S26.away.ga/S26.away.m,f1,true)}
+    </div>
+  </div>`;
+}
+
+renderOverview();renderWinRate();renderGoals();renderForm();renderCompare();renderAwards();renderMatches();renderTopScorers();renderPosTabs();renderPlayerTable();renderAbsentTable();renderAttendance();renderImpact();renderGoalsByPos();renderVenue();renderOpponents();renderFormation();renderSummary();
 </script>
 </body>
 </html>
