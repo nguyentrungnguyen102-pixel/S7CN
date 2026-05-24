@@ -115,7 +115,7 @@ tr:hover{background:rgba(79,195,247,0.05)}
 
 <header>
   <h1>S7CN - Thống kê mùa giải 2026</h1>
-  <p>Cập nhật sau 12 trận (Tuần 1 - Tuần 19)</p>
+  <p>Cập nhật sau 13 trận (Tuần 1 - Tuần 20)</p>
 </header>
 
 <!-- OVERVIEW CARDS -->
@@ -191,9 +191,9 @@ tr:hover{background:rgba(79,195,247,0.05)}
 
 <script>
 const TEAM = {
-  matches:12, winPct:0.5, totalGoals:37, gf:39, ga:29, gd:10,
-  w:6, d:4, l:2, avgGF:3.25, avgGA:2.42,
-  form:["D","W","D","L","W"] // 5 trận gần nhất: 🟡🟢🟡🔴🟢
+  matches:13, winPct:0.538, totalGoals:44, gf:47, ga:31, gd:16,
+  w:7, d:4, l:2, avgGF:3.62, avgGA:2.38,
+  form:["W","D","L","W","W"] // 5 trận gần nhất: 🟢🟡🔴🟢🟢
 };
 
 const MATCHES = [
@@ -209,33 +209,34 @@ const MATCHES = [
   {week:15,date:"12/04",vs:"Huyền Thoại FC",gf:4,ga:4,r:"D",venue:"Lotus Tân Sơn",attend:17},
   {week:16,date:"19/04",vs:"ĐH TDTT",gf:3,ga:4,r:"L",venue:"ĐH TDTT",attend:14},
   {week:19,date:"10/05",vs:"Sân Cáp",gf:5,ga:3,r:"W",venue:"ĐH TDTT",attend:13},
+  {week:20,date:"17/05",vs:"Lên Bia FC",gf:8,ga:2,r:"W",venue:"Dĩ An",attend:15},
 ];
 
 const PLAYERS = [
-  {id:1, name:"Mai Cồ Hiếu",fullName:"Mai Hiếu",pos:"FW",no:"23",goals:1,matches:12,matchPct:1,winPct:0.5,form:"🟡🟢🟡🔴🟢",formArr:["D","W","D","L","W"],pointImpact:1.83,w:6,d:4,l:2,gf:39,ga:29,gd:10,type:"main"},
-  {id:2, name:"Văn Quang",fullName:"Văn Quang",pos:"FW",no:"10",goals:1,matches:8,matchPct:0.67,winPct:0.625,form:"⚪🟢🟡⚪⚪",formArr:["N","W","D","N","N"],pointImpact:2.13,w:5,d:2,l:1,gf:25,ga:16,gd:9,type:"main"},
-  {id:3, name:"Nguyên Khôi",fullName:"Nguyên Khôi",pos:"DF",no:"19",goals:0,matches:7,matchPct:0.58,winPct:0.571,form:"🟡⚪⚪⚪🟢",formArr:["D","N","N","N","W"],pointImpact:2,w:4,d:2,l:1,gf:21,ga:15,gd:6,type:"main"},
-  {id:4, name:"Lucky Trần",fullName:"Trần Giao Hòa",pos:"MF",no:"11",goals:0,matches:9,matchPct:0.75,winPct:0.556,form:"🟡🟢⚪🔴⚪",formArr:["D","W","N","L","N"],pointImpact:2,w:5,d:3,l:1,gf:30,ga:20,gd:10,type:"main"},
-  {id:5, name:"Quốc Long",fullName:"Quốc Long",pos:"MF",no:"8",goals:4,matches:9,matchPct:0.75,winPct:0.556,form:"⚪🟢🟡🔴⚪",formArr:["N","W","D","L","N"],pointImpact:1.89,w:5,d:2,l:2,gf:28,ga:20,gd:8,type:"main"},
-  {id:6, name:"Hữu Duyên",fullName:"Hữu Duyên",pos:"DF",no:"47",goals:1,matches:11,matchPct:0.92,winPct:0.455,form:"🟡⚪🟡🔴🟢",formArr:["D","N","D","L","W"],pointImpact:1.73,w:5,d:4,l:2,gf:34,ga:27,gd:7,type:"main"},
-  {id:7, name:"Nguyễn Hoàng",fullName:"Nguyễn Hoàng",pos:"DF",no:"39",goals:0,matches:10,matchPct:0.83,winPct:0.6,form:"🟡🟢🟡⚪🟢",formArr:["D","W","D","N","W"],pointImpact:2.1,w:6,d:3,l:1,gf:33,ga:22,gd:11,type:"main"},
-  {id:8, name:"Đức Khoa",fullName:"Đức Khoa",pos:"GK",no:"01",goals:0,matches:10,matchPct:0.83,winPct:0.5,form:"🟡🟢🟡🔴⚪",formArr:["D","W","D","L","N"],pointImpact:1.8,w:5,d:3,l:2,gf:31,ga:23,gd:8,type:"main"},
-  {id:9, name:"Dương Chí Hoàng",fullName:"Dương Chí Hoàng",pos:"DF",no:"24",goals:0,matches:8,matchPct:0.67,winPct:0.5,form:"🟡⚪🟡🔴🟢",formArr:["D","N","D","L","W"],pointImpact:1.88,w:4,d:3,l:1,gf:28,ga:21,gd:7,type:"main"},
-  {id:10,name:"Minh Hoàng",fullName:"Minh Hoàng",pos:"DF",no:"12",goals:0,matches:7,matchPct:0.58,winPct:0.571,form:"🟡🟢⚪⚪🟢",formArr:["D","W","N","N","W"],pointImpact:2,w:4,d:2,l:1,gf:24,ga:17,gd:7,type:"main"},
-  {id:11,name:"Trung Nguyên",fullName:"Trung Nguyên",pos:"MF",no:"14",goals:2,matches:11,matchPct:0.92,winPct:0.455,form:"🟡🟢🟡🔴🟢",formArr:["D","W","D","L","W"],pointImpact:1.73,w:5,d:4,l:2,gf:35,ga:27,gd:8,type:"main"},
-  {id:12,name:"Tài Củi",fullName:"Ngọc Tài",pos:"FW",no:"30",goals:1,matches:10,matchPct:0.83,winPct:0.4,form:"🟡🟢🟡🔴⚪",formArr:["D","W","D","L","N"],pointImpact:1.6,w:4,d:4,l:2,gf:30,ga:24,gd:6,type:"main"},
-  {id:13,name:"Văn Chung",fullName:"Văn Chung",pos:"FW",no:"6",goals:7,matches:8,matchPct:0.67,winPct:0.5,form:"⚪🟢🟡🔴🟢",formArr:["N","W","D","L","W"],pointImpact:1.75,w:4,d:2,l:2,gf:27,ga:21,gd:6,type:"main"},
-  {id:14,name:"Gia Lộc",fullName:"Gia Lộc",pos:"MF",no:"75",goals:2,matches:8,matchPct:0.67,winPct:0.5,form:"🟡⚪🟡🔴🟢",formArr:["D","N","D","L","W"],pointImpact:1.75,w:4,d:2,l:2,gf:24,ga:19,gd:5,type:"main"},
-  {id:15,name:"Phú Bình",fullName:"Phú Bình",pos:"DF",no:"15",goals:0,matches:4,matchPct:0.33,winPct:0.5,form:"⚪⚪⚪🔴⚪",formArr:["N","N","N","L","N"],pointImpact:1.75,w:2,d:1,l:1,gf:11,ga:8,gd:3,type:"main"},
+  {id:1, name:"Mai Cồ Hiếu",fullName:"Mai Hiếu",pos:"FW",no:"23",goals:3,matches:13,matchPct:1,winPct:0.538,form:"🟢🟡🔴🟢🟢",formArr:["W","D","L","W","W"],pointImpact:1.92,w:7,d:4,l:2,gf:47,ga:31,gd:16,type:"main"},
+  {id:2, name:"Văn Quang",fullName:"Văn Quang",pos:"FW",no:"10",goals:1,matches:9,matchPct:0.69,winPct:0.667,form:"🟢🟡⚪⚪🟢",formArr:["W","D","N","N","W"],pointImpact:2.22,w:6,d:2,l:1,gf:33,ga:18,gd:15,type:"main"},
+  {id:3, name:"Nguyên Khôi",fullName:"Nguyên Khôi",pos:"DF",no:"19",goals:0,matches:8,matchPct:0.62,winPct:0.625,form:"⚪⚪⚪🟢🟢",formArr:["N","N","N","W","W"],pointImpact:2.13,w:5,d:2,l:1,gf:29,ga:17,gd:12,type:"main"},
+  {id:4, name:"Lucky Trần",fullName:"Trần Giao Hòa",pos:"MF",no:"11",goals:0,matches:10,matchPct:0.77,winPct:0.6,form:"🟢⚪🔴⚪🟢",formArr:["W","N","L","N","W"],pointImpact:2.1,w:6,d:3,l:1,gf:38,ga:22,gd:16,type:"main"},
+  {id:5, name:"Quốc Long",fullName:"Quốc Long",pos:"MF",no:"8",goals:4,matches:10,matchPct:0.77,winPct:0.6,form:"🟢🟡🔴⚪🟢",formArr:["W","D","L","N","W"],pointImpact:2,w:6,d:2,l:2,gf:36,ga:22,gd:14,type:"main"},
+  {id:6, name:"Hữu Duyên",fullName:"Hữu Duyên",pos:"DF",no:"47",goals:1,matches:12,matchPct:0.92,winPct:0.5,form:"⚪🟡🔴🟢🟢",formArr:["N","D","L","W","W"],pointImpact:1.83,w:6,d:4,l:2,gf:42,ga:29,gd:13,type:"main"},
+  {id:7, name:"Nguyễn Hoàng",fullName:"Nguyễn Hoàng",pos:"DF",no:"39",goals:0,matches:11,matchPct:0.85,winPct:0.636,form:"🟢🟡⚪🟢🟢",formArr:["W","D","N","W","W"],pointImpact:2.18,w:7,d:3,l:1,gf:41,ga:24,gd:17,type:"main"},
+  {id:8, name:"Đức Khoa",fullName:"Đức Khoa",pos:"GK",no:"01",goals:0,matches:10,matchPct:0.77,winPct:0.5,form:"🟢🟡🔴⚪⚪",formArr:["W","D","L","N","N"],pointImpact:1.8,w:5,d:3,l:2,gf:31,ga:23,gd:8,type:"main"},
+  {id:9, name:"Dương Chí Hoàng",fullName:"Dương Chí Hoàng",pos:"DF",no:"24",goals:0,matches:8,matchPct:0.62,winPct:0.5,form:"⚪🟡🔴🟢⚪",formArr:["N","D","L","W","N"],pointImpact:1.88,w:4,d:3,l:1,gf:28,ga:21,gd:7,type:"main"},
+  {id:10,name:"Minh Hoàng",fullName:"Minh Hoàng",pos:"DF",no:"12",goals:0,matches:8,matchPct:0.62,winPct:0.625,form:"🟢⚪⚪🟢🟢",formArr:["W","N","N","W","W"],pointImpact:2.13,w:5,d:2,l:1,gf:32,ga:19,gd:13,type:"main"},
+  {id:11,name:"Trung Nguyên",fullName:"Trung Nguyên",pos:"MF",no:"14",goals:2,matches:12,matchPct:0.92,winPct:0.5,form:"🟢🟡🔴🟢🟢",formArr:["W","D","L","W","W"],pointImpact:1.83,w:6,d:4,l:2,gf:43,ga:29,gd:14,type:"main"},
+  {id:12,name:"Tài Củi",fullName:"Ngọc Tài",pos:"FW",no:"30",goals:1,matches:11,matchPct:0.85,winPct:0.455,form:"🟢🟡🔴⚪🟢",formArr:["W","D","L","N","W"],pointImpact:1.73,w:5,d:4,l:2,gf:38,ga:26,gd:12,type:"main"},
+  {id:13,name:"Văn Chung",fullName:"Văn Chung",pos:"FW",no:"6",goals:7,matches:8,matchPct:0.62,winPct:0.5,form:"🟢🟡🔴🟢⚪",formArr:["W","D","L","W","N"],pointImpact:1.75,w:4,d:2,l:2,gf:27,ga:21,gd:6,type:"main"},
+  {id:14,name:"Gia Lộc",fullName:"Gia Lộc",pos:"MF",no:"75",goals:2,matches:9,matchPct:0.69,winPct:0.556,form:"⚪🟡🔴🟢🟢",formArr:["N","D","L","W","W"],pointImpact:1.89,w:5,d:2,l:2,gf:32,ga:21,gd:11,type:"main"},
+  {id:15,name:"Phú Bình",fullName:"Phú Bình",pos:"DF",no:"15",goals:0,matches:4,matchPct:0.31,winPct:0.5,form:"⚪⚪🔴⚪⚪",formArr:["N","N","L","N","N"],pointImpact:1.75,w:2,d:1,l:1,gf:11,ga:8,gd:3,type:"main"},
   {id:16,name:"Văn Tới",fullName:"Văn Tới",pos:"GK",no:"22",goals:0,matches:0,matchPct:0,winPct:0,form:"",formArr:[],pointImpact:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,type:"main",note:"Nhà tài trợ"},
-  {id:17,name:"Khâm",fullName:"Nguyễn Quốc Khâm",pos:"FW",no:"22",goals:6,matches:8,matchPct:0.67,winPct:0.5,form:"⚪⚪⚪🔴🟢",formArr:["N","N","N","L","W"],pointImpact:1.75,w:4,d:2,l:2,gf:23,ga:18,gd:5,type:"main"},
-  {id:18,name:"Cảm",fullName:"Phan Cảm",pos:"FW",no:"7",goals:10,matches:10,matchPct:0.83,winPct:0.4,form:"🟡🟢🟡🔴🟢",formArr:["D","W","D","L","W"],pointImpact:1.6,w:4,d:4,l:2,gf:32,ga:26,gd:6,type:"main"},
-  {id:19,name:"Hoàng Đại",fullName:"Hoàng Đại",pos:"FW",no:"",goals:0,matches:2,matchPct:0.17,winPct:0,form:"🟡⚪🟡⚪⚪",formArr:["D","N","D","N","N"],pointImpact:1,w:0,d:2,l:0,gf:7,ga:7,gd:0,type:"main"},
-  {id:20,name:"Lâm",fullName:"Lâm",pos:"MF",no:"",goals:2,matches:5,matchPct:0.42,winPct:0.4,form:"🟡🟢🟡🔴🟢",formArr:["D","W","D","L","W"],pointImpact:1.6,w:2,d:2,l:1,gf:20,ga:16,gd:4,type:"main"},
-  {id:21,name:"Anh Sơn",fullName:"Anh Sơn",pos:"MF",no:"",goals:0,matches:3,matchPct:0.25,winPct:0.333,form:"⚪⚪🟡⚪⚪",formArr:["N","N","D","N","N"],pointImpact:1.67,w:1,d:2,l:0,gf:11,ga:9,gd:2,type:"sub"},
-  {id:22,name:"Chí Quỹ",fullName:"Phạm Lê Chí Quỹ",pos:"MF",no:"4",goals:0,matches:2,matchPct:0.17,winPct:0.5,form:"⚪⚪⚪⚪⚪",formArr:["N","N","N","N","N"],pointImpact:2,w:1,d:1,l:0,gf:7,ga:5,gd:2,type:"sub"},
-  {id:23,name:"Tiến",fullName:"Tiến",pos:"DF",no:"",goals:0,matches:2,matchPct:0.17,winPct:0,form:"🟡⚪🟡⚪⚪",formArr:["D","N","D","N","N"],pointImpact:1,w:0,d:2,l:0,gf:7,ga:7,gd:0,type:"sub"},
-  {id:24,name:"Mới",fullName:"Mới",pos:"MF",no:"",goals:1,matches:2,matchPct:0.17,winPct:0.5,form:"⚪🟢🟡⚪⚪",formArr:["N","W","D","N","N"],pointImpact:2,w:1,d:1,l:0,gf:9,ga:6,gd:3,type:"sub"},
+  {id:17,name:"Khâm",fullName:"Nguyễn Quốc Khâm",pos:"FW",no:"22",goals:7,matches:9,matchPct:0.69,winPct:0.556,form:"⚪⚪🔴🟢🟢",formArr:["N","N","L","W","W"],pointImpact:1.89,w:5,d:2,l:2,gf:31,ga:20,gd:11,type:"main"},
+  {id:18,name:"Cảm",fullName:"Phan Cảm",pos:"FW",no:"7",goals:13,matches:11,matchPct:0.85,winPct:0.455,form:"🟢🟡🔴🟢🟢",formArr:["W","D","L","W","W"],pointImpact:1.73,w:5,d:4,l:2,gf:40,ga:28,gd:12,type:"main"},
+  {id:19,name:"Hoàng Đại",fullName:"Hoàng Đại",pos:"FW",no:"",goals:1,matches:3,matchPct:0.23,winPct:0.333,form:"⚪🟡⚪⚪🟢",formArr:["N","D","N","N","W"],pointImpact:1.67,w:1,d:2,l:0,gf:15,ga:9,gd:6,type:"main"},
+  {id:20,name:"Lâm",fullName:"Lâm",pos:"MF",no:"",goals:2,matches:6,matchPct:0.46,winPct:0.5,form:"🟢🟡🔴🟢🟢",formArr:["W","D","L","W","W"],pointImpact:1.83,w:3,d:2,l:1,gf:28,ga:18,gd:10,type:"main"},
+  {id:21,name:"Anh Sơn",fullName:"Anh Sơn",pos:"MF",no:"",goals:0,matches:3,matchPct:0.23,winPct:0.333,form:"⚪🟡⚪⚪⚪",formArr:["N","D","N","N","N"],pointImpact:1.67,w:1,d:2,l:0,gf:11,ga:9,gd:2,type:"sub"},
+  {id:22,name:"Chí Quỹ",fullName:"Phạm Lê Chí Quỹ",pos:"MF",no:"4",goals:0,matches:2,matchPct:0.15,winPct:0.5,form:"⚪⚪⚪⚪⚪",formArr:["N","N","N","N","N"],pointImpact:2,w:1,d:1,l:0,gf:7,ga:5,gd:2,type:"sub"},
+  {id:23,name:"Tiến",fullName:"Tiến",pos:"DF",no:"",goals:0,matches:2,matchPct:0.15,winPct:0,form:"⚪🟡⚪⚪⚪",formArr:["N","D","N","N","N"],pointImpact:1,w:0,d:2,l:0,gf:7,ga:7,gd:0,type:"sub"},
+  {id:24,name:"Mới",fullName:"Mới",pos:"MF",no:"",goals:1,matches:2,matchPct:0.15,winPct:0.5,form:"🟢🟡⚪⚪⚪",formArr:["W","D","N","N","N"],pointImpact:2,w:1,d:1,l:0,gf:9,ga:6,gd:3,type:"sub"},
 ];
 
 // ========== RENDER ==========
