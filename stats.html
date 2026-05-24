@@ -124,13 +124,6 @@ tr:hover{background:rgba(232,118,43,.06)}
 <!-- VINH DANH -->
 <div class="card"><h2>Vinh danh mùa giải 2026</h2><div class="award-grid" id="awards"></div></div>
 
-<!-- ĐỘI HÌNH TIÊU BIỂU -->
-<div class="card">
-  <h2>Đội hình tiêu biểu</h2>
-  <div class="formation-tabs" id="fTabs"></div>
-  <div id="pitchWrap"></div>
-</div>
-
 <div class="grid grid-2">
   <div class="card"><h2>Lịch sử trận đấu</h2><div id="matchHistory"></div></div>
   <div class="card"><h2>Vua phá lưới</h2><div id="topScorers"></div></div>
@@ -151,6 +144,21 @@ tr:hover{background:rgba(232,118,43,.06)}
 </div>
 
 <div class="card"><h2>Bàn thắng theo vị trí & hiệu suất</h2><div class="grid grid-2"><div id="goalsByPos"></div><div id="goalsPerMatch"></div></div></div>
+
+<div class="grid grid-2">
+  <div class="card"><h2>Sân nhà vs Sân khách</h2><div id="venueAnalysis"></div></div>
+  <div class="card"><h2>Phân tích theo sân thi đấu</h2><div id="venueBreakdown"></div></div>
+</div>
+
+<div class="card"><h2>Phân tích đối thủ</h2><p class="hint">Kết quả khi gặp từng đối thủ tại sân nhà (Giga Arena) và sân khách</p><div class="scroll-x"><table><thead><tr id="oppThead"></tr></thead><tbody id="oppTbody"></tbody></table></div></div>
+
+<div class="card">
+  <h2>Đội hình tiêu biểu</h2>
+  <div class="formation-tabs" id="fTabs"></div>
+  <div id="pitchWrap"></div>
+</div>
+
+<div class="card"><h2>Tổng kết mùa giải 2026</h2><div id="seasonSummary"></div></div>
 
 </div>
 <script>
@@ -205,41 +213,41 @@ function absent(p){const m=T.m-p.m;if(!m)return null;const w=T.w-p.w,d=T.d-p.d,l
 const BEST_XI={
   "4-4-2":[
     {n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},
-    {n:"Minh Hoàng",p:"DF",top:"73%",left:"15%"},
-    {n:"Nguyễn Hoàng",p:"DF",top:"76%",left:"37%"},
-    {n:"Hữu Duyên",p:"DF",top:"76%",left:"63%"},
-    {n:"Nguyên Khôi",p:"DF",top:"73%",left:"85%"},
-    {n:"Quốc Long",p:"MF",top:"50%",left:"15%"},
-    {n:"Lucky Trần",p:"MF",top:"52%",left:"37%"},
-    {n:"Trung Nguyên",p:"MF",top:"52%",left:"63%"},
-    {n:"Gia Lộc",p:"MF",top:"50%",left:"85%"},
+    {n:"Gia Lộc",p:"DF",top:"73%",left:"15%"},
+    {n:"Hữu Duyên",p:"DF",top:"76%",left:"37%"},
+    {n:"D.Chí Hoàng",p:"DF",top:"76%",left:"63%"},
+    {n:"Nguyễn Hoàng",p:"DF",top:"73%",left:"85%"},
+    {n:"Mai Cồ Hiếu",p:"MF",top:"50%",left:"15%"},
+    {n:"Quốc Long",p:"MF",top:"52%",left:"37%"},
+    {n:"Lucky Trần",p:"MF",top:"52%",left:"63%"},
+    {n:"Trung Nguyên",p:"MF",top:"50%",left:"85%"},
     {n:"Cảm",p:"FW",top:"24%",left:"38%"},
-    {n:"Văn Chung",p:"FW",top:"24%",left:"62%"},
+    {n:"Khâm",p:"FW",top:"24%",left:"62%"},
   ],
   "3-5-2":[
     {n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},
-    {n:"Nguyễn Hoàng",p:"DF",top:"76%",left:"25%"},
+    {n:"Minh Hoàng",p:"DF",top:"76%",left:"25%"},
     {n:"Hữu Duyên",p:"DF",top:"78%",left:"50%"},
-    {n:"Minh Hoàng",p:"DF",top:"76%",left:"75%"},
-    {n:"Lâm",p:"MF",top:"53%",left:"8%"},
+    {n:"D.Chí Hoàng",p:"DF",top:"76%",left:"75%"},
+    {n:"Nguyễn Hoàng",p:"MF",top:"53%",left:"8%"},
     {n:"Quốc Long",p:"MF",top:"55%",left:"30%"},
     {n:"Trung Nguyên",p:"MF",top:"62%",left:"50%"},
     {n:"Lucky Trần",p:"MF",top:"55%",left:"70%"},
     {n:"Gia Lộc",p:"MF",top:"53%",left:"92%"},
     {n:"Cảm",p:"FW",top:"24%",left:"38%"},
-    {n:"Khâm",p:"FW",top:"24%",left:"62%"},
+    {n:"Văn Chung",p:"FW",top:"24%",left:"62%"},
   ],
   "4-5-1":[
     {n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},
-    {n:"Minh Hoàng",p:"DF",top:"73%",left:"15%"},
-    {n:"Nguyễn Hoàng",p:"DF",top:"76%",left:"37%"},
-    {n:"Hữu Duyên",p:"DF",top:"76%",left:"63%"},
+    {n:"Nguyễn Hoàng",p:"DF",top:"73%",left:"15%"},
+    {n:"Hữu Duyên",p:"DF",top:"76%",left:"37%"},
+    {n:"D.Chí Hoàng",p:"DF",top:"76%",left:"63%"},
     {n:"Nguyên Khôi",p:"DF",top:"73%",left:"85%"},
-    {n:"Quốc Long",p:"MF",top:"48%",left:"12%"},
-    {n:"Lucky Trần",p:"MF",top:"50%",left:"32%"},
+    {n:"Lâm",p:"MF",top:"48%",left:"12%"},
+    {n:"Quốc Long",p:"MF",top:"50%",left:"32%"},
     {n:"Trung Nguyên",p:"MF",top:"58%",left:"50%"},
-    {n:"Gia Lộc",p:"MF",top:"50%",left:"68%"},
-    {n:"Lâm",p:"MF",top:"48%",left:"88%"},
+    {n:"Lucky Trần",p:"MF",top:"50%",left:"68%"},
+    {n:"Văn Quang",p:"MF",top:"48%",left:"88%"},
     {n:"Cảm",p:"FW",top:"22%",left:"50%"},
   ],
 };
@@ -270,22 +278,13 @@ function renderForm(){
 
 function renderAwards(){
   const el=document.getElementById("awards");
-  const topScorer=P.slice().sort((a,b)=>b.g-a.g)[0];
-  const bestGpm=P.filter(p=>p.m>=3&&p.g>0).map(p=>({...p,gpm:p.g/p.m})).sort((a,b)=>b.gpm-a.gpm)[0];
-  const mvp=P.filter(p=>p.m>=5).map(p=>({...p,score:p.wp*40+(p.m/T.m)*20+(p.gd/p.m)*10+p.g*2})).sort((a,b)=>b.score-a.score)[0];
-  const ironMan=P.slice().sort((a,b)=>b.mp-a.mp||b.m-a.m)[0];
-  const bestDef=P.filter(p=>p.p==="DF"&&p.m>=4).sort((a,b)=>(b.gd/b.m)-(a.gd/a.m))[0];
-  const bestMid=P.filter(p=>p.p==="MF"&&p.m>=5).sort((a,b)=>{const sa=a.wp*30+a.g*10+(a.m/T.m)*15;const sb=b.wp*30+b.g*10+(b.m/T.m)*15;return sb-sa})[0];
-  const mostMissed=P.filter(p=>p.m<T.m&&p.m>=4).map(p=>{const a=absent(p);return{...p,drop:p.wp-a.wp}}).sort((a,b)=>b.drop-a.drop)[0];
-
+  const lk=P.find(p=>p.n==="Lucky Trần"),cam=P.find(p=>p.n==="Cảm"),mch=P.find(p=>p.n==="Mai Cồ Hiếu"),nh=P.find(p=>p.n==="Nguyễn Hoàng"),ql=P.find(p=>p.n==="Quốc Long");
   const awards=[
-    {icon:"🏆",title:"Cầu thủ xuất sắc nhất (MVP)",name:mvp.n,stat:`Win% ${(mvp.wp*100).toFixed(0)}% · ${mvp.g} bàn · ${mvp.m} trận`,detail:"Tổng hợp: tỷ lệ thắng, số trận, hiệu số, bàn thắng"},
-    {icon:"⚽",title:"Vua phá lưới",name:topScorer.n,stat:`${topScorer.g} bàn / ${topScorer.m} trận`,detail:`Hiệu suất: ${(topScorer.g/topScorer.m).toFixed(2)} bàn/trận`},
-    {icon:"🔥",title:"Hiệu suất ghi bàn cao nhất",name:bestGpm.n,stat:`${bestGpm.gpm.toFixed(2)} bàn/trận (${bestGpm.g} bàn / ${bestGpm.m} trận)`,detail:"Tối thiểu 3 trận tham gia"},
-    {icon:"💪",title:"Chiến binh thép (Chuyên cần)",name:ironMan.n,stat:`${ironMan.m}/${T.m} trận (${(ironMan.mp*100).toFixed(0)}%)`,detail:"Không bỏ lỡ trận nào"},
-    {icon:"🛡️",title:"Hậu vệ xuất sắc nhất",name:bestDef.n,stat:`Win% ${(bestDef.wp*100).toFixed(0)}% · GD +${(bestDef.gd/bestDef.m).toFixed(1)}/trận`,detail:`${bestDef.m} trận · ${bestDef.w}W ${bestDef.d}D ${bestDef.l}L`},
-    {icon:"🎯",title:"Tiền vệ xuất sắc nhất",name:bestMid.n,stat:`Win% ${(bestMid.wp*100).toFixed(0)}% · ${bestMid.g} bàn · ${bestMid.m} trận`,detail:"Tổng hợp: tỷ lệ thắng, bàn thắng, tham gia"},
-    {icon:"❤️",title:"Không thể thiếu (Thiếu = yếu)",name:mostMissed.n,stat:`Khi vắng: Win% giảm ${(mostMissed.drop*100).toFixed(0)}%`,detail:`Có mặt ${(mostMissed.wp*100).toFixed(0)}% win → Vắng ${((mostMissed.wp-mostMissed.drop)*100).toFixed(0)}% win`},
+    {icon:"🏆",title:"Cầu thủ xuất sắc nhất (MVP)",name:lk.n,stat:`${lk.m} trận · Win% ${(lk.wp*100).toFixed(0)}% · ${lk.w}W ${lk.d}D ${lk.l}L`,detail:`Đ/T ${((lk.w*3+lk.d)/lk.m).toFixed(2)} · GD +${lk.gd} · Chỉ ${lk.l} trận thua · Trụ cột tuyến giữa`},
+    {icon:"⚽",title:"Vua phá lưới",name:cam.n,stat:`${cam.g} bàn / ${cam.m} trận`,detail:`Hiệu suất: ${(cam.g/cam.m).toFixed(2)} bàn/trận`},
+    {icon:"💪",title:"Chiến binh thép (Iron Man)",name:mch.n,stat:`${mch.m}/${T.m} trận (${(mch.mp*100).toFixed(0)}%)`,detail:"Ra sân đầy đủ 100% trận đấu"},
+    {icon:"🛡️",title:"Hậu vệ xuất sắc nhất",name:nh.n,stat:`Win% ${(nh.wp*100).toFixed(0)}% · ${nh.m} trận · GD +${nh.gd}`,detail:`${nh.w}W ${nh.d}D ${nh.l}L · TB GA/trận: ${(nh.ga/nh.m).toFixed(1)}`},
+    {icon:"🎯",title:"Tiền vệ xuất sắc nhất",name:ql.n,stat:`${ql.g} bàn · Win% ${(ql.wp*100).toFixed(0)}% · ${ql.m} trận`,detail:`Đ/T ${((ql.w*3+ql.d)/ql.m).toFixed(2)} · Ghi bàn + tạo nhịp tuyến giữa`},
   ];
   el.innerHTML=awards.map(a=>`<div class="award"><div class="icon">${a.icon}</div><div class="title">${a.title}</div><div class="player-name">${a.name}</div><div class="stat">${a.stat}</div><div class="detail">${a.detail}</div></div>`).join("");
 }
@@ -356,7 +355,33 @@ function renderGoalsByPos(){
   document.getElementById("goalsPerMatch").innerHTML=`<h3 style="font-size:12px;color:#8a9bb5;margin-bottom:10px">Hiệu suất ghi bàn / trận</h3>`+sc.map(p=>`<div class="chart-bar-h"><div class="name">${p.n}</div><div class="bar-wrap"><div class="bar bar-orange" style="width:${p.gpm/mx*100}%">${p.gpm.toFixed(2)}</div></div><div class="val">${p.g}</div></div>`).join("");
 }
 
-renderOverview();renderWinRate();renderGoals();renderForm();renderAwards();renderFormation();renderMatches();renderTopScorers();renderPosTabs();renderPlayerTable();renderAbsentTable();renderAttendance();renderImpact();renderGoalsByPos();
+function renderVenue(){
+  const home=M.filter(m=>m.v==="Giga Arena"),away=M.filter(m=>m.v!=="Giga Arena");
+  function vs(arr){const w=arr.filter(m=>m.r==="W").length,d=arr.filter(m=>m.r==="D").length,l=arr.filter(m=>m.r==="L").length,gf=arr.reduce((s,m)=>s+m.gf,0),ga=arr.reduce((s,m)=>s+m.ga,0);return{m:arr.length,w,d,l,gf,ga,gd:gf-ga,ppg:arr.length?(w*3+d)/arr.length:0,wp:arr.length?w/arr.length:0}}
+  const h=vs(home),a=vs(away);
+  document.getElementById("venueAnalysis").innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px"><div style="text-align:center;padding:14px;background:var(--navy);border-radius:8px;border:1px solid var(--navy4)"><div style="font-size:12px;color:var(--orange);font-weight:bold;margin-bottom:8px">SÂN NHÀ — GIGA ARENA</div><div style="font-size:26px;font-weight:bold;color:#fff">${h.w}W ${h.d}D ${h.l}L</div><div style="font-size:12px;color:#8a9bb5;margin-top:4px">${h.m} trận · ${(h.wp*100).toFixed(0)}% win</div><div style="margin-top:8px"><span style="color:#4caf50;font-weight:bold;font-size:20px">${h.gf}</span><span style="color:#8a9bb5"> — </span><span style="color:#ef5350;font-weight:bold;font-size:20px">${h.ga}</span></div><div style="font-size:11px;color:#8a9bb5;margin-top:4px">GD: <span style="color:${h.gd>=0?"#4caf50":"#ef5350"}">${h.gd>=0?"+":""}${h.gd}</span> · Đ/T: <b style="color:var(--orange)">${h.ppg.toFixed(2)}</b></div></div><div style="text-align:center;padding:14px;background:var(--navy);border-radius:8px;border:1px solid var(--navy4)"><div style="font-size:12px;color:var(--orange);font-weight:bold;margin-bottom:8px">SÂN KHÁCH</div><div style="font-size:26px;font-weight:bold;color:#fff">${a.w}W ${a.d}D ${a.l}L</div><div style="font-size:12px;color:#8a9bb5;margin-top:4px">${a.m} trận · ${(a.wp*100).toFixed(0)}% win</div><div style="margin-top:8px"><span style="color:#4caf50;font-weight:bold;font-size:20px">${a.gf}</span><span style="color:#8a9bb5"> — </span><span style="color:#ef5350;font-weight:bold;font-size:20px">${a.ga}</span></div><div style="font-size:11px;color:#8a9bb5;margin-top:4px">GD: <span style="color:${a.gd>=0?"#4caf50":"#ef5350"}">${a.gd>=0?"+":""}${a.gd}</span> · Đ/T: <b style="color:var(--orange)">${a.ppg.toFixed(2)}</b></div></div></div>`;
+  const venues={};M.forEach(m=>{if(!venues[m.v])venues[m.v]=[];venues[m.v].push(m)});
+  let vhtml="";Object.entries(venues).sort((a,b)=>b[1].length-a[1].length).forEach(([name,matches])=>{const s=vs(matches);const isH=name==="Giga Arena";vhtml+=`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--navy4)"><div style="width:120px;font-size:12px;font-weight:bold;color:${isH?"var(--orange)":"#e0e0e0"}">${name}${isH?" (Nhà)":""}</div><div style="width:40px;font-size:11px;color:#8a9bb5">${s.m} trận</div><div style="flex:1"><div class="bar-wrap"><div class="bar bar-${s.wp>=.5?"green":"orange"}" style="width:${Math.max(s.wp*100,20)}%">${s.w}W ${s.d}D ${s.l}L</div></div></div><div style="width:50px;font-size:12px;text-align:right;color:${s.gd>=0?"#4caf50":"#ef5350"}">${s.gf}-${s.ga}</div></div>`});
+  document.getElementById("venueBreakdown").innerHTML=vhtml;
+}
+
+function renderOpponents(){
+  const h=["Đối thủ","Trận","W","D","L","GF","GA","GD","%Win","Đ/T","Sân nhà","Sân khách"];
+  document.getElementById("oppThead").innerHTML=h.map(x=>`<th>${x}</th>`).join("");
+  const opps={};
+  M.forEach(m=>{if(!opps[m.vs])opps[m.vs]={w:0,d:0,l:0,gf:0,ga:0,hm:[],am:[]};const o=opps[m.vs];o.gf+=m.gf;o.ga+=m.ga;if(m.r==="W")o.w++;else if(m.r==="D")o.d++;else o.l++;if(m.v==="Giga Arena")o.hm.push(m);else o.am.push(m)});
+  const sorted=Object.entries(opps).sort((a,b)=>(b[1].w+b[1].d+b[1].l)-(a[1].w+a[1].d+a[1].l));
+  const rs=m=>`<span class="match-result result-${m.r}" style="font-size:10px;padding:1px 5px;margin:1px">${m.gf}-${m.ga}</span>`;
+  document.getElementById("oppTbody").innerHTML=sorted.map(([name,o])=>{const t=o.w+o.d+o.l,gd=o.gf-o.ga,wp=o.w/t,ppg=(o.w*3+o.d)/t;return`<tr><td><b>${name}</b></td><td>${t}</td><td>${o.w}</td><td>${o.d}</td><td>${o.l}</td><td>${o.gf}</td><td>${o.ga}</td><td style="color:${gd>=0?"#4caf50":"#ef5350"}">${gd>=0?"+":""}${gd}</td><td>${(wp*100).toFixed(0)}%</td><td style="color:var(--orange);font-weight:bold">${ppg.toFixed(2)}</td><td>${o.hm.length?o.hm.map(rs).join(""):"—"}</td><td>${o.am.length?o.am.map(rs).join(""):"—"}</td></tr>`}).join("");
+}
+
+function renderSummary(){
+  const hm=M.filter(m=>m.v==="Giga Arena"),am=M.filter(m=>m.v!=="Giga Arena");
+  const hw=hm.filter(m=>m.r==="W").length,aw=am.filter(m=>m.r==="W").length;
+  document.getElementById("seasonSummary").innerHTML=`<div style="line-height:1.8;font-size:13px"><h3 style="color:var(--orange);font-size:15px;margin-bottom:10px">Chốt kỳ 2026</h3><p><b style="color:#4caf50">Tấn công:</b> TB ${(T.gf/T.m).toFixed(1)} bàn/trận — hỏa lực mạnh nhờ bộ ba Cảm (13 bàn), Khâm & Văn Chung (7 bàn mỗi người). Quốc Long đóng góp 4 bàn từ tuyến giữa.</p><p style="margin-top:8px"><b style="color:#ef5350">Phòng ngự:</b> TB ${(T.ga/T.m).toFixed(1)} bàn thua/trận — hàng thủ cần cải thiện. Nguyễn Hoàng (${P.find(p=>p.n==="Nguyễn Hoàng").wp*100|0}% win khi ra sân) là trụ cột phòng ngự đáng tin cậy nhất.</p><p style="margin-top:8px"><b style="color:var(--orange)">Chuyển hóa:</b> ${T.d} trận hòa (${(T.d/T.m*100).toFixed(0)}%) — tỷ lệ cao. Cần tìm cách giải quyết trận đấu dứt khoát hơn.</p><p style="margin-top:8px"><b style="color:#fff">Nhân sự:</b> ${P.filter(p=>p.m>=8).length} cầu thủ đá từ 8 trận — chiều sâu đội hình tốt. Lucky Trần (MVP) ổn định với chỉ 1 trận thua khi ra sân. Mai Cồ Hiếu ra sân 100% — tinh thần chiến binh.</p><p style="margin-top:8px"><b style="color:#fff">Sân nhà vs Sân khách:</b> Sân khách ${(aw/am.length*100).toFixed(0)}% win (${aw}W/${am.length} trận) tốt hơn sân nhà Giga Arena ${(hw/hm.length*100).toFixed(0)}% win (${hw}W/${hm.length} trận).</p><h3 style="color:var(--orange);font-size:15px;margin:18px 0 10px">Mục tiêu kỳ tiếp theo</h3><ul style="padding-left:20px;color:#ccc"><li>Giảm bàn thua: mục tiêu TB ≤ 2.0 bàn/trận (hiện tại ${(T.ga/T.m).toFixed(1)})</li><li>Biến hòa thành thắng: giảm tỷ lệ hòa từ ${(T.d/T.m*100).toFixed(0)}% xuống dưới 20%</li><li>Nâng cao thành tích sân nhà Giga Arena — cần thắng ổn định hơn tại sân nhà</li><li>Duy trì lực lượng tấn công — phát huy Cảm, Khâm, Văn Chung</li><li>Tăng sự gắn kết: tạo cơ hội cho cầu thủ dự bị hòa nhập nhiều hơn</li></ul></div>`;
+}
+
+renderOverview();renderWinRate();renderGoals();renderForm();renderAwards();renderMatches();renderTopScorers();renderPosTabs();renderPlayerTable();renderAbsentTable();renderAttendance();renderImpact();renderGoalsByPos();renderVenue();renderOpponents();renderFormation();renderSummary();
 </script>
 </body>
 </html>
