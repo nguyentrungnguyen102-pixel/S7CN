@@ -1,0 +1,47 @@
+name: Auto-update Stats from Google Sheets
+
+on:
+  schedule:
+    # Chạy mỗi thứ Hai lúc 02:00 UTC (09:00 ICT)
+    - cron: "0 2 * * 1"
+  workflow_dispatch:
+    # Cho phép chạy thủ công từ tab Actions
+
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run update script
+        run: python scripts/update_stats.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add stats.html
+          if git diff --staged --quiet; then
+            echo "No changes — stats.html is already up to date."
+          else
+            MATCH_COUNT=$(grep -o 'Cập nhật sau [0-9]* trận' stats.html | grep -o '[0-9]*' || echo "?")
+            git commit -m "Auto-update stats: ${MATCH_COUNT} trận ($(date +'%d/%m/%Y'))"
+            git push origin main
+            echo "✓ Pushed updated stats.html to main"
+          fi
