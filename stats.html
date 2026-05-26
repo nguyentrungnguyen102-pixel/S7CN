@@ -1,483 +1,782 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" data-tmpl="club">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>S7CN FC - Thống kê 2026</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>S7-CN FC · Dashboard 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#0a1628;color:#e0e0e0;line-height:1.5}
-:root{--navy:#0a1628;--navy2:#12223a;--navy3:#1a3050;--navy4:#1e3a5f;--orange:#e8762b;--orange2:#f59e4f;--white:#f0f2f5}
-.container{max-width:1400px;margin:0 auto;padding:16px}
-header{background:linear-gradient(135deg,#12223a,#0a1628);padding:24px;border-radius:12px;margin-bottom:20px;text-align:center;border:1px solid var(--navy4)}
-header h1{font-size:28px;color:var(--orange);margin-bottom:4px}
-header .sub{color:#8a9bb5;font-size:14px}
-header .logo-text{font-size:11px;color:var(--navy4);margin-top:4px;letter-spacing:2px}
-.grid{display:grid;gap:16px;margin-bottom:20px}
-.grid-4{grid-template-columns:repeat(auto-fit,minmax(155px,1fr))}
-.grid-2{grid-template-columns:repeat(auto-fit,minmax(380px,1fr))}
-.grid-3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.card{background:var(--navy2);border-radius:10px;padding:20px;border:1px solid var(--navy4)}
-.card h2{font-size:14px;color:var(--orange);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:8px}
-.stat-card{text-align:center;padding:18px 14px}
-.stat-card .number{font-size:34px;font-weight:bold;color:#fff}
-.stat-card .label{font-size:10px;color:#8a9bb5;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
-.stat-card.win .number{color:#4caf50}
-.stat-card.draw .number{color:var(--orange)}
-.stat-card.lose .number{color:#ef5350}
-.stat-card.goals .number{color:var(--orange2)}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th{background:#0d1a2e;color:var(--orange);padding:8px 5px;text-align:left;position:sticky;top:0;font-size:10px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;z-index:2}
-td{padding:6px 5px;border-bottom:1px solid var(--navy4);white-space:nowrap}
-tr:hover{background:rgba(232,118,43,.06)}
-.pos-badge{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:bold;color:#fff}
-.pos-FW{background:#c0392b}.pos-MF{background:#2471a3}.pos-DF{background:#27ae60}.pos-GK{background:var(--orange)}
-.form-dots{display:flex;gap:2px;align-items:center}
-.form-dot{width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold}
-.form-W{background:#4caf50}.form-D{background:var(--orange)}.form-L{background:#ef5350}.form-N{background:#2a3a50}
-.bar-wrap{height:18px;background:#0d1a2e;border-radius:4px;overflow:hidden;min-width:60px}
-.bar{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 6px;font-size:10px;font-weight:bold;color:#fff;min-width:fit-content}
-.bar-green{background:linear-gradient(90deg,#1b5e20,#4caf50)}.bar-red{background:linear-gradient(90deg,#b71c1c,#ef5350)}.bar-orange{background:linear-gradient(90deg,#b35a1a,var(--orange))}
-.match-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--navy4)}
-.match-row:last-child{border:none}
-.match-date{width:80px;font-size:11px;color:#8a9bb5}.match-vs{flex:1;font-weight:500;font-size:13px}
-.match-score{font-size:17px;font-weight:bold;min-width:50px;text-align:center}
-.match-result{padding:3px 9px;border-radius:4px;font-size:11px;font-weight:bold;min-width:46px;text-align:center}
-.result-W{background:#1b5e20;color:#fff}.result-D{background:#b35a1a;color:#fff}.result-L{background:#b71c1c;color:#fff}
-.match-venue{font-size:11px;color:#607d8b;min-width:100px;text-align:right}
-.top-scorer{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--navy4)}
-.top-scorer:last-child{border:none}
-.scorer-rank{width:25px;height:25px;border-radius:50%;background:var(--navy3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
-.scorer-rank.gold{background:#ffd700;color:#000}.scorer-rank.silver{background:#c0c0c0;color:#000}.scorer-rank.bronze{background:#cd7f32;color:#fff}
-.scorer-name{flex:1;font-size:13px}.scorer-goals{font-size:20px;font-weight:bold;color:var(--orange)}
-.tabs{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap}
-.tab{padding:7px 14px;border-radius:6px;background:var(--navy3);color:#8a9bb5;cursor:pointer;font-size:12px;border:none;transition:all .15s}
-.tab:hover{background:var(--navy4)}.tab.active{background:var(--orange);color:#fff;font-weight:bold}
-.impact-pos{color:#4caf50;font-weight:bold}.impact-neg{color:#ef5350;font-weight:bold}.impact-neu{color:var(--orange);font-weight:bold}
-.scroll-x{overflow-x:auto}
-.legend{display:flex;gap:14px;margin:10px 0;font-size:11px;color:#8a9bb5;flex-wrap:wrap}
-.legend span{display:flex;align-items:center;gap:4px}
-.legend .dot{width:12px;height:12px;border-radius:50%;display:inline-block}
-.chart-bar-h{display:flex;align-items:center;gap:8px;margin:5px 0}
-.chart-bar-h .name{width:90px;font-size:11px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chart-bar-h .bar-wrap{flex:1}.chart-bar-h .val{width:28px;font-size:11px;font-weight:bold;color:var(--orange)}
-.win-rate-circle{width:78px;height:78px;border-radius:50%;border:4px solid var(--navy4);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 8px}
-.win-rate-circle .pct{font-size:20px;font-weight:bold;color:#4caf50}.win-rate-circle .lbl{font-size:9px;color:#8a9bb5}
-.gd-bar{display:flex;height:22px;border-radius:4px;overflow:hidden;margin:8px 0}
-.gd-gf{background:#4caf50;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
-.gd-ga{background:#ef5350;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
-.absent-bad{color:#ef5350;font-weight:bold}.absent-good{color:#4caf50;font-weight:bold}.absent-neutral{color:var(--orange);font-weight:bold}
-.hint{font-size:11px;color:#607d8b;font-style:italic;margin:6px 0}
-
-/* Awards */
-.award-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
-.award{background:var(--navy);border:1px solid var(--navy4);border-radius:10px;padding:16px;text-align:center;position:relative;overflow:hidden}
-.award::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange),var(--orange2))}
-.award .icon{font-size:36px;margin-bottom:6px}
-.award .title{font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
-.award .player-name{font-size:20px;font-weight:bold;color:#fff;margin-bottom:2px}
-.award .stat{font-size:13px;color:var(--orange2);font-weight:bold}
-.award .detail{font-size:11px;color:#8a9bb5;margin-top:4px}
-
-/* Formation */
-.formation-tabs{display:flex;gap:6px;margin-bottom:16px;justify-content:center}
-.formation-tab{padding:8px 20px;border-radius:6px;background:var(--navy3);color:#8a9bb5;cursor:pointer;font-size:14px;font-weight:bold;border:2px solid transparent;transition:all .15s}
-.formation-tab:hover{border-color:var(--navy4)}.formation-tab.active{background:var(--orange);color:#fff;border-color:var(--orange)}
-.pitch{position:relative;width:100%;max-width:500px;margin:0 auto;aspect-ratio:3/4;background:linear-gradient(180deg,#1e6b35 0%,#1e6b35 49.5%,#1a5f2e 49.5%,#1a5f2e 50.5%,#1e6b35 50.5%);border:3px solid rgba(255,255,255,.7);border-radius:8px;overflow:hidden}
-.pitch::before{content:'';position:absolute;top:50%;left:50%;width:80px;height:80px;border:2px solid rgba(255,255,255,.5);border-radius:50%;transform:translate(-50%,-50%)}
-.pitch::after{content:'';position:absolute;top:50%;left:0;right:0;height:2px;background:rgba(255,255,255,.5)}
-.pitch-box{position:absolute;left:20%;right:20%;height:14%;border:2px solid rgba(255,255,255,.5)}
-.pitch-box.top{top:0;border-top:none}.pitch-box.bottom{bottom:0;border-bottom:none}
-.pitch-player{position:absolute;transform:translate(-50%,-50%);text-align:center;z-index:2}
-.pitch-circle{width:48px;height:48px;border-radius:50%;background:rgba(232,118,43,.9);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold;color:#fff;margin:0 auto;line-height:1.1;padding:2px}
-.pitch-label{font-size:9px;color:rgba(255,255,255,.8);margin-top:2px;text-shadow:0 1px 2px rgba(0,0,0,.8)}
-.pitch-circle.gk{background:var(--orange)}
-.pitch-circle.df{background:#27ae60}
-.pitch-circle.mf{background:#2471a3}
-.pitch-circle.fw{background:#c0392b}
-.detail-row td{padding:0!important;border:none!important}
-.detail-content{padding:12px 16px;background:var(--navy);border-radius:6px;margin:4px 0 8px}
-.detail-match{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:11px;border-bottom:1px solid var(--navy4);flex-wrap:wrap}
-.detail-match:last-child{border:none}
-.detail-absent{opacity:.35}
-tr.clickable{cursor:pointer}
-tr.clickable:hover{background:rgba(232,118,43,.12)!important}
-.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-.cmp-card{background:var(--navy);border-radius:8px;padding:16px;border:1px solid var(--navy4);text-align:center}
-.cmp-year{font-size:13px;color:var(--orange);font-weight:bold;margin-bottom:10px;letter-spacing:1px}
-.cmp-big{font-size:24px;font-weight:bold;color:#fff;margin:4px 0}
-.cmp-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--navy4);font-size:12px}
-.cmp-row:last-child{border:none}
-.cmp-label{color:#8a9bb5;width:100px;text-align:left}
-.cmp-val{font-weight:bold;width:80px;text-align:center}
-.cmp-better{color:#4caf50}.cmp-worse{color:#ef5350}.cmp-same{color:var(--orange)}
-.cmp-arrow{font-size:16px;width:30px;text-align:center}
-
-@media(max-width:600px){
-  .grid-4{grid-template-columns:repeat(2,1fr)}.grid-2,.grid-3{grid-template-columns:1fr}
-  .match-venue{display:none}table{font-size:10px}th,td{padding:4px 3px}
-  .award-grid{grid-template-columns:1fr 1fr}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0C0907;--bg2:#110E09;--sf:#181410;--sf2:#1F1B15;--sf3:#282119;
+  --bd:#362D22;--bd2:#4A4035;
+  --or:#E8701A;--or2:#F5893A;--or-d:rgba(232,112,26,.13);--or-g:rgba(232,112,26,.28);
+  --tl:#2A8BAE;--tl-d:rgba(42,139,174,.13);
+  --tx:#F0ECE6;--tx2:#A09286;--tx3:#6A584E;
+  --grn:#3CB870;--grn-d:rgba(60,184,112,.13);
+  --red:#E54545;--red-d:rgba(229,69,69,.13);
+  --amb:#E8A030;--amb-d:rgba(232,160,48,.13);
+  --kfw:#DC1A1A;--kgk:#1B3560;
+  --fd:'Playfair Display',serif;--fb:'Be Vietnam Pro',sans-serif;
+  --r:12px;--rs:8px;
 }
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--fb);line-height:1.5;min-height:100vh}
+
+.hero{background:linear-gradient(140deg,var(--bg2) 0%,#0f0b07 55%,var(--bg2) 100%);border-bottom:1px solid var(--bd);padding:44px 48px 34px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 18% 55%,var(--or-d) 0%,transparent 60%);pointer-events:none}
+.hero::after{content:'';position:absolute;top:0;right:0;width:280px;height:100%;background:radial-gradient(ellipse at 100% 50%,rgba(42,139,174,.07) 0%,transparent 70%);pointer-events:none}
+.hero-i{display:flex;align-items:center;gap:30px;max-width:1440px;margin:0 auto}
+.logo-wrap{width:90px;height:90px;border-radius:50%;background:#fff;padding:5px;box-shadow:0 0 0 2px var(--or),0 0 28px var(--or-g);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.hero-logo{width:78px;height:78px;object-fit:contain;border-radius:50%;display:block}
+.hero-info{flex:1}
+.hero-eye{font-size:10px;letter-spacing:4px;color:var(--or);text-transform:uppercase;margin-bottom:5px;font-weight:600;font-family:var(--fd)}
+.hero-name{font-family:'Playfair Display',serif;font-size:56px;font-weight:700;letter-spacing:2px;line-height:1;color:#fff;text-shadow:0 2px 30px var(--or-g)}
+.hero-sub{margin-top:7px;color:var(--tx2);font-size:12px;letter-spacing:.3px}
+.hero-kpi{display:flex;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;flex-shrink:0}
+.kp{padding:16px 22px;text-align:center;border-right:1px solid var(--bd)}
+.kp:last-child{border:none}
+.kp-n{font-family:var(--fd);font-size:26px;font-weight:700;line-height:1}
+.kp-n.or{color:var(--or)}.kp-n.grn{color:var(--grn)}.kp-n.sm{font-size:15px;letter-spacing:.3px;margin-top:4px}
+.kp-l{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--tx3);margin-top:4px;font-weight:500}
+
+.tbar{background:var(--sf2);border-bottom:1px solid var(--bd);padding:0 48px}
+.tbar-i{max-width:1440px;margin:0 auto;display:flex;align-items:center;gap:6px;padding:9px 0}
+.tlbl{font-size:9px;letter-spacing:2px;color:var(--tx3);text-transform:uppercase;font-weight:600;margin-right:6px;white-space:nowrap}
+.tb{padding:6px 18px;border-radius:6px;background:transparent;border:1px solid var(--bd);color:var(--tx3);font-size:10px;font-weight:600;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all .18s;font-family:var(--fb)}
+.tb:hover{color:var(--tx2);border-color:var(--bd2)}.tb.on{background:var(--or);border-color:var(--or);color:#fff}
+
+.snav{position:sticky;top:0;z-index:90;background:rgba(12,9,7,.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd)}
+.snav-i{max-width:1440px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none}
+.snav-i::-webkit-scrollbar{display:none}
+.sl{padding:13px 15px;font-size:11px;font-weight:500;letter-spacing:.3px;text-decoration:none;color:var(--tx3);white-space:nowrap;border-bottom:2px solid transparent;transition:all .18s;font-family:var(--fb)}
+.sl:hover{color:var(--tx2)}.sl.on{color:var(--or);border-bottom-color:var(--or)}
+
+.content{max-width:1440px;margin:0 auto;padding:26px 48px 80px;display:flex;flex-direction:column;gap:34px}
+.grp{display:flex;flex-direction:column;gap:16px}
+.ghdr{display:flex;align-items:center;gap:14px}
+.gname{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--or);white-space:nowrap}
+.gline{flex:1;height:1px;background:linear-gradient(90deg,var(--bd),transparent)}
+.gbadge{font-size:9px;letter-spacing:1.5px;color:var(--tx3);border:1px solid var(--bd);padding:2px 8px;border-radius:10px;font-weight:600}
+
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:20px}
+.ct{font-family:var(--fd);font-size:9px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--or);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.ct::after{content:'';flex:1;height:1px;background:var(--bd)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+
+.ovs{display:grid;grid-template-columns:repeat(8,1fr);gap:1px;background:var(--bd);border-radius:var(--r);overflow:hidden;border:1px solid var(--bd)}
+.ovc{background:var(--sf);padding:17px 6px;text-align:center;transition:background .15s}
+.ovc:hover{background:var(--sf2)}
+.ovn{font-family:var(--fd);font-size:28px;font-weight:700;line-height:1}
+.ovn.grn{color:var(--grn)}.ovn.red{color:var(--red)}.ovn.or{color:var(--or)}.ovn.amb{color:var(--amb)}
+.ovl{font-size:8px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx3);margin-top:4px}
+
+.wdl-bar{display:flex;height:5px;border-radius:3px;overflow:hidden;width:100%;gap:2px}
+.ww{background:var(--grn)}.wd{background:var(--amb)}.wl{background:var(--red)}
+
+.scr{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--bd)}
+.scr:last-child{border:none}
+.rk{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;flex-shrink:0;font-family:var(--fd)}
+.rk1{background:var(--or);color:#fff}.rk2{background:#a0a0a0;color:#000}.rk3{background:#8b6347;color:#fff}.rkn{background:var(--sf3);color:var(--tx2)}
+.sb{flex:2;height:4px;border-radius:2px;background:var(--sf3);overflow:hidden}
+.sbf{height:100%;border-radius:2px;transition:width .6s ease}
+
+.mr{display:flex;align-items:center;gap:7px;padding:7px 0;border-bottom:1px solid var(--bd);cursor:pointer;transition:background .12s}
+.mr:hover{background:rgba(232,112,26,.05);margin:0 -4px;padding:7px 4px;border-radius:4px}
+.mr:last-child{border:none}
+.mwk{font-size:9px;color:var(--tx3);letter-spacing:1px;font-weight:700;width:22px;flex-shrink:0;font-family:var(--fd)}
+.mdt{font-size:10px;color:var(--tx3);width:36px;flex-shrink:0}
+.mvs{flex:1;font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.msc{font-family:var(--fd);font-size:14px;font-weight:700;min-width:44px;text-align:center}
+.rp{font-size:8px;font-weight:700;padding:2px 7px;border-radius:14px;min-width:40px;text-align:center}
+.rW{background:var(--grn-d);color:var(--grn)}.rD{background:var(--amb-d);color:var(--amb)}.rL{background:var(--red-d);color:var(--red)}
+.mven{font-size:10px;color:var(--tx3);min-width:78px;text-align:right;white-space:nowrap}
+.mdet{background:var(--bg);border-radius:var(--rs);margin:3px 0 7px;padding:10px 12px;display:none}
+.mdet.open{display:block}
+.chip{display:inline-flex;align-items:center;gap:3px;border-radius:5px;padding:3px 6px;margin:2px;font-size:10px;border:1px solid}
+.chip-g{background:var(--sf2);border-color:var(--bd)}.chip-pen{background:var(--amb-d);border-color:rgba(232,160,48,.25)}
+.chip-ms{background:var(--red-d);border-color:rgba(229,69,69,.25)}.chip-c{background:var(--red-d);border-color:rgba(229,69,69,.2)}
+.chip .sc{color:var(--or);font-weight:600}.chip .as{color:var(--tl)}.chip .sm{font-size:8px;color:var(--tx3)}
+
+.gkc{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r);padding:16px;text-align:center;position:relative;overflow:hidden}
+.gkc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--or),var(--or2))}
+.gkn{font-family:var(--fd);font-size:19px;font-weight:700;color:#fff;margin-bottom:2px}
+.gkp{font-size:9px;letter-spacing:2px;color:var(--or);text-transform:uppercase;margin-bottom:10px;font-weight:600}
+.gkg{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.gks{background:rgba(255,255,255,.05);border-radius:5px;padding:8px 4px;text-align:center}
+.gks-n{font-family:var(--fd);font-size:17px;font-weight:700}.gks-l{font-size:7px;color:var(--tx3);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+
+.hc{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bd);border-radius:6px;overflow:hidden;margin-bottom:9px}
+.hcc{background:var(--sf2);padding:12px;text-align:center}
+.hcn{font-family:var(--fd);font-size:24px;font-weight:700}
+.hcl{font-size:8px;color:var(--tx3);letter-spacing:1.5px;text-transform:uppercase;margin-top:3px}
+
+.pr{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd);font-size:11px}
+.pr:last-child{border:none}
+.pr-n{font-weight:600;flex:1}
+.pv{font-family:var(--fd);font-size:14px;font-weight:700;min-width:24px;text-align:center}
+
+.bw{height:11px;background:var(--sf3);border-radius:3px;overflow:hidden;min-width:30px}
+.b{height:100%;display:flex;align-items:center;padding:0 4px;font-size:8px;font-weight:700;color:#fff;min-width:12px;white-space:nowrap}
+.bor{background:linear-gradient(90deg,#7a3a0a,var(--or))}.bgrn{background:linear-gradient(90deg,#1a5e35,var(--grn))}.bred{background:linear-gradient(90deg,#7a1a1a,var(--red))}.btl{background:linear-gradient(90deg,#0a3a4a,var(--tl))}
+.cb{display:flex;align-items:center;gap:6px;margin:2px 0}
+.cbn{width:100px;font-size:10px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--tx2)}
+.cbw{flex:1}.cbv{width:26px;font-size:10px;font-weight:600;color:var(--or);text-align:right}
+
+table{width:100%;border-collapse:collapse;font-size:11px}
+th{padding:7px 5px;text-align:left;font-size:8px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx3);border-bottom:1px solid var(--bd);background:var(--sf);white-space:nowrap}
+td{padding:6px 5px;border-bottom:1px solid var(--bd)}
+tr:last-child td{border:none}
+tr.cl{cursor:pointer}
+tr.cl:hover td{background:var(--sf2)}
+.dr td{padding:0!important;border:none!important}
+.di{padding:9px 11px;background:var(--bg);border-radius:6px;margin:3px 0 5px}
+.pos{display:inline-block;padding:2px 5px;border-radius:3px;font-size:8px;font-weight:700}
+.FW{background:var(--red-d);color:#ef7777}.MF{background:var(--tl-d);color:var(--tl)}
+.DF{background:var(--grn-d);color:var(--grn)}.GK{background:var(--amb-d);color:var(--amb)}
+.fds{display:flex;gap:2px}
+.fd{width:12px;height:12px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:6px;font-weight:700;color:#fff}
+.fdW{background:var(--grn)}.fdD{background:var(--amb)}.fdL{background:var(--red)}.fdN{background:var(--sf3);color:var(--tx3)}
+
+.aws{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.aw{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r);padding:14px 11px;text-align:center;position:relative;overflow:hidden}
+.aw::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--or),var(--or2))}
+.aw-t{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--or);font-weight:600;margin-bottom:6px;line-height:1.5}
+.aw-p{font-family:var(--fd);font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
+.aw-s{font-size:10px;color:var(--or2)}.aw-d{font-size:9px;color:var(--tx3);margin-top:3px;line-height:1.5}
+
+.cmh{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.cmhc{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--rs);padding:12px;text-align:center}
+.cmy{font-size:8px;letter-spacing:2px;color:var(--or);font-weight:600;text-transform:uppercase;margin-bottom:5px}
+.cmb{font-family:var(--fd);font-size:19px;font-weight:700}
+.cmcols{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.cmcol{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--rs);padding:10px}
+.cmt{font-size:8px;letter-spacing:2px;color:var(--or);font-weight:600;text-transform:uppercase;margin-bottom:7px}
+.cr{display:flex;justify-content:space-between;align-items:center;padding:2px 0;border-bottom:1px solid var(--bd);font-size:10px}
+.cr:last-child{border:none}
+.crl{color:var(--tx3)}.crv{font-weight:600;min-width:26px;text-align:right}
+.ig{color:var(--grn)}.ir{color:var(--red)}.ia{color:var(--amb)}
+
+.pw{display:flex;justify-content:center;padding:8px 0 12px}
+.pt{position:relative;width:310px;aspect-ratio:2/3;border:1.5px solid rgba(255,255,255,.15);border-radius:6px;overflow:hidden;background:linear-gradient(180deg,#1a5e2a,#1e6b30)}
+.pt::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(0,0,0,.08) 27px,rgba(0,0,0,.08) 54px)}
+.pml{position:absolute;top:50%;left:0;right:0;height:1px;background:rgba(255,255,255,.22)}
+.pmc{position:absolute;top:50%;left:50%;width:62px;height:62px;border-radius:50%;border:1px solid rgba(255,255,255,.22);transform:translate(-50%,-50%)}
+.pmbt{position:absolute;top:0;left:24%;right:24%;height:13%;border:1px solid rgba(255,255,255,.22);border-top:none}
+.pmbb{position:absolute;bottom:0;left:24%;right:24%;height:13%;border:1px solid rgba(255,255,255,.22);border-bottom:none}
+.pp{position:absolute;transform:translate(-50%,-50%);text-align:center;z-index:5}
+.pc{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:600;color:#fff;margin:0 auto;border:1.5px solid rgba(255,255,255,.3);box-shadow:0 2px 10px rgba(0,0,0,.6);text-align:center;line-height:1.1;padding:2px;font-family:var(--fb)}
+.pc-gk{background:linear-gradient(135deg,#1B3560,#2A5BA8)}
+.pc-fw{background:linear-gradient(135deg,#9B1010,var(--kfw))}
+.pc-mf{background:linear-gradient(135deg,#8a3a0a,#E8701A)}
+.pc-df{background:linear-gradient(135deg,#1a5e35,var(--grn))}
+.pl{font-size:7px;color:rgba(255,255,255,.85);margin-top:2px;text-shadow:0 1px 3px rgba(0,0,0,.9);white-space:nowrap;max-width:56px;overflow:hidden;text-overflow:ellipsis}
+
+.vp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.vc{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--rs);padding:13px;text-align:center}
+.vc-n{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--or);font-weight:600;margin-bottom:6px}
+.vc-w{font-family:var(--fd);font-size:17px;font-weight:700;margin-bottom:3px}
+.vc-s{font-size:10px;color:var(--tx3)}
+
+.sumg{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.sumb h3{font-family:var(--fd);font-size:10px;letter-spacing:2px;color:var(--or);text-transform:uppercase;margin-bottom:7px;padding-bottom:6px;border-bottom:1px solid var(--bd)}
+.sumb p{font-size:12px;color:var(--tx2);line-height:1.9;margin-bottom:7px}
+.sumb ul{padding-left:14px;color:var(--tx2);font-size:12px;line-height:2.1}
+.sumb li::marker{color:var(--or)}
+
+.twb{flex:1;min-width:52px;padding:5px 4px;background:var(--sf3);border:1px solid var(--bd);border-radius:5px;color:var(--tx2);font-size:10px;cursor:pointer;font-family:var(--fb);transition:all .15s;text-align:center}
+.twb:hover{border-color:var(--bd2)}.twb.on{background:var(--or);border-color:var(--or);color:#fff;font-weight:600}
+
+.hint{font-size:10px;color:var(--tx3);font-style:italic;margin-bottom:8px}
+.sx{overflow-x:auto;scrollbar-width:thin;scrollbar-color:var(--bd2) transparent}
+.sx::-webkit-scrollbar{height:3px}
+.sx::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
+
+[data-tmpl="stats"] .grp-fm{display:none}
+[data-tmpl="match"] .grp-fm,[data-tmpl="match"] .grp-an,[data-tmpl="match"] .grp-tk{display:none}
+
+@media(max-width:1100px){.aws{grid-template-columns:repeat(3,1fr)}.cmcols{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){
+  .hero-i{flex-direction:column;text-align:center;gap:16px}.hero-kpi{width:100%}
+  .content{padding:18px 16px 60px}.g2,.g3{grid-template-columns:1fr}
+  .ovs{grid-template-columns:repeat(4,1fr)}.aws{grid-template-columns:1fr 1fr}.cmcols{grid-template-columns:1fr}.sumg{grid-template-columns:1fr}
+  .hero-name{font-size:38px}.tbar,.hero{padding-left:16px;padding-right:16px}.mven{display:none}
+}
+@media(max-width:480px){.ovs{grid-template-columns:repeat(2,1fr)}.aws{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="container">
-<header>
-  <h1>S7-CN FC</h1>
-  <div class="sub">Thống kê mùa giải 2026 | Cập nhật sau 14 trận</div>
-  <div class="logo-text">SINCE 2018</div>
+
+<header class="hero">
+  <div class="hero-i">
+    <div class="logo-wrap"><svg viewBox="0 0 78 78" class="hero-logo"><circle cx="39" cy="39" r="37" fill="#1a1510" stroke="var(--or)" stroke-width="2"/><text x="39" y="30" text-anchor="middle" fill="var(--or)" font-family="'Playfair Display',serif" font-size="15" font-weight="700">S7-CN</text><text x="39" y="48" text-anchor="middle" fill="#fff" font-family="'Playfair Display',serif" font-size="13" font-weight="600">FC</text><text x="39" y="62" text-anchor="middle" fill="#A09286" font-family="'Be Vietnam Pro',sans-serif" font-size="6" letter-spacing="2">SINCE 2018</text></svg></div>
+    <div class="hero-info">
+      <div class="hero-eye">S7-CN FC · SINCE 2018</div>
+      <h1 class="hero-name">S7-CN FC</h1>
+      <p class="hero-sub">Mùa giải 2026 &nbsp;·&nbsp; Cập nhật sau 14 trận &nbsp;·&nbsp; Dữ liệu chi tiết từ tuần 11</p>
+    </div>
+    <div class="hero-kpi">
+      <div class="kp"><div class="kp-n">14</div><div class="kp-l">Trận</div></div>
+      <div class="kp"><div class="kp-n sm">7W · 4D · 3L</div><div class="kp-l">Thành tích</div></div>
+      <div class="kp"><div class="kp-n or">25</div><div class="kp-l">Điểm</div></div>
+    </div>
+  </div>
 </header>
 
-<div class="grid grid-4" id="overviewCards"></div>
+<nav class="snav"><div class="snav-i" id="snavEl"></div></nav>
 
-<div class="grid grid-3">
-  <div class="card"><h2>Tỷ lệ thắng/hòa/thua</h2><div id="winRateViz"></div></div>
-  <div class="card"><h2>Bàn thắng / Bàn thua</h2><div id="goalsViz"></div></div>
-  <div class="card"><h2>Phong độ 5 trận gần nhất</h2><div id="formViz"></div>
-    <div class="legend"><span><span class="dot" style="background:#4caf50"></span> Thắng</span><span><span class="dot" style="background:var(--orange)"></span> Hòa</span><span><span class="dot" style="background:#ef5350"></span> Thua</span></div>
+<div class="content">
+
+  <div class="grp grp-ov" id="grp-ov" data-screen-label="01 Tổng quan">
+    <div class="ghdr"><span class="gname">Tổng quan</span><div class="gline"></div><span class="gbadge">OVERVIEW</span></div>
+    <div id="ovStrip" class="ovs"></div>
+    <div class="g3">
+      <div class="card"><div class="ct">Tỷ lệ thắng</div><div id="winRate"></div></div>
+      <div class="card"><div class="ct">Bàn thắng / Thua</div><div id="goalsViz"></div></div>
+      <div class="card"><div class="ct">5 trận gần nhất</div><div id="formViz"></div></div>
+    </div>
   </div>
+
+  <div class="grp grp-mt" id="grp-mt" data-screen-label="02 Trận đấu">
+    <div class="ghdr"><span class="gname">Trận đấu</span><div class="gline"></div><span class="gbadge">MATCHES</span></div>
+    <div class="g2">
+      <div class="card"><div class="ct">Lịch sử trận đấu</div><p class="hint">Nhấn trận có "▾ chi tiết" để xem bàn thắng · assist · penalty</p><div id="matchEl"></div></div>
+      <div class="card"><div class="ct">Phân tích đối thủ</div><div class="sx"><table><thead><tr id="oppTh"></tr></thead><tbody id="oppTb"></tbody></table></div></div>
+    </div>
+  </div>
+
+  <div class="grp grp-pl" id="grp-pl" data-screen-label="03 Cầu thủ">
+    <div class="ghdr"><span class="gname">Cầu thủ</span><div class="gline"></div><span class="gbadge">PLAYERS</span></div>
+    <div class="card">
+      <div class="ct">Thống kê cá nhân</div>
+      <div style="display:flex;gap:5px;margin-bottom:11px;flex-wrap:wrap" id="posF"></div>
+      <div class="sx"><table><thead><tr id="pTh"></tr></thead><tbody id="pTb"></tbody></table></div>
+    </div>
+    <div class="g2">
+      <div class="card"><div class="ct">Tỷ lệ tham gia</div><div id="attEl"></div></div>
+      <div class="card"><div class="ct">Điểm / trận khi thi đấu</div><div id="impEl"></div></div>
+    </div>
+  </div>
+
+  <div class="grp grp-atk" id="grp-atk" data-screen-label="04 Tấn công">
+    <div class="ghdr"><span class="gname">Tấn công</span><div class="gline"></div><span class="gbadge">ATTACK</span></div>
+    <div class="g2">
+      <div class="card"><div class="ct">Vua phá lưới</div><div id="scorers"></div></div>
+      <div class="card"><div class="ct">Kiến tạo · Assist</div><div id="assists"></div></div>
+    </div>
+    <div class="g3">
+      <div class="card"><div class="ct">Penalty ghi bàn / hỏng</div><div id="penEl"></div></div>
+      <div class="card"><div class="ct">Bàn thắng theo hiệp</div><div id="halfGf"></div></div>
+      <div class="card"><div class="ct">Hiệu suất bàn / trận</div><div id="gpmEl"></div></div>
+    </div>
+  </div>
+
+  <div class="grp grp-def" id="grp-def" data-screen-label="05 Phòng ngự">
+    <div class="ghdr"><span class="gname">Phòng ngự</span><div class="gline"></div><span class="gbadge">DEFENSE</span></div>
+    <div class="g2">
+      <div class="card"><div class="ct">Thống kê thủ môn</div><div id="gkEl"></div></div>
+      <div class="card"><div class="ct">Bàn thua theo hiệp</div><div id="halfGa"></div></div>
+    </div>
+  </div>
+
+  <div class="grp grp-an" id="grp-an" data-screen-label="06 Phân tích">
+    <div class="ghdr"><span class="gname">Phân tích</span><div class="gline"></div><span class="gbadge">ANALYSIS</span></div>
+    <div class="g2">
+      <div class="card"><div class="ct">Sân nhà vs Sân khách</div><div id="venueEl"></div></div>
+      <div class="card"><div class="ct">Chi tiết theo sân</div><div id="venBrkEl"></div></div>
+    </div>
+  </div>
+
+  <div class="grp grp-fm" id="grp-fm" data-screen-label="07 Đội hình tiêu biểu">
+    <div class="ghdr"><span class="gname">Đội hình tiêu biểu</span><div class="gline"></div><span class="gbadge">FORMATION</span></div>
+    <div class="card">
+      <div class="ct">Đội hình ra sân</div>
+      <div style="display:flex;gap:8px;justify-content:center;margin-bottom:14px" id="fmTabs"></div>
+      <div id="pitchEl"></div>
+      <div style="display:flex;justify-content:center;gap:16px;margin-top:10px;font-size:10px;color:var(--tx3);flex-wrap:wrap">
+        <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:var(--kfw);display:inline-block"></span>Tiền đạo · Đỏ</span>
+        <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:#E8701A;display:inline-block"></span>Tiền vệ · Cam</span>
+        <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:var(--grn);display:inline-block"></span>Hậu vệ · Xanh lá</span>
+        <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:var(--kgk);display:inline-block"></span>Thủ môn · Xanh dương</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grp grp-tk" id="grp-tk" data-screen-label="08 Tổng kết">
+    <div class="ghdr"><span class="gname">Tổng kết</span><div class="gline"></div><span class="gbadge">SEASON RECAP</span></div>
+    <div id="tkEl"></div>
+  </div>
+
+  <div class="grp grp-vd" id="grp-vd" data-screen-label="09 Vinh danh">
+    <div class="ghdr"><span class="gname">Vinh danh</span><div class="gline"></div><span class="gbadge">AWARDS</span></div>
+    <div class="card"><div class="ct">Giải thưởng mùa giải 2026</div><div class="aws" id="awEl"></div></div>
+  </div>
+
+  <div class="grp grp-dg" id="grp-dg" data-screen-label="10 Đánh giá">
+    <div class="ghdr"><span class="gname">Đánh giá</span><div class="gline"></div><span class="gbadge">EVALUATION</span></div>
+    <div class="card"><div class="ct">Nhận xét &amp; Định hướng</div><div id="sumEl"></div></div>
+  </div>
+
 </div>
 
-<div class="card">
-  <h2>So sánh 2025 vs 2026 (Sân 11)</h2>
-  <div id="compareSection"></div>
-</div>
-<div class="card"><h2>Vinh danh mùa giải 2026</h2><div class="award-grid" id="awards"></div></div>
 
-<div class="grid grid-2">
-  <div class="card"><h2>Lịch sử trận đấu</h2><div id="matchHistory"></div></div>
-  <div class="card"><h2>Vua phá lưới</h2><div id="topScorers"></div></div>
-</div>
-
-<div class="card"><h2>Thống kê cầu thủ chi tiết</h2><div class="tabs" id="posTabs"></div>
-  <div class="scroll-x"><table><thead><tr id="playerThead"></tr></thead><tbody id="playerTbody"></tbody></table></div>
-</div>
-
-<div class="card"><h2>Ảnh hưởng khi cầu thủ vắng mặt</h2>
-  <p class="hint">So sánh thành tích đội khi có vs không có cầu thủ. Đỏ = đội yếu hơn khi vắng, Xanh = đội mạnh hơn khi vắng.</p>
-  <div class="scroll-x"><table><thead><tr id="absentThead"></tr></thead><tbody id="absentTbody"></tbody></table></div>
-</div>
-
-<div class="grid grid-2">
-  <div class="card"><h2>Tỷ lệ tham gia</h2><div id="attendanceChart"></div></div>
-  <div class="card"><h2>Điểm / trận khi thi đấu</h2><div id="impactChart"></div></div>
-</div>
-
-<div class="card"><h2>Bàn thắng theo vị trí & hiệu suất</h2><div class="grid grid-2"><div id="goalsByPos"></div><div id="goalsPerMatch"></div></div></div>
-
-<div class="grid grid-2">
-  <div class="card"><h2>Sân nhà vs Sân khách</h2><div id="venueAnalysis"></div></div>
-  <div class="card"><h2>Phân tích theo sân thi đấu</h2><div id="venueBreakdown"></div></div>
-</div>
-
-<div class="card"><h2>Phân tích đối thủ</h2><p class="hint">Kết quả khi gặp từng đối thủ tại sân nhà (Giga Arena) và sân khách</p><div class="scroll-x"><table><thead><tr id="oppThead"></tr></thead><tbody id="oppTbody"></tbody></table></div></div>
-
-<div class="card">
-  <h2>Đội hình tiêu biểu</h2>
-  <div class="formation-tabs" id="fTabs"></div>
-  <div id="pitchWrap"></div>
-</div>
-
-<div class="card"><h2>Tổng kết mùa giải 2026</h2><div id="seasonSummary"></div></div>
-
-</div>
 <script>
+// ===== CORE DATA =====
 const T={m:14,gf:48,ga:33,gd:15,w:7,d:4,l:3,form:["D","L","W","W","L"]};
-T.ppg=(T.w*3+T.d)/T.m;
+T.pts=T.w*3+T.d; T.ppg=T.pts/T.m;
 
 const M=[
-  {wk:1,dt:"04/01",vs:"Thiết Bị Việt FC",gf:4,ga:2,r:"W",v:"Etihad Q12",a:13},
-  {wk:2,dt:"11/01",vs:"Long Xuyên FC",gf:4,ga:2,r:"W",v:"Giga Arena",a:15},
-  {wk:3,dt:"18/01",vs:"Vườn Mai Phương Bình FC",gf:0,ga:2,r:"L",v:"Giga Arena",a:14},
-  {wk:4,dt:"25/01",vs:"Long Xuyên FC",gf:2,ga:0,r:"W",v:"Giga Arena",a:15},
-  {wk:9,dt:"01/03",vs:"Liên Quân FC",gf:3,ga:1,r:"W",v:"Etihad Q12",a:13},
-  {wk:10,dt:"08/03",vs:"Sân Cáp",gf:3,ga:3,r:"D",v:"Giga Arena",a:12},
-  {wk:11,dt:"15/03",vs:"Long Xuyên FC",gf:3,ga:3,r:"D",v:"Giga Arena",a:13},
-  {wk:12,dt:"22/03",vs:"Friends FC",gf:3,ga:3,r:"D",v:"Etihad Q12",a:15},
-  {wk:14,dt:"05/04",vs:"Nhật Huy FC",gf:5,ga:2,r:"W",v:"Giga Arena",a:13},
-  {wk:15,dt:"12/04",vs:"Huyền Thoại FC",gf:4,ga:4,r:"D",v:"Lotus Tân Sơn",a:17},
-  {wk:16,dt:"19/04",vs:"ĐH TDTT",gf:3,ga:4,r:"L",v:"ĐH TDTT",a:14},
-  {wk:19,dt:"10/05",vs:"Sân Cáp",gf:5,ga:3,r:"W",v:"ĐH TDTT",a:13},
-  {wk:20,dt:"17/05",vs:"Lên Bia FC",gf:8,ga:2,r:"W",v:"Dĩ An",a:16},
-  {wk:21,dt:"24/05",vs:"AE Bình Định",gf:1,ga:2,r:"L",v:"Giga Arena",a:16},
+  {wk:1,dt:"04/01",vs:"Thiết Bị Việt FC",gf:4,ga:2,r:"W",v:"Etihad Q12"},
+  {wk:2,dt:"11/01",vs:"Long Xuyên FC",gf:4,ga:2,r:"W",v:"Giga Arena"},
+  {wk:3,dt:"18/01",vs:"Vườn Mai Phương Bình FC",gf:0,ga:2,r:"L",v:"Giga Arena"},
+  {wk:4,dt:"25/01",vs:"Long Xuyên FC",gf:2,ga:0,r:"W",v:"Giga Arena"},
+  {wk:9,dt:"01/03",vs:"Liên Quân FC",gf:3,ga:1,r:"W",v:"Etihad Q12"},
+  {wk:10,dt:"08/03",vs:"Sân Cáp",gf:3,ga:3,r:"D",v:"Giga Arena"},
+  {wk:11,dt:"15/03",vs:"Long Xuyên FC",gf:3,ga:3,r:"D",v:"Giga Arena"},
+  {wk:12,dt:"22/03",vs:"Friends FC",gf:3,ga:3,r:"D",v:"Etihad Q12"},
+  {wk:14,dt:"05/04",vs:"Nhật Huy FC",gf:5,ga:2,r:"W",v:"Giga Arena"},
+  {wk:15,dt:"12/04",vs:"Huyền Thoại FC",gf:4,ga:4,r:"D",v:"Lotus Tân Sơn"},
+  {wk:16,dt:"19/04",vs:"ĐH TDTT",gf:3,ga:4,r:"L",v:"ĐH TDTT"},
+  {wk:19,dt:"10/05",vs:"Sân Cáp",gf:5,ga:3,r:"W",v:"ĐH TDTT"},
+  {wk:20,dt:"17/05",vs:"Lên Bia FC",gf:8,ga:2,r:"W",v:"Dĩ An"},
+  {wk:21,dt:"24/05",vs:"AE Bình Định",gf:1,ga:2,r:"L",v:"Giga Arena"},
 ];
 
+// ===== GOAL DETAIL (Tuần 14 → 21) =====
+// s=scored [{sc,as,t:"normal"|"pen",h:1|2}]  ms=missed pen  c=conceded [{gk,h,t}]  pf/ps=pen faced/saved
+const MG={
+  11:{s:[{sc:"Cảm",as:null,t:"normal",h:1},{sc:"Cảm",as:null,t:"normal",h:2},{sc:"Văn Chung",as:"Gia Lộc",t:"normal",h:2}],c:[{gk:"Văn Tới",h:1},{gk:"Văn Tới",h:1},{gk:"Văn Tới",h:2}],pf:0,ps:0},
+  14:{s:[{sc:"Cảm",as:null,t:"normal",h:1},{sc:"Cảm",as:null,t:"normal",h:1},{sc:"Quốc Long",as:"Lucky Trần",t:"normal",h:1},{sc:"Cảm",as:"Khâm",t:"normal",h:2},{sc:"Khâm",as:"Văn Chung",t:"normal",h:2}],c:[{gk:"Đức Khoa",h:2},{gk:"Đức Khoa",h:2}],pf:0,ps:0},
+  15:{s:[{sc:"Cảm",as:null,t:"normal",h:1},{sc:"Văn Chung",as:"Khâm",t:"normal",h:1},{sc:"Văn Chung",as:"Gia Lộc",t:"normal",h:2},{sc:"Gia Lộc",as:"Trung Nguyên",t:"normal",h:2}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2},{gk:"Đức Khoa",h:2}],pf:0,ps:0},
+  16:{s:[{sc:"Cảm",as:null,t:"normal",h:1},{sc:"Văn Chung",as:null,t:"pen",h:2},{sc:"Lâm",as:"Gia Lộc",t:"normal",h:2}],ms:[{sc:"Khâm",h:1}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2},{gk:"Đức Khoa",h:2}],pf:1,ps:0},
+  19:{s:[{sc:"Cảm",as:"Trung Nguyên",t:"normal",h:1},{sc:"Cảm",as:null,t:"normal",h:1},{sc:"Lâm",as:"Văn Quang",t:"normal",h:1},{sc:"Cảm",as:"Khâm",t:"normal",h:2},{sc:"Mới",as:null,t:"normal",h:2}],c:[{gk:"Văn Tới",h:1},{gk:"Văn Tới",h:2},{gk:"Văn Tới",h:2}],pf:0,ps:0},
+  20:{s:[{sc:"Cảm",as:"Văn Chung",t:"normal",h:1},{sc:"Cảm",as:null,t:"normal",h:1},{sc:"Lâm",as:null,t:"pen",h:1},{sc:"Văn Chung",as:"Quốc Long",t:"normal",h:1},{sc:"Cảm",as:null,t:"normal",h:2},{sc:"Khâm",as:"Văn Chung",t:"normal",h:2},{sc:"Khâm",as:null,t:"normal",h:2},{sc:"Văn Chung",as:null,t:"normal",h:2}],c:[{gk:"Văn Tới",h:1},{gk:"Văn Tới",h:2}],pf:0,ps:0},
+  21:{s:[{sc:"Văn Chung",as:"Văn Quang",t:"normal",h:1}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2}],pf:0,ps:0},
+};
+
+// Compute aggregates
+const AST_H={},PEN={},HGF={h1:0,h2:0},HGA={h1:0,h2:0},GKD={};
+Object.values(MG).forEach(mg=>{
+  (mg.s||[]).forEach(g=>{
+    if(g.as){if(!AST_H[g.as])AST_H[g.as]={h1:0,h2:0};g.h===1?AST_H[g.as].h1++:AST_H[g.as].h2++;}
+    if(g.t==="pen"){if(!PEN[g.sc])PEN[g.sc]={sc:0,ms:0};PEN[g.sc].sc++}
+    g.h===1?HGF.h1++:HGF.h2++;
+  });
+  (mg.ms||[]).forEach(g=>{if(!PEN[g.sc])PEN[g.sc]={sc:0,ms:0};PEN[g.sc].ms++});
+  (mg.c||[]).forEach(c=>{
+    if(!GKD[c.gk])GKD[c.gk]={conc:0,h1:0,h2:0,pf:0,ps:0};
+    GKD[c.gk].conc++;c.h===1?(GKD[c.gk].h1++,HGA.h1++):(GKD[c.gk].h2++,HGA.h2++);
+  });
+  if(mg.pf)Object.values(GKD).forEach(d=>{d.pf+=mg.pf;d.ps+=mg.ps||0});
+});
+const AST=Object.fromEntries(Object.entries(AST_H).map(([k,v])=>[k,v.h1+v.h2]));
+
+// ===== PLAYERS =====
 const P=[
-  {n:"Mai Cồ Hiếu",p:"FW",no:"23",g:3,m:14,mp:1,wp:.5,fa:["D","L","W","W","L"],pi:1.79,w:7,d:4,l:3,gf:48,ga:33,gd:15,t:"main"},
-  {n:"Văn Quang",p:"FW",no:"10",g:1,m:10,mp:.71,wp:.6,fa:["D","N","N","W","L"],pi:2,w:6,d:2,l:2,gf:34,ga:20,gd:14,t:"main"},
-  {n:"Nguyên Khôi",p:"DF",no:"19",g:0,m:9,mp:.64,wp:.556,fa:["N","N","W","W","L"],pi:1.89,w:5,d:2,l:2,gf:30,ga:19,gd:11,t:"main"},
-  {n:"Lucky Trần",p:"MF",no:"11",g:0,m:11,mp:.79,wp:.545,fa:["N","L","N","W","L"],pi:1.91,w:6,d:3,l:2,gf:39,ga:24,gd:15,t:"main"},
-  {n:"Quốc Long",p:"MF",no:"8",g:4,m:11,mp:.79,wp:.545,fa:["D","L","N","W","L"],pi:1.82,w:6,d:2,l:3,gf:37,ga:24,gd:13,t:"main"},
-  {n:"Hữu Duyên",p:"DF",no:"47",g:1,m:13,mp:.93,wp:.462,fa:["D","L","W","W","L"],pi:1.69,w:6,d:4,l:3,gf:43,ga:31,gd:12,t:"main"},
-  {n:"Nguyễn Hoàng",p:"DF",no:"39",g:0,m:12,mp:.86,wp:.583,fa:["D","N","W","W","L"],pi:2,w:7,d:3,l:2,gf:42,ga:26,gd:16,t:"main"},
-  {n:"Đức Khoa",p:"GK",no:"01",g:0,m:11,mp:.79,wp:.455,fa:["D","L","N","N","L"],pi:1.64,w:5,d:3,l:3,gf:32,ga:25,gd:7,t:"main"},
-  {n:"D.Chí Hoàng",p:"DF",no:"24",g:0,m:9,mp:.64,wp:.444,fa:["D","L","W","N","L"],pi:1.67,w:4,d:3,l:2,gf:29,ga:23,gd:6,t:"main"},
-  {n:"Minh Hoàng",p:"DF",no:"12",g:0,m:9,mp:.64,wp:.556,fa:["N","N","W","W","L"],pi:1.89,w:5,d:2,l:2,gf:33,ga:21,gd:12,t:"main"},
-  {n:"Trung Nguyên",p:"MF",no:"14",g:2,m:13,mp:.93,wp:.462,fa:["D","L","W","W","L"],pi:1.69,w:6,d:4,l:3,gf:44,ga:31,gd:13,t:"main"},
-  {n:"Tài Củi",p:"FW",no:"30",g:1,m:12,mp:.86,wp:.417,fa:["D","L","N","W","L"],pi:1.58,w:5,d:4,l:3,gf:39,ga:28,gd:11,t:"main"},
-  {n:"Văn Chung",p:"FW",no:"6",g:8,m:9,mp:.64,wp:.444,fa:["D","L","W","N","L"],pi:1.56,w:4,d:2,l:3,gf:28,ga:23,gd:5,t:"main"},
-  {n:"Gia Lộc",p:"MF",no:"75",g:2,m:10,mp:.71,wp:.5,fa:["D","L","W","W","L"],pi:1.7,w:5,d:2,l:3,gf:33,ga:23,gd:10,t:"main"},
-  {n:"Phú Bình",p:"DF",no:"15",g:0,m:4,mp:.29,wp:.5,fa:["N","L","N","N","N"],pi:1.75,w:2,d:1,l:1,gf:11,ga:8,gd:3,t:"main"},
-  {n:"Khâm",p:"FW",no:"22",g:7,m:10,mp:.71,wp:.5,fa:["N","L","W","W","L"],pi:1.7,w:5,d:2,l:3,gf:32,ga:22,gd:10,t:"main"},
-  {n:"Cảm",p:"FW",no:"7",g:13,m:12,mp:.86,wp:.417,fa:["D","L","W","W","L"],pi:1.58,w:5,d:4,l:3,gf:41,ga:30,gd:11,t:"main"},
-  {n:"Hoàng Đại",p:"FW",no:"",g:1,m:3,mp:.21,wp:.333,fa:["D","N","N","W","N"],pi:1.67,w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"main"},
-  {n:"Lâm",p:"MF",no:"",g:3,m:6,mp:.43,wp:.5,fa:["D","L","W","W","N"],pi:1.83,w:3,d:2,l:1,gf:28,ga:18,gd:10,t:"main"},
-  {n:"Anh Sơn",p:"MF",no:"",g:0,m:3,mp:.21,wp:.333,fa:["D","N","N","N","N"],pi:1.67,w:1,d:2,l:0,gf:11,ga:9,gd:2,t:"sub"},
-  {n:"Chí Quỹ",p:"MF",no:"4",g:0,m:2,mp:.14,wp:.5,fa:["N","N","N","N","N"],pi:2,w:1,d:1,l:0,gf:7,ga:5,gd:2,t:"sub"},
-  {n:"Tiến",p:"DF",no:"",g:0,m:3,mp:.21,wp:.333,fa:["D","N","N","W","N"],pi:1.67,w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"sub"},
-  {n:"Mới",p:"MF",no:"",g:1,m:2,mp:.14,wp:.5,fa:["D","N","N","N","N"],pi:2,w:1,d:1,l:0,gf:9,ga:6,gd:3,t:"sub"},
+  {n:"Mai Cồ Hiếu",p:"FW",no:"23",g:3,m:14,mp:1,wp:.5,fa:["D","L","W","W","L"],w:7,d:4,l:3,gf:48,ga:33,gd:15,t:"main"},
+  {n:"Văn Quang",p:"FW",no:"10",g:1,m:10,mp:.71,wp:.6,fa:["D","N","N","W","L"],w:6,d:2,l:2,gf:34,ga:20,gd:14,t:"main"},
+  {n:"Nguyên Khôi",p:"DF",no:"19",g:0,m:9,mp:.64,wp:.556,fa:["N","N","W","W","L"],w:5,d:2,l:2,gf:30,ga:19,gd:11,t:"main"},
+  {n:"Lucky Trần",p:"MF",no:"11",g:0,m:11,mp:.79,wp:.545,fa:["N","L","N","W","L"],w:6,d:3,l:2,gf:39,ga:24,gd:15,t:"main"},
+  {n:"Quốc Long",p:"MF",no:"8",g:4,m:11,mp:.79,wp:.545,fa:["D","L","N","W","L"],w:6,d:2,l:3,gf:37,ga:24,gd:13,t:"main"},
+  {n:"Hữu Duyên",p:"DF",no:"47",g:1,m:13,mp:.93,wp:.462,fa:["D","L","W","W","L"],w:6,d:4,l:3,gf:43,ga:31,gd:12,t:"main"},
+  {n:"Nguyễn Hoàng",p:"DF",no:"39",g:0,m:12,mp:.86,wp:.583,fa:["D","N","W","W","L"],w:7,d:3,l:2,gf:42,ga:26,gd:16,t:"main"},
+  {n:"Văn Tới",p:"GK",no:"16",g:0,m:3,mp:.21,wp:.667,fa:["N","N","W","W","N"],w:2,d:1,l:0,gf:16,ga:8,gd:8,t:"main"},
+  {n:"Đức Khoa",p:"GK",no:"01",g:0,m:11,mp:.79,wp:.455,fa:["D","L","N","N","L"],w:5,d:3,l:3,gf:32,ga:25,gd:7,t:"main"},
+  {n:"D.Chí Hoàng",p:"DF",no:"24",g:0,m:9,mp:.64,wp:.444,fa:["D","L","W","N","L"],w:4,d:3,l:2,gf:29,ga:23,gd:6,t:"main"},
+  {n:"Minh Hoàng",p:"DF",no:"12",g:0,m:9,mp:.64,wp:.556,fa:["N","N","W","W","L"],w:5,d:2,l:2,gf:33,ga:21,gd:12,t:"main"},
+  {n:"Trung Nguyên",p:"MF",no:"14",g:2,m:13,mp:.93,wp:.462,fa:["D","L","W","W","L"],w:6,d:4,l:3,gf:44,ga:31,gd:13,t:"main"},
+  {n:"Tài Củi",p:"FW",no:"30",g:1,m:12,mp:.86,wp:.417,fa:["D","L","N","W","L"],w:5,d:4,l:3,gf:39,ga:28,gd:11,t:"main"},
+  {n:"Văn Chung",p:"FW",no:"6",g:8,m:9,mp:.64,wp:.444,fa:["D","L","W","N","L"],w:4,d:2,l:3,gf:28,ga:23,gd:5,t:"main"},
+  {n:"Gia Lộc",p:"MF",no:"75",g:2,m:10,mp:.71,wp:.5,fa:["D","L","W","W","L"],w:5,d:2,l:3,gf:33,ga:23,gd:10,t:"main"},
+  {n:"Phú Bình",p:"DF",no:"15",g:0,m:4,mp:.29,wp:.5,fa:["N","L","N","N","N"],w:2,d:1,l:1,gf:11,ga:8,gd:3,t:"main"},
+  {n:"Khâm",p:"FW",no:"22",g:7,m:10,mp:.71,wp:.5,fa:["N","L","W","W","L"],w:5,d:2,l:3,gf:32,ga:22,gd:10,t:"main"},
+  {n:"Cảm",p:"FW",no:"7",g:13,m:12,mp:.86,wp:.417,fa:["D","L","W","W","L"],w:5,d:4,l:3,gf:41,ga:30,gd:11,t:"main"},
+  {n:"Hoàng Đại",p:"FW",no:"",g:1,m:3,mp:.21,wp:.333,fa:["D","N","N","W","N"],w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"main"},
+  {n:"Lâm",p:"MF",no:"",g:3,m:6,mp:.43,wp:.5,fa:["D","L","W","W","N"],w:3,d:2,l:1,gf:28,ga:18,gd:10,t:"main"},
+  {n:"Anh Sơn",p:"MF",no:"",g:0,m:3,mp:.21,wp:.333,fa:["D","N","N","N","N"],w:1,d:2,l:0,gf:11,ga:9,gd:2,t:"sub"},
+  {n:"Chí Quỹ",p:"MF",no:"4",g:0,m:2,mp:.14,wp:.5,fa:["N","N","N","N","N"],w:1,d:1,l:0,gf:7,ga:5,gd:2,t:"sub"},
+  {n:"Tiến",p:"DF",no:"",g:0,m:3,mp:.21,wp:.333,fa:["D","N","N","W","N"],w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"sub"},
+  {n:"Mới",p:"MF",no:"",g:1,m:2,mp:.14,wp:.5,fa:["D","N","N","N","N"],w:1,d:1,l:0,gf:9,ga:6,gd:3,t:"sub"},
 ];
 
-const S25={m:22,w:14,d:2,l:6,gf:82,ga:57,gd:25,pts:44,ppg:2.00,wp:.636,
-  home:{m:15,w:12,d:1,l:2,gf:61,ga:24,gd:37},
-  away:{m:7,w:2,d:1,l:4,gf:21,ga:33,gd:-12}};
+const PM={"Mai Cồ Hiếu":[0,0,0,1,0,0,0,0,0,0,0,0,2,0],"Văn Quang":[1,0,0,0,0,null,0,null,0,0,null,null,0,0],"Nguyên Khôi":[0,0,0,0,null,0,null,0,null,null,null,0,0,0],"Lucky Trần":[0,0,null,0,0,0,0,0,0,null,0,null,0,0],"Quốc Long":[1,0,0,1,0,null,0,null,0,0,2,null,0,0],"Hữu Duyên":[0,0,0,0,1,0,0,0,null,0,0,0,0,0],"Nguyễn Hoàng":[0,0,0,0,0,null,0,0,0,0,null,0,0,0],"Văn Tới":[null,null,null,null,null,null,0,null,null,null,null,0,0,null],
+  "Đức Khoa":[0,0,0,0,0,0,null,0,0,0,0,null,null,0],"D.Chí Hoàng":[0,0,null,0,null,0,null,0,null,0,0,0,null,0],"Minh Hoàng":[0,0,0,null,null,null,0,0,0,null,null,0,0,0],"Trung Nguyên":[null,1,0,0,0,0,0,0,0,1,0,0,0,0],"Tài Củi":[null,0,0,0,0,0,0,1,0,0,0,null,0,0],"Văn Chung":[1,null,0,null,1,2,null,null,0,0,1,2,null,1],"Gia Lộc":[1,null,0,0,0,null,null,0,null,null,1,null,0,0],"Phú Bình":[null,null,null,0,0,null,0,null,null,null,0,null,null,null],"Khâm":[null,2,0,0,1,1,2,null,null,null,0,0,1,0],"Cảm":[null,1,0,0,null,0,1,2,3,1,0,2,3,0],"Hoàng Đại":[null,null,null,null,null,null,null,0,null,0,null,null,1,null],"Lâm":[null,null,null,null,null,null,null,0,1,1,0,0,1,null],"Anh Sơn":[0,null,null,null,null,0,null,null,null,0,null,null,null,null],"Chí Quỹ":[null,0,null,null,null,null,0,null,null,null,null,null,null,null],"Tiến":[null,null,null,null,null,null,null,0,null,0,null,null,0,null],"Mới":[null,null,null,null,null,null,null,null,1,0,null,null,null,null]};
 
-const PM={
-  "Mai Cồ Hiếu":[0,0,0,1,0,0,0,0,0,0,0,0,2,0],
-  "Văn Quang":[1,0,0,0,0,null,0,null,0,0,null,null,0,0],
-  "Nguyên Khôi":[0,0,0,0,null,0,null,0,null,null,null,0,0,0],
-  "Lucky Trần":[0,0,null,0,0,0,0,0,0,null,0,null,0,0],
-  "Quốc Long":[1,0,0,1,0,null,0,null,0,0,2,null,0,0],
-  "Hữu Duyên":[0,0,0,0,1,0,0,0,null,0,0,0,0,0],
-  "Nguyễn Hoàng":[0,0,0,0,0,null,0,0,0,0,null,0,0,0],
-  "Đức Khoa":[0,0,0,0,0,0,null,0,0,0,0,null,null,0],
-  "D.Chí Hoàng":[0,0,null,0,null,0,null,0,null,0,0,0,null,0],
-  "Minh Hoàng":[0,0,0,null,null,null,0,0,0,null,null,0,0,0],
-  "Trung Nguyên":[null,1,0,0,0,0,0,0,0,1,0,0,0,0],
-  "Tài Củi":[null,0,0,0,0,0,0,1,0,0,0,null,0,0],
-  "Văn Chung":[1,null,0,null,1,2,null,null,0,0,1,2,null,1],
-  "Gia Lộc":[1,null,0,0,0,null,null,0,null,null,1,null,0,0],
-  "Phú Bình":[null,null,null,0,0,null,0,null,null,null,0,null,null,null],
-  "Khâm":[null,2,0,0,1,1,2,null,null,null,0,0,1,0],
-  "Cảm":[null,1,0,0,null,0,1,2,3,1,0,2,3,0],
-  "Hoàng Đại":[null,null,null,null,null,null,null,0,null,0,null,null,1,null],
-  "Lâm":[null,null,null,null,null,null,null,0,1,1,0,0,1,null],
-  "Anh Sơn":[0,null,null,null,null,0,null,null,null,0,null,null,null,null],
-  "Chí Quỹ":[null,0,null,null,null,null,0,null,null,null,null,null,null,null],
-  "Tiến":[null,null,null,null,null,null,null,0,null,0,null,null,0,null],
-  "Mới":[null,null,null,null,null,null,null,null,1,0,null,null,null,null],
+const BXI={
+  "4-4-2":[{n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},{n:"Gia Lộc",p:"DF",top:"73%",left:"15%"},{n:"Hữu Duyên",p:"DF",top:"76%",left:"37%"},{n:"D.Chí Hoàng",p:"DF",top:"76%",left:"63%"},{n:"Nguyễn Hoàng",p:"DF",top:"73%",left:"85%"},{n:"Mai Cồ Hiếu",p:"MF",top:"50%",left:"15%"},{n:"Quốc Long",p:"MF",top:"52%",left:"37%"},{n:"Lucky Trần",p:"MF",top:"52%",left:"63%"},{n:"Trung Nguyên",p:"MF",top:"50%",left:"85%"},{n:"Cảm",p:"FW",top:"24%",left:"38%"},{n:"Văn Chung",p:"FW",top:"24%",left:"62%"}],
+  "3-5-2":[{n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},{n:"Minh Hoàng",p:"DF",top:"76%",left:"25%"},{n:"Hữu Duyên",p:"DF",top:"78%",left:"50%"},{n:"D.Chí Hoàng",p:"DF",top:"76%",left:"75%"},{n:"Nguyễn Hoàng",p:"MF",top:"53%",left:"8%"},{n:"Tài Củi",p:"MF",top:"55%",left:"30%"},{n:"Mai Cồ Hiếu",p:"MF",top:"45%",left:"50%"},{n:"Lucky Trần",p:"MF",top:"55%",left:"70%"},{n:"Gia Lộc",p:"MF",top:"53%",left:"92%"},{n:"Cảm",p:"FW",top:"24%",left:"38%"},{n:"Khâm",p:"FW",top:"24%",left:"62%"}],
+  "4-5-1":[{n:"Văn Tới",p:"GK",top:"90%",left:"50%"},{n:"Nguyễn Hoàng",p:"DF",top:"73%",left:"15%"},{n:"Hữu Duyên",p:"DF",top:"76%",left:"37%"},{n:"D.Chí Hoàng",p:"DF",top:"76%",left:"63%"},{n:"Nguyên Khôi",p:"DF",top:"73%",left:"85%"},{n:"Văn Quang",p:"MF",top:"48%",left:"12%"},{n:"Quốc Long",p:"MF",top:"50%",left:"32%"},{n:"Lâm",p:"MF",top:"58%",left:"50%"},{n:"Lucky Trần",p:"MF",top:"50%",left:"68%"},{n:"Mai Cồ Hiếu",p:"MF",top:"48%",left:"88%"},{n:"Cảm",p:"FW",top:"22%",left:"50%"}],
 };
 
-function absent(p){const m=T.m-p.m;if(!m)return null;const w=T.w-p.w,d=T.d-p.d,l=T.l-p.l,gf=T.gf-p.gf,ga=T.ga-p.ga;return{m,w,d,l,gf,ga,gd:gf-ga,wp:w/m,ppg:(w*3+d)/m,agf:gf/m,aga:ga/m}}
-
-// ============ FORMATIONS ============
-const BEST_XI={
-  "4-4-2":[
-    {n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},
-    {n:"Gia Lộc",p:"DF",top:"73%",left:"15%"},
-    {n:"Hữu Duyên",p:"DF",top:"76%",left:"37%"},
-    {n:"D.Chí Hoàng",p:"DF",top:"76%",left:"63%"},
-    {n:"Nguyễn Hoàng",p:"DF",top:"73%",left:"85%"},
-    {n:"Mai Cồ Hiếu",p:"MF",top:"50%",left:"15%"},
-    {n:"Quốc Long",p:"MF",top:"52%",left:"37%"},
-    {n:"Lucky Trần",p:"MF",top:"52%",left:"63%"},
-    {n:"Trung Nguyên",p:"MF",top:"50%",left:"85%"},
-    {n:"Cảm",p:"FW",top:"24%",left:"38%"},
-    {n:"Văn Chung",p:"FW",top:"24%",left:"62%"},
-  ],
-  "3-5-2":[
-    {n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},
-    {n:"Minh Hoàng",p:"DF",top:"76%",left:"25%"},
-    {n:"Hữu Duyên",p:"DF",top:"78%",left:"50%"},
-    {n:"D.Chí Hoàng",p:"DF",top:"76%",left:"75%"},
-    {n:"Nguyễn Hoàng",p:"MF",top:"53%",left:"8%"},
-    {n:"Quốc Long",p:"MF",top:"55%",left:"30%"},
-    {n:"Mai Cồ Hiếu",p:"MF",top:"45%",left:"50%"},
-    {n:"Lucky Trần",p:"MF",top:"55%",left:"70%"},
-    {n:"Gia Lộc",p:"MF",top:"53%",left:"92%"},
-    {n:"Cảm",p:"FW",top:"24%",left:"38%"},
-    {n:"Văn Chung",p:"FW",top:"24%",left:"62%"},
-  ],
-  "4-5-1":[
-    {n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},
-    {n:"Nguyễn Hoàng",p:"DF",top:"73%",left:"15%"},
-    {n:"Hữu Duyên",p:"DF",top:"76%",left:"37%"},
-    {n:"D.Chí Hoàng",p:"DF",top:"76%",left:"63%"},
-    {n:"Nguyên Khôi",p:"DF",top:"73%",left:"85%"},
-    {n:"Lâm",p:"MF",top:"48%",left:"12%"},
-    {n:"Quốc Long",p:"MF",top:"50%",left:"32%"},
-    {n:"Trung Nguyên",p:"MF",top:"58%",left:"50%"},
-    {n:"Lucky Trần",p:"MF",top:"50%",left:"68%"},
-    {n:"Mai Cồ Hiếu",p:"MF",top:"48%",left:"88%"},
-    {n:"Cảm",p:"FW",top:"22%",left:"50%"},
-  ],
-};
-
-let curF="4-4-2";
-
-// ============ RENDER ============
-function renderOverview(){
-  const el=document.getElementById("overviewCards");
-  const cards=[{n:T.m,l:"Trận",c:""},{n:T.w,l:"Thắng",c:"win"},{n:T.d,l:"Hòa",c:"draw"},{n:T.l,l:"Thua",c:"lose"},{n:T.gf,l:"Bàn thắng",c:"goals"},{n:T.ga,l:"Bàn thua",c:"lose"},{n:"+"+T.gd,l:"Hiệu số",c:"win"},{n:T.ppg.toFixed(2),l:"Điểm/trận",c:"goals"}];
-  el.innerHTML=cards.map(c=>`<div class="card stat-card ${c.c}"><div class="number">${c.n}</div><div class="label">${c.l}</div></div>`).join("");
+// ===== RENDERS =====
+function renderOv(){
+  document.getElementById("ovStrip").innerHTML=[{n:T.m,l:"Trận",c:""},{n:T.w,l:"Thắng",c:"grn"},{n:T.d,l:"Hòa",c:"amb"},{n:T.l,l:"Thua",c:"red"},{n:T.gf,l:"Bàn thắng",c:"or"},{n:T.ga,l:"Bàn thua",c:"red"},{n:"+"+T.gd,l:"Hiệu số",c:"grn"},{n:T.ppg.toFixed(2),l:"Điểm/trận",c:"or"}].map(c=>`<div class="ovc"><div class="ovn ${c.c}">${c.n}</div><div class="ovl">${c.l}</div></div>`).join("");
 }
 
 function renderWinRate(){
-  const el=document.getElementById("winRateViz"),t=T.w+T.d+T.l,wp=((T.w/t)*100).toFixed(0),dp=((T.d/t)*100).toFixed(0),lp=((T.l/t)*100).toFixed(0);
-  el.innerHTML=`<div class="win-rate-circle"><span class="pct">${wp}%</span><span class="lbl">WIN RATE</span></div><div class="gd-bar"><div class="gd-gf" style="width:${wp}%">W ${T.w}</div><div style="background:var(--orange);flex:0 0 ${dp}%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold">D ${T.d}</div><div class="gd-ga" style="width:${lp}%">L ${T.l}</div></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:#8a9bb5"><span>TB GF: <b style="color:#4caf50">${(T.gf/T.m).toFixed(2)}</b></span><span>TB GA: <b style="color:#ef5350">${(T.ga/T.m).toFixed(2)}</b></span></div>`;
+  const r=52,ci=2*Math.PI*r,off=ci-(T.w/T.m)*ci;
+  document.getElementById("winRate").innerHTML=`<div style="display:flex;flex-direction:column;align-items:center;gap:11px">
+    <svg width="130" height="130" viewBox="0 0 130 130">
+      <circle cx="65" cy="65" r="${r}" fill="none" stroke="var(--sf3)" stroke-width="10"/>
+      <circle cx="65" cy="65" r="${r}" fill="none" stroke="var(--grn)" stroke-width="10" stroke-dasharray="${ci.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" stroke-linecap="round" transform="rotate(-90 65 65)"/>
+      <text x="65" y="59" text-anchor="middle" fill="#fff" font-family="Rajdhani,sans-serif" font-size="24" font-weight="700">${(T.w/T.m*100).toFixed(0)}%</text>
+      <text x="65" y="75" text-anchor="middle" fill="var(--tx3)" font-size="8" letter-spacing="2">WIN RATE</text>
+    </svg>
+    <div class="wdl-bar"><div class="ww" style="flex:${T.w}"></div><div class="wd" style="flex:${T.d}"></div><div class="wl" style="flex:${T.l}"></div></div>
+    <div style="display:flex;justify-content:space-between;width:100%;font-size:10px;color:var(--tx2)"><span><b style="color:var(--grn)">${T.w}</b> T</span><span><b style="color:var(--amb)">${T.d}</b> H</span><span><b style="color:var(--red)">${T.l}</b> B</span></div>
+    <div style="text-align:center;font-size:10px;color:var(--tx3)">PPG <b style="color:var(--or);font-family:Rajdhani,sans-serif;font-size:14px">${T.ppg.toFixed(2)}</b> · Điểm <b style="color:var(--or);font-family:Rajdhani,sans-serif;font-size:14px">${T.pts}</b></div>
+  </div>`;
 }
 
 function renderGoals(){
-  const el=document.getElementById("goalsViz"),mx=Math.max(T.gf,T.ga);
-  el.innerHTML=`<div style="margin:10px 0"><div style="font-size:11px;color:#8a9bb5;margin-bottom:3px">Bàn thắng</div><div class="bar-wrap"><div class="bar bar-green" style="width:${T.gf/mx*100}%">${T.gf}</div></div></div><div style="margin:10px 0"><div style="font-size:11px;color:#8a9bb5;margin-bottom:3px">Bàn thua</div><div class="bar-wrap"><div class="bar bar-red" style="width:${T.ga/mx*100}%">${T.ga}</div></div></div><div style="margin-top:14px;text-align:center"><span style="font-size:28px;font-weight:bold;color:#4caf50">${T.gf}</span><span style="font-size:14px;color:#8a9bb5;margin:0 8px">-</span><span style="font-size:28px;font-weight:bold;color:#ef5350">${T.ga}</span></div>`;
+  document.getElementById("goalsViz").innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin:6px 0 12px">
+      <div style="text-align:center"><div style="font-family:var(--fd);font-size:44px;font-weight:700;line-height:1;color:var(--grn)">${T.gf}</div><div style="font-size:8px;letter-spacing:2px;color:var(--tx3);margin-top:3px;text-transform:uppercase">Bàn thắng</div></div>
+      <div style="font-family:var(--fd);font-size:22px;color:var(--bd2)">—</div>
+      <div style="text-align:center"><div style="font-family:var(--fd);font-size:44px;font-weight:700;line-height:1;color:var(--red)">${T.ga}</div><div style="font-size:8px;letter-spacing:2px;color:var(--tx3);margin-top:3px;text-transform:uppercase">Bàn thua</div></div>
+    </div>
+    <div class="wdl-bar" style="height:6px"><div class="ww" style="flex:${T.gf}"></div><div class="wl" style="flex:${T.ga}"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:10px;margin-top:8px;color:var(--tx3)">
+      <span>TB: <b style="color:var(--grn)">${(T.gf/T.m).toFixed(1)}</b>/trận</span>
+      <span style="font-family:var(--fd);font-size:18px;color:var(--grn);font-weight:700">+${T.gd}</span>
+      <span>TB: <b style="color:var(--red)">${(T.ga/T.m).toFixed(1)}</b>/trận</span>
+    </div>`;
 }
 
 function renderForm(){
-  const el=document.getElementById("formViz"),lb={W:"T",D:"H",L:"B"};
-  el.innerHTML=`<div class="form-dots" style="justify-content:center;gap:8px;margin:14px 0">${T.form.map(f=>`<div class="form-dot form-${f}" style="width:36px;height:36px;font-size:14px">${lb[f]}</div>`).join("")}</div><div style="text-align:center;color:#8a9bb5;font-size:12px">${T.form.map(f=>f==="W"?"Thắng":f==="D"?"Hòa":"Thua").join(" → ")}</div>`;
+  const lb={W:"T",D:"H",L:"B"},full={W:"Thắng",D:"Hòa",L:"Thua"},clr={W:"var(--grn)",D:"var(--amb)",L:"var(--red)"};
+  document.getElementById("formViz").innerHTML=`
+    <div style="display:flex;gap:7px;justify-content:center;margin:6px 0 10px">
+      ${T.form.map(f=>`<div style="width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:15px;font-weight:600;color:#fff;background:${clr[f]}">${lb[f]}</div>`).join("")}
+    </div>
+    <div style="text-align:center;font-size:10px;color:var(--tx3);margin-bottom:12px">${T.form.map(f=>full[f]).join(" → ")}</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;text-align:center;border-top:1px solid var(--bd);padding-top:10px">
+      ${[["W","THẮNG","grn"],["D","HÒA","amb"],["L","THUA","red"]].map(([r,lbl,c])=>`<div><div style="font-family:var(--fd);font-size:17px;color:var(--${c})">${T.form.filter(f=>f===r).length}</div><div style="font-size:8px;color:var(--tx3);letter-spacing:1px">${lbl}</div></div>`).join("")}
+    </div>`;
 }
 
-function renderAwards(){
-  const el=document.getElementById("awards");
-  const lk=P.find(p=>p.n==="Lucky Trần"),cam=P.find(p=>p.n==="Cảm"),mch=P.find(p=>p.n==="Mai Cồ Hiếu"),nh=P.find(p=>p.n==="Nguyễn Hoàng"),ql=P.find(p=>p.n==="Quốc Long");
-  const awards=[
-    {icon:"🏆",title:"Cầu thủ xuất sắc nhất (MVP)",name:lk.n,stat:`${lk.m} trận · Win% ${(lk.wp*100).toFixed(0)}% · ${lk.w}W ${lk.d}D ${lk.l}L`,detail:`Đ/T ${((lk.w*3+lk.d)/lk.m).toFixed(2)} · GD +${lk.gd} · Chỉ ${lk.l} trận thua · Trụ cột tuyến giữa`},
-    {icon:"⚽",title:"Vua phá lưới",name:cam.n,stat:`${cam.g} bàn / ${cam.m} trận`,detail:`Hiệu suất: ${(cam.g/cam.m).toFixed(2)} bàn/trận`},
-    {icon:"💪",title:"Chiến binh thép (Iron Man)",name:mch.n,stat:`${mch.m}/${T.m} trận (${(mch.mp*100).toFixed(0)}%)`,detail:"Ra sân đầy đủ 100% trận đấu"},
-    {icon:"🛡️",title:"Hậu vệ xuất sắc nhất",name:nh.n,stat:`Win% ${(nh.wp*100).toFixed(0)}% · ${nh.m} trận · GD +${nh.gd}`,detail:`${nh.w}W ${nh.d}D ${nh.l}L · TB GA/trận: ${(nh.ga/nh.m).toFixed(1)}`},
-    {icon:"🎯",title:"Tiền vệ xuất sắc nhất",name:ql.n,stat:`${ql.g} bàn · Win% ${(ql.wp*100).toFixed(0)}% · ${ql.m} trận`,detail:`Đ/T ${((ql.w*3+ql.d)/ql.m).toFixed(2)} · Ghi bàn + tạo nhịp tuyến giữa`},
-  ];
-  el.innerHTML=awards.map(a=>`<div class="award"><div class="icon">${a.icon}</div><div class="title">${a.title}</div><div class="player-name">${a.name}</div><div class="stat">${a.stat}</div><div class="detail">${a.detail}</div></div>`).join("");
+function renderScorers(){
+  const s=P.filter(p=>p.g>0).sort((a,b)=>b.g-a.g),mx=s[0]?.g||1;
+  document.getElementById("scorers").innerHTML=s.map((p,i)=>`<div class="scr">
+    <div class="rk ${i===0?"rk1":i===1?"rk2":i===2?"rk3":"rkn"}">${i+1}</div>
+    <span class="pos ${p.p}">${p.p}</span>
+    <div style="font-size:12px;font-weight:600;flex:1">${p.n}</div>
+    <div class="sb"><div class="sbf" style="width:${p.g/mx*100}%;background:linear-gradient(90deg,#8a3a0a,var(--or))"></div></div>
+    <div style="font-family:var(--fd);font-size:19px;font-weight:700;color:var(--or);min-width:26px;text-align:right">${p.g}</div>
+  </div>`).join("");
 }
 
-function renderFormation(){
-  const tabs=document.getElementById("fTabs");
-  tabs.innerHTML=Object.keys(BEST_XI).map(f=>`<div class="formation-tab ${f===curF?"active":""}" onclick="curF='${f}';renderFormation()">${f}</div>`).join("");
-  const wrap=document.getElementById("pitchWrap");
-  const xi=BEST_XI[curF];
-  const posClass={GK:"gk",DF:"df",MF:"mf",FW:"fw"};
-  wrap.innerHTML=`<div class="pitch"><div class="pitch-box top"></div><div class="pitch-box bottom"></div>${xi.map(s=>`<div class="pitch-player" style="top:${s.top};left:${s.left}"><div class="pitch-circle ${posClass[s.p]}">${s.n}</div><div class="pitch-label">${s.p}</div></div>`).join("")}</div>
-  <div style="margin-top:12px;text-align:center"><div class="legend" style="justify-content:center"><span><span class="dot" style="background:var(--orange)"></span> GK</span><span><span class="dot" style="background:#27ae60"></span> DF</span><span><span class="dot" style="background:#2471a3"></span> MF</span><span><span class="dot" style="background:#c0392b"></span> FW</span></div><p class="hint">Tiêu chí: tỷ lệ thắng khi có mặt, hiệu số/trận, số trận thi đấu, bàn thắng cá nhân, phong độ.</p></div>`;
+function renderAssists(){
+  const s=Object.entries(AST_H).sort((a,b)=>(b[1].h1+b[1].h2)-(a[1].h1+a[1].h2)),mx=Math.max(...Object.values(AST_H).map(v=>v.h1+v.h2),1);
+  document.getElementById("assists").innerHTML=!s.length?`<p style="color:var(--tx3);font-size:11px;font-style:italic">Cập nhật từ tuần 11.</p>`:
+    s.map(([n,v],i)=>{const p=P.find(x=>x.n===n),tot=v.h1+v.h2;return`<div class="scr">
+      <div class="rk ${i===0?"rk1":i===1?"rk2":i===2?"rk3":"rkn"}">${i+1}</div>
+      ${p?`<span class="pos ${p.p}">${p.p}</span>`:""}
+      <div style="font-size:12px;font-weight:600;flex:1">${n}</div>
+      <div style="flex:2">
+        <div class="bw" style="height:10px;display:flex;overflow:hidden;border-radius:3px">
+          <div style="width:${v.h1/mx*100}%;background:var(--grn);display:flex;align-items:center;padding-left:3px;font-size:8px;font-weight:700;color:#fff">${v.h1||""}</div>
+          <div style="width:${v.h2/mx*100}%;background:var(--or);display:flex;align-items:center;padding-left:3px;font-size:8px;font-weight:700;color:#fff">${v.h2||""}</div>
+        </div>
+        <div style="display:flex;gap:8px;font-size:8px;margin-top:2px"><span style="color:var(--grn)">H1:${v.h1}</span><span style="color:var(--or)">H2:${v.h2}</span></div>
+      </div>
+      <div style="font-family:var(--fd);font-size:19px;font-weight:700;color:var(--tl);min-width:26px;text-align:right">${tot}</div>
+    </div>`}).join("");
+}
+
+function renderPen(){
+  const en=Object.entries(PEN).sort((a,b)=>(b[1].sc+b[1].ms)-(a[1].sc+a[1].ms));
+  const ts=Object.values(PEN).reduce((s,v)=>s+v.sc,0),tm=Object.values(PEN).reduce((s,v)=>s+v.ms,0);
+  document.getElementById("penEl").innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px;text-align:center">
+      <div style="background:var(--grn-d);border:1px solid rgba(60,184,112,.25);border-radius:6px;padding:9px">
+        <div style="font-family:var(--fd);font-size:22px;font-weight:700;color:var(--grn)">${ts}</div>
+        <div style="font-size:8px;color:var(--tx3);letter-spacing:1px;margin-top:2px;text-transform:uppercase">Vào lưới</div>
+      </div>
+      <div style="background:var(--red-d);border:1px solid rgba(229,69,69,.25);border-radius:6px;padding:9px">
+        <div style="font-family:var(--fd);font-size:22px;font-weight:700;color:var(--red)">${tm}</div>
+        <div style="font-size:8px;color:var(--tx3);letter-spacing:1px;margin-top:2px;text-transform:uppercase">Hỏng</div>
+      </div>
+    </div>
+    ${en.map(([n,v])=>`<div class="pr"><span class="pr-n">${n}</span><div style="display:flex;gap:10px;align-items:center"><span class="pv" style="color:var(--grn)">${v.sc}</span><span style="color:var(--tx3);font-size:9px">|</span><span class="pv" style="color:var(--red)">${v.ms}</span></div></div>`).join("")}
+    ${!en.length?`<p style="color:var(--tx3);font-size:10px;font-style:italic">Dữ liệu từ tuần 14.</p>`:""}`;
+}
+
+function renderHalfGf(){
+  const tot=HGF.h1+HGF.h2||1;
+  document.getElementById("halfGf").innerHTML=`
+    <div class="hc"><div class="hcc"><div class="hcn" style="color:var(--grn)">${HGF.h1}</div><div class="hcl">Hiệp 1</div></div><div class="hcc"><div class="hcn" style="color:var(--or)">${HGF.h2}</div><div class="hcl">Hiệp 2</div></div></div>
+    <div style="margin-top:10px">
+      <div class="cb">
+        <div style="width:26px;text-align:right;font-size:10px;font-weight:700;color:var(--grn);flex-shrink:0">H1</div>
+        <div class="cbw"><div class="bw" style="height:14px"><div class="b bgrn" style="width:${HGF.h1/tot*100}%">${HGF.h1} bàn · ${(HGF.h1/tot*100).toFixed(0)}%</div></div></div>
+      </div>
+      <div class="cb" style="margin-top:5px">
+        <div style="width:26px;text-align:right;font-size:10px;font-weight:700;color:var(--or);flex-shrink:0">H2</div>
+        <div class="cbw"><div class="bw" style="height:14px"><div class="b bor" style="width:${HGF.h2/tot*100}%">${HGF.h2} bàn · ${(HGF.h2/tot*100).toFixed(0)}%</div></div></div>
+      </div>
+    </div>
+    <div style="font-size:9px;color:var(--tx3);margin-top:7px;text-align:center">${HGF.h1+HGF.h2} bàn có dữ liệu (từ tuần 11)</div>`;
+}
+
+function renderGpm(){
+  const s=P.filter(p=>p.g>0&&p.m>0).map(p=>({...p,gpm:p.g/p.m})).sort((a,b)=>b.gpm-a.gpm),mx=s[0]?.gpm||1;
+  document.getElementById("gpmEl").innerHTML=s.map(p=>`<div class="cb"><div class="cbn">${p.n}</div><div class="cbw"><div class="bw"><div class="b bor" style="width:${p.gpm/mx*100}%">${p.gpm.toFixed(2)}</div></div></div><div class="cbv">${p.g}</div></div>`).join("");
+}
+
+function renderGK(){
+  document.getElementById("gkEl").innerHTML=Object.entries(GKD).map(([n,d])=>`<div class="gkc">
+    <div class="gkn">${n}</div><div class="gkp">GK · S7-CN FC${n==="Văn Tới"?" · <span style='color:var(--tx3);font-size:7px'>* Tạm tính</span>":""}</div>
+    <div class="gkg">
+      <div class="gks"><div class="gks-n" style="color:var(--red)">${d.conc}</div><div class="gks-l">Bàn thua</div></div>
+      <div class="gks"><div class="gks-n" style="color:var(--grn)">${d.h1}</div><div class="gks-l">Thua H1</div></div>
+      <div class="gks"><div class="gks-n" style="color:var(--amb)">${d.h2}</div><div class="gks-l">Thua H2</div></div>
+      <div class="gks"><div class="gks-n" style="color:var(--tl)">${d.pf}</div><div class="gks-l">Pen gặp</div></div>
+      <div class="gks"><div class="gks-n" style="color:var(--grn)">${d.ps}</div><div class="gks-l">Pen cản</div></div>
+      <div class="gks"><div class="gks-n">${(d.conc/Math.max(Object.keys(MG).filter(wk=>MG[wk].c?.some(c=>c.gk===n)).length,1)).toFixed(2)}</div><div class="gks-l">BThua/T</div></div>
+    </div>
+  </div>`).join('<div style="margin-top:8px"></div>')+`<div style="font-size:9px;color:var(--tx3);margin-top:8px;font-style:italic">* Văn Tới: tạm tính từ các trận Đức Khoa không bắt</div>`;
+}
+
+function renderHalfGa(){
+  const tot=HGA.h1+HGA.h2||1;
+  document.getElementById("halfGa").innerHTML=`
+    <div class="hc"><div class="hcc"><div class="hcn" style="color:var(--red)">${HGA.h1}</div><div class="hcl">Hiệp 1</div></div><div class="hcc"><div class="hcn" style="color:var(--amb)">${HGA.h2}</div><div class="hcl">Hiệp 2</div></div></div>
+    <div class="wdl-bar" style="height:5px"><div class="wl" style="flex:${HGA.h1}"></div><div style="background:var(--amb);flex:${HGA.h2}"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:10px;margin-top:6px;color:var(--tx3)"><span>${(HGA.h1/tot*100).toFixed(0)}% Hiệp 1</span><span>${HGA.h1+HGA.h2} bàn dữ liệu</span><span>${(HGA.h2/tot*100).toFixed(0)}% Hiệp 2</span></div>
+    <div style="margin-top:12px;border-top:1px solid var(--bd);padding-top:10px">
+      ${Object.entries(GKD).map(([n,d])=>`<div style="font-size:11px;color:var(--tx2);margin-bottom:5px"><b style="color:var(--tx)">${n}</b> · ${d.h1} thua H1 · ${d.h2} thua H2 · <span style="color:var(--tl)">${d.pf}</span> Pen gặp · <span style="color:var(--grn)">${d.ps}</span> cản</div>`).join("")}
+    </div>`;
 }
 
 function renderMatches(){
-  document.getElementById("matchHistory").innerHTML=M.slice().reverse().map(m=>`<div class="match-row"><div class="match-date">T${m.wk} · ${m.dt}</div><div class="match-vs">${m.vs}</div><div class="match-score">${m.gf} - ${m.ga}</div><div class="match-result result-${m.r}">${m.r==="W"?"Thắng":m.r==="D"?"Hòa":"Thua"}</div><div class="match-venue">${m.v}</div></div>`).join("");
+  document.getElementById("matchEl").innerHTML=M.slice().reverse().map((m,ri)=>{
+    const idx=M.length-1-ri,mg=MG[m.wk];
+    const col=m.r==="W"?"var(--grn)":m.r==="D"?"var(--amb)":"var(--red)";
+    let det="";
+    if(mg){
+      det=`<div class="mdet" id="md${idx}">`;
+      if(mg.s?.length){
+        det+=`<div style="font-size:8px;letter-spacing:1px;color:var(--or);margin-bottom:4px;font-weight:700;text-transform:uppercase">Bàn thắng</div>`;
+        det+=mg.s.map(g=>`<span class="chip chip-${g.t==="pen"?"pen":"g"}"><span class="sc">${g.sc}</span>${g.as?`<span class="as">→${g.as}</span>`:""}${g.t==="pen"?`<span class="sm">PEN</span>`:""}<span class="sm">H${g.h}</span></span>`).join("");
+      }
+      if(mg.ms?.length){
+        det+=`<div style="font-size:8px;letter-spacing:1px;color:var(--red);margin:5px 0 3px;font-weight:700;text-transform:uppercase">Hỏng Penalty</div>`;
+        det+=mg.ms.map(g=>`<span class="chip chip-ms"><span>${g.sc}</span><span class="sm">H${g.h}</span></span>`).join("");
+      }
+      if(mg.c?.length){
+        det+=`<div style="font-size:8px;letter-spacing:1px;color:var(--red);margin:5px 0 3px;font-weight:700;text-transform:uppercase">Bàn thua</div>`;
+        det+=mg.c.map(c=>`<span class="chip chip-c"><span style="color:var(--tl)">${c.gk}</span><span class="sm">H${c.h}</span></span>`).join("");
+      }
+      det+="</div>";
+    }
+    return`<div class="mr" onclick="togDet(${idx})">
+      <div class="mwk">T${m.wk}</div>
+      <div class="mdt">${m.dt}</div>
+      <div class="mvs">${m.vs}${mg?`<span style="font-size:8px;color:var(--tl);margin-left:5px">▾ chi tiết</span>`:""}</div>
+      <div class="msc" style="color:${col}">${m.gf}–${m.ga}</div>
+      <div class="rp r${m.r}">${m.r==="W"?"THẮNG":m.r==="D"?"HÒA":"THUA"}</div>
+      <div class="mven">${m.v}</div>
+    </div>${det}`;
+  }).join("");
 }
+function togDet(i){const el=document.getElementById("md"+i);if(el)el.classList.toggle("open")}
 
-function renderTopScorers(){
-  const sorted=P.filter(p=>p.g>0).sort((a,b)=>b.g-a.g);const mx=sorted[0]?.g||1;
-  document.getElementById("topScorers").innerHTML=sorted.map((p,i)=>`<div class="top-scorer"><div class="scorer-rank ${i===0?"gold":i===1?"silver":i===2?"bronze":""}">${i+1}</div><span class="pos-badge pos-${p.p}">${p.p}</span><div class="scorer-name">${p.n}</div><div style="flex:1"><div class="bar-wrap"><div class="bar bar-orange" style="width:${p.g/mx*100}%">${p.g}</div></div></div><div class="scorer-goals">${p.g}</div></div>`).join("");
+function renderOpponents(){
+  const ops={};M.forEach(m=>{if(!ops[m.vs])ops[m.vs]={w:0,d:0,l:0,gf:0,ga:0};const o=ops[m.vs];o.gf+=m.gf;o.ga+=m.ga;if(m.r==="W")o.w++;else if(m.r==="D")o.d++;else o.l++});
+  document.getElementById("oppTh").innerHTML=["Đối thủ","T","W","D","L","GF","GA","GD","%W","Kết quả"].map(x=>`<th>${x}</th>`).join("");
+  document.getElementById("oppTb").innerHTML=Object.entries(ops).sort((a,b)=>(b[1].w+b[1].d+b[1].l)-(a[1].w+a[1].d+a[1].l)).map(([n,o])=>{
+    const t=o.w+o.d+o.l,gd=o.gf-o.ga;
+    const ms=M.filter(m=>m.vs===n).map(m=>`<span class="rp r${m.r}" style="font-size:8px;margin:1px">${m.gf}-${m.ga}</span>`).join("");
+    return`<tr><td><b>${n}</b></td><td>${t}</td><td style="color:var(--grn)">${o.w}</td><td style="color:var(--amb)">${o.d}</td><td style="color:var(--red)">${o.l}</td><td>${o.gf}</td><td>${o.ga}</td><td style="color:${gd>=0?"var(--grn)":"var(--red)"}">${gd>=0?"+":""}${gd}</td><td>${(o.w/t*100).toFixed(0)}%</td><td>${ms}</td></tr>`;
+  }).join("");
 }
 
 let curPos="ALL";
-function renderPlayerTable(){
-  const h=["#","Tên","Pos","Áo","Trận","%Trận","Bàn","%Thắng","Phong độ","W","D","L","GF","GA","GD","Đ/Trận"];
-  document.getElementById("playerThead").innerHTML=h.map(x=>`<th>${x}</th>`).join("");
-  const f=curPos==="ALL"?P.filter(p=>p.m>0):P.filter(p=>p.p===curPos&&p.m>0);
-  const s=f.sort((a,b)=>b.m-a.m||b.g-a.g);const lb={W:"T",D:"H",L:"B",N:"·"};
-  document.getElementById("playerTbody").innerHTML=s.map((p,i)=>{
-    const ppg=p.m?(p.w*3+p.d)/p.m:0;const cls=ppg>=T.ppg?"impact-pos":ppg>=1.5?"impact-neu":"impact-neg";
-    return `<tr class="clickable" onclick="toggleDetail(this,'${p.n}')"><td>${i+1}</td><td><b>${p.n}</b>${p.t==="sub"?' <span style="font-size:9px;color:var(--orange)">(Sub)</span>':""} <span style="font-size:9px;color:#607d8b">▼</span></td><td><span class="pos-badge pos-${p.p}">${p.p}</span></td><td>${p.no||"-"}</td><td>${p.m}</td><td>${(p.mp*100).toFixed(0)}%</td><td><b style="color:var(--orange)">${p.g}</b></td><td>${(p.wp*100).toFixed(0)}%</td><td><div class="form-dots">${p.fa.map(f=>`<div class="form-dot form-${f}">${lb[f]}</div>`).join("")}</div></td><td>${p.w}</td><td>${p.d}</td><td>${p.l}</td><td>${p.gf}</td><td>${p.ga}</td><td style="color:${p.gd>0?"#4caf50":"var(--orange)"}">${p.gd>0?"+":""}${p.gd}</td><td><span class="${cls}" style="font-weight:bold;font-size:11px">${ppg.toFixed(2)}</span></td></tr>`;
-  }).join("");
-}
-
-function toggleDetail(tr,name){
-  const next=tr.nextElementSibling;
-  if(next&&next.classList.contains("detail-row")){next.remove();return}
-  document.querySelectorAll(".detail-row").forEach(r=>r.remove());
-  const pm=PM[name];if(!pm)return;
-  const detail=document.createElement("tr");detail.className="detail-row";
-  const td=document.createElement("td");td.colSpan=16;
-  let html='<div class="detail-content"><div style="font-size:12px;color:var(--orange);font-weight:bold;margin-bottom:8px">Chi tiết trận đấu — '+name+'</div>';
-  let totalG=0;M.forEach((m,i)=>{const g=pm[i];const played=g!==null;if(played&&g>0)totalG+=g;
-    html+=`<div class="detail-match${played?"":" detail-absent"}"><span style="width:65px;color:#8a9bb5;flex-shrink:0">T${m.wk} · ${m.dt}</span><span style="width:150px;flex-shrink:0">${m.vs}</span><span style="width:45px;font-weight:bold;text-align:center;flex-shrink:0">${m.gf}-${m.ga}</span><span class="match-result result-${m.r}" style="font-size:10px;padding:1px 6px">${m.r==="W"?"Thắng":m.r==="D"?"Hòa":"Thua"}</span><span style="width:70px;color:${played?"#4caf50":"#ef5350"};font-weight:bold;flex-shrink:0">${played?"✓ Có mặt":"✗ Vắng"}</span>${played&&g>0?`<span style="color:var(--orange);font-weight:bold">⚽ ${g} bàn</span>`:""}</div>`});
-  html+=`<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--navy4);font-size:11px;color:#8a9bb5">Tổng: <b style="color:#fff">${pm.filter(x=>x!==null).length}/${T.m}</b> trận · <b style="color:var(--orange)">${totalG}</b> bàn</div></div>`;
-  td.innerHTML=html;detail.appendChild(td);tr.after(detail);
-}
-
-function renderPosTabs(){
+function renderPosF(){
   const tabs=["ALL","FW","MF","DF","GK"],names={ALL:"Tất cả",FW:"Tiền đạo",MF:"Tiền vệ",DF:"Hậu vệ",GK:"Thủ môn"};
-  document.getElementById("posTabs").innerHTML=tabs.map(t=>`<button class="tab ${t===curPos?"active":""}" onclick="curPos='${t}';renderPosTabs();renderPlayerTable()">${names[t]}</button>`).join("");
+  document.getElementById("posF").innerHTML=tabs.map(t=>`<button class="twb${t===curPos?" on":""}" style="min-width:64px" onclick="curPos='${t}';renderPosF();renderPT()">${names[t]}</button>`).join("");
 }
 
-function renderAbsentTable(){
-  const h=["Tên","Pos","Đá","Vắng","Có mặt<br>%W","Vắng<br>%W","Chênh<br>%W","Có mặt<br>Đ/T","Vắng<br>Đ/T","Chênh<br>Đ/T","Vắng<br>GF/T","Vắng<br>GA/T","Vắng<br>W-D-L","Đánh giá"];
-  document.getElementById("absentThead").innerHTML=h.map(x=>`<th>${x}</th>`).join("");
-  const list=P.filter(p=>p.m>0&&p.m<T.m).map(p=>{const a=absent(p);const ppgW=(p.w*3+p.d)/p.m;const dw=p.wp-a.wp;const dp=ppgW-a.ppg;return{...p,a,ppgW,dw,dp}}).sort((a,b)=>b.dp-a.dp);
-  document.getElementById("absentTbody").innerHTML=list.map(p=>{
-    const a=p.a;const dwC=p.dw>0.05?"absent-bad":p.dw<-0.05?"absent-good":"absent-neutral";
-    const dpC=p.dp>0.2?"absent-bad":p.dp<-0.2?"absent-good":"absent-neutral";
-    const v=p.dp>0.3?"Thiếu = yếu hơn":p.dp<-0.3?"Thiếu ≠ ảnh hưởng":"Ảnh hưởng ít";
-    const vC=p.dp>0.3?"absent-bad":p.dp<-0.3?"absent-good":"absent-neutral";
-    return `<tr><td><b>${p.n}</b></td><td><span class="pos-badge pos-${p.p}">${p.p}</span></td><td>${p.m}</td><td>${a.m}</td><td>${(p.wp*100).toFixed(0)}%</td><td>${(a.wp*100).toFixed(0)}%</td><td class="${dwC}">${p.dw>0?"+":""}${(p.dw*100).toFixed(0)}%</td><td>${p.ppgW.toFixed(2)}</td><td>${a.ppg.toFixed(2)}</td><td class="${dpC}">${p.dp>0?"+":""}${p.dp.toFixed(2)}</td><td>${a.agf.toFixed(1)}</td><td>${a.aga.toFixed(1)}</td><td>${a.w}-${a.d}-${a.l}</td><td class="${vC}" style="font-size:11px">${v}</td></tr>`;
+function renderPT(){
+  const h=["#","Tên","POS","Áo","Trận","%T","Bàn","Ast","%Win","Phong độ","W","D","L","GD","Đ/T"];
+  document.getElementById("pTh").innerHTML=h.map(x=>`<th>${x}</th>`).join("");
+  const lb={W:"T",D:"H",L:"B",N:"·"};
+  const f=curPos==="ALL"?P.filter(p=>p.m>0):P.filter(p=>p.p===curPos&&p.m>0);
+  document.getElementById("pTb").innerHTML=f.sort((a,b)=>b.m-a.m||b.g-a.g).map((p,i)=>{
+    const ppg=(p.w*3+p.d)/p.m,ast=AST[p.n]||0,c=ppg>=T.ppg?"ig":ppg>=1.5?"ia":"ir";
+    return`<tr class="cl" onclick="togPD(this,'${p.n}')">
+      <td style="color:var(--tx3)">${i+1}</td>
+      <td><b>${p.n}</b>${p.t==="sub"?`<span style="font-size:8px;color:var(--or)"> Sub</span>`:""}<span style="font-size:8px;color:var(--tx3)"> ▾</span></td>
+      <td><span class="pos ${p.p}">${p.p}</span></td>
+      <td style="color:var(--tx3)">${p.no||"—"}</td>
+      <td><b>${p.m}</b></td>
+      <td style="color:var(--tx2)">${(p.mp*100).toFixed(0)}%</td>
+      <td><b style="color:var(--or)">${p.g}</b></td>
+      <td style="color:var(--tl)">${ast||"—"}</td>
+      <td>${(p.wp*100).toFixed(0)}%</td>
+      <td><div class="fds">${p.fa.map(f=>`<div class="fd fd${f}">${lb[f]}</div>`).join("")}</div></td>
+      <td style="color:var(--grn)">${p.w}</td><td style="color:var(--amb)">${p.d}</td><td style="color:var(--red)">${p.l}</td>
+      <td style="color:${p.gd>0?"var(--grn)":"var(--amb)"}">${p.gd>0?"+":""}${p.gd}</td>
+      <td><span class="${c}">${ppg.toFixed(2)}</span></td>
+    </tr>`;
   }).join("");
 }
 
-function renderAttendance(){
-  const sorted=P.filter(p=>p.m>0).sort((a,b)=>b.mp-a.mp);
-  document.getElementById("attendanceChart").innerHTML=sorted.map(p=>`<div class="chart-bar-h"><div class="name">${p.n}</div><div class="bar-wrap"><div class="bar bar-orange" style="width:${p.mp*100}%">${(p.mp*100).toFixed(0)}%</div></div><div class="val">${p.m}</div></div>`).join("");
+function togPD(tr,name){
+  const nx=tr.nextElementSibling;
+  if(nx?.classList.contains("dr")){nx.remove();return}
+  document.querySelectorAll(".dr").forEach(r=>r.remove());
+  const pm=PM[name];if(!pm)return;
+  const det=document.createElement("tr");det.className="dr";
+  const td=document.createElement("td");td.colSpan=15;
+  const ast_h=AST_H[name],pen_s=PEN[name];
+  let h=`<div class="di"><div style="font-size:9px;color:var(--or);font-weight:700;margin-bottom:7px;letter-spacing:1px">${name.toUpperCase()} · CHI TIẾT</div>`;
+  if(ast_h||pen_s){h+=`<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:9px;padding-bottom:8px;border-bottom:1px solid var(--bd)">`;
+    if(ast_h)h+=`<span style="background:var(--tl-d);border:1px solid rgba(42,139,174,.25);border-radius:5px;padding:3px 8px;font-size:10px">🅰 Kiến tạo: <b style="color:var(--tl)">${ast_h.h1+ast_h.h2}</b> <span style="color:var(--tx3);font-size:8px">(H1:${ast_h.h1} · H2:${ast_h.h2})</span></span>`;
+    if(pen_s){h+=`<span style="background:var(--grn-d);border:1px solid rgba(60,184,112,.25);border-radius:5px;padding:3px 8px;font-size:10px">⚽ Pen vào: <b style="color:var(--grn)">${pen_s.sc}</b></span>`;
+    h+=`<span style="background:var(--red-d);border:1px solid rgba(229,69,69,.25);border-radius:5px;padding:3px 8px;font-size:10px">✗ Pen hỏng: <b style="color:var(--red)">${pen_s.ms}</b></span>`;}
+    h+=`</div>`;}
+  h+=`<div style="display:flex;flex-wrap:wrap;gap:3px">`;
+  let tg=0;
+  M.forEach((m,i)=>{const g=pm[i];const pl=g!==null;if(pl&&g>0)tg+=g;
+    h+=`<div style="display:inline-flex;align-items:center;gap:4px;background:${pl?"var(--sf2)":"rgba(0,0,0,.3)"};border:1px solid var(--bd);border-radius:5px;padding:3px 6px;opacity:${pl?1:.35};font-size:10px;margin:1px">
+      <span style="color:var(--tx3);font-size:8px">T${m.wk}</span>
+      <span style="font-weight:600;color:${m.r==="W"?"var(--grn)":m.r==="D"?"var(--amb)":"var(--red)"}">${m.gf}-${m.ga}</span>
+      <span style="color:${pl?"var(--grn)":"var(--red)"};font-size:9px">${pl?"✓":"✗"}</span>
+      ${pl&&g>0?`<span style="color:var(--or);font-weight:700">⚽${g}</span>`:""}
+    </div>`;
+  });
+  h+=`</div><div style="margin-top:6px;font-size:10px;color:var(--tx3)">${pm.filter(x=>x!==null).length}/${T.m} trận · <b style="color:var(--or)">${tg}</b> bàn</div></div>`;
+  td.innerHTML=h;det.appendChild(td);tr.after(det);
 }
 
-function renderImpact(){
-  const sorted=P.filter(p=>p.m>0).map(p=>({...p,ppg:p.m?(p.w*3+p.d)/p.m:0})).sort((a,b)=>b.ppg-a.ppg);const mx=Math.max(...sorted.map(p=>p.ppg));
-  document.getElementById("impactChart").innerHTML=`<div style="font-size:11px;color:#8a9bb5;margin-bottom:8px">Điểm/trận khi cầu thủ thi đấu. TB đội: ${T.ppg.toFixed(2)}</div>`+sorted.map(p=>{const c=p.ppg>=T.ppg?"bar-green":p.ppg>=1.5?"bar-orange":"bar-red";return`<div class="chart-bar-h"><div class="name">${p.n}</div><div class="bar-wrap"><div class="bar ${c}" style="width:${p.ppg/mx*100}%">${p.ppg.toFixed(2)}</div></div></div>`}).join("");
+function renderAtt(){
+  document.getElementById("attEl").innerHTML=P.filter(p=>p.m>0).sort((a,b)=>b.mp-a.mp).map(p=>`<div class="cb"><div class="cbn">${p.n}</div><div class="cbw"><div class="bw"><div class="b bor" style="width:${p.mp*100}%">${(p.mp*100).toFixed(0)}%</div></div></div><div class="cbv">${p.m}</div></div>`).join("");
 }
 
-function renderGoalsByPos(){
-  const pg={FW:0,MF:0,DF:0,GK:0};P.forEach(p=>{if(pg[p.p]!==undefined)pg[p.p]+=p.g});const tot=Object.values(pg).reduce((a,b)=>a+b,0)||1;
-  document.getElementById("goalsByPos").innerHTML=`<h3 style="font-size:12px;color:#8a9bb5;margin-bottom:10px">Bàn thắng theo vị trí</h3>`+Object.entries(pg).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).map(([pos,g])=>`<div class="chart-bar-h"><div class="name"><span class="pos-badge pos-${pos}">${pos}</span></div><div class="bar-wrap"><div class="bar bar-orange" style="width:${g/tot*100}%">${g} (${(g/tot*100).toFixed(0)}%)</div></div></div>`).join("");
-  const sc=P.filter(p=>p.g>0&&p.m>0).map(p=>({...p,gpm:p.g/p.m})).sort((a,b)=>b.gpm-a.gpm);const mx=Math.max(...sc.map(s=>s.gpm));
-  document.getElementById("goalsPerMatch").innerHTML=`<h3 style="font-size:12px;color:#8a9bb5;margin-bottom:10px">Hiệu suất ghi bàn / trận</h3>`+sc.map(p=>`<div class="chart-bar-h"><div class="name">${p.n}</div><div class="bar-wrap"><div class="bar bar-orange" style="width:${p.gpm/mx*100}%">${p.gpm.toFixed(2)}</div></div><div class="val">${p.g}</div></div>`).join("");
+function renderImp(){
+  const s=P.filter(p=>p.m>0).map(p=>({...p,ppg:(p.w*3+p.d)/p.m})).sort((a,b)=>b.ppg-a.ppg),mx=s[0]?.ppg||1;
+  document.getElementById("impEl").innerHTML=`<div style="font-size:10px;color:var(--tx3);margin-bottom:7px">Đội TB: <b style="color:var(--or)">${T.ppg.toFixed(2)}</b> Đ/T</div>`+
+    s.map(p=>{const c=p.ppg>=T.ppg?"bgrn":p.ppg>=1.5?"bor":"bred";return`<div class="cb"><div class="cbn">${p.n}</div><div class="cbw"><div class="bw"><div class="b ${c}" style="width:${p.ppg/mx*100}%">${p.ppg.toFixed(2)}</div></div></div></div>`}).join("");
+}
+
+let curF="4-4-2";
+function renderFm(){
+  document.getElementById("fmTabs").innerHTML=Object.keys(BXI).map(f=>`<button class="twb${f===curF?" on":""}" style="padding:6px 20px;font-family:var(--fd);font-size:13px" onclick="curF='${f}';renderFm()">${f}</button>`).join("");
+  document.getElementById("pitchEl").innerHTML=`<div class="pw"><div class="pt">
+    <div class="pml"></div><div class="pmc"></div><div class="pmbt"></div><div class="pmbb"></div>
+    ${BXI[curF].map(s=>`<div class="pp" style="top:${s.top};left:${s.left}"><div class="pc pc-${s.p.toLowerCase()}">${s.n}</div><div class="pl">${s.p}</div></div>`).join("")}
+  </div></div>`;
 }
 
 function renderVenue(){
-  const home=M.filter(m=>m.v==="Giga Arena"),away=M.filter(m=>m.v!=="Giga Arena");
-  function vs(arr){const w=arr.filter(m=>m.r==="W").length,d=arr.filter(m=>m.r==="D").length,l=arr.filter(m=>m.r==="L").length,gf=arr.reduce((s,m)=>s+m.gf,0),ga=arr.reduce((s,m)=>s+m.ga,0);return{m:arr.length,w,d,l,gf,ga,gd:gf-ga,ppg:arr.length?(w*3+d)/arr.length:0,wp:arr.length?w/arr.length:0}}
-  const h=vs(home),a=vs(away);
-  document.getElementById("venueAnalysis").innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px"><div style="text-align:center;padding:14px;background:var(--navy);border-radius:8px;border:1px solid var(--navy4)"><div style="font-size:12px;color:var(--orange);font-weight:bold;margin-bottom:8px">SÂN NHÀ — GIGA ARENA</div><div style="font-size:26px;font-weight:bold;color:#fff">${h.w}W ${h.d}D ${h.l}L</div><div style="font-size:12px;color:#8a9bb5;margin-top:4px">${h.m} trận · ${(h.wp*100).toFixed(0)}% win</div><div style="margin-top:8px"><span style="color:#4caf50;font-weight:bold;font-size:20px">${h.gf}</span><span style="color:#8a9bb5"> — </span><span style="color:#ef5350;font-weight:bold;font-size:20px">${h.ga}</span></div><div style="font-size:11px;color:#8a9bb5;margin-top:4px">GD: <span style="color:${h.gd>=0?"#4caf50":"#ef5350"}">${h.gd>=0?"+":""}${h.gd}</span> · Đ/T: <b style="color:var(--orange)">${h.ppg.toFixed(2)}</b></div></div><div style="text-align:center;padding:14px;background:var(--navy);border-radius:8px;border:1px solid var(--navy4)"><div style="font-size:12px;color:var(--orange);font-weight:bold;margin-bottom:8px">SÂN KHÁCH</div><div style="font-size:26px;font-weight:bold;color:#fff">${a.w}W ${a.d}D ${a.l}L</div><div style="font-size:12px;color:#8a9bb5;margin-top:4px">${a.m} trận · ${(a.wp*100).toFixed(0)}% win</div><div style="margin-top:8px"><span style="color:#4caf50;font-weight:bold;font-size:20px">${a.gf}</span><span style="color:#8a9bb5"> — </span><span style="color:#ef5350;font-weight:bold;font-size:20px">${a.ga}</span></div><div style="font-size:11px;color:#8a9bb5;margin-top:4px">GD: <span style="color:${a.gd>=0?"#4caf50":"#ef5350"}">${a.gd>=0?"+":""}${a.gd}</span> · Đ/T: <b style="color:var(--orange)">${a.ppg.toFixed(2)}</b></div></div></div>`;
-  const venues={};M.forEach(m=>{if(!venues[m.v])venues[m.v]=[];venues[m.v].push(m)});
-  let vhtml="";Object.entries(venues).sort((a,b)=>b[1].length-a[1].length).forEach(([name,matches])=>{const s=vs(matches);const isH=name==="Giga Arena";vhtml+=`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--navy4)"><div style="width:120px;font-size:12px;font-weight:bold;color:${isH?"var(--orange)":"#e0e0e0"}">${name}${isH?" (Nhà)":""}</div><div style="width:40px;font-size:11px;color:#8a9bb5">${s.m} trận</div><div style="flex:1"><div class="bar-wrap"><div class="bar bar-${s.wp>=.5?"green":"orange"}" style="width:${Math.max(s.wp*100,20)}%">${s.w}W ${s.d}D ${s.l}L</div></div></div><div style="width:50px;font-size:12px;text-align:right;color:${s.gd>=0?"#4caf50":"#ef5350"}">${s.gf}-${s.ga}</div></div>`});
-  document.getElementById("venueBreakdown").innerHTML=vhtml;
-}
-
-function renderOpponents(){
-  const h=["Đối thủ","Trận","W","D","L","GF","GA","GD","%Win","Đ/T","Sân nhà","Sân khách"];
-  document.getElementById("oppThead").innerHTML=h.map(x=>`<th>${x}</th>`).join("");
-  const opps={};
-  M.forEach(m=>{if(!opps[m.vs])opps[m.vs]={w:0,d:0,l:0,gf:0,ga:0,hm:[],am:[]};const o=opps[m.vs];o.gf+=m.gf;o.ga+=m.ga;if(m.r==="W")o.w++;else if(m.r==="D")o.d++;else o.l++;if(m.v==="Giga Arena")o.hm.push(m);else o.am.push(m)});
-  const sorted=Object.entries(opps).sort((a,b)=>(b[1].w+b[1].d+b[1].l)-(a[1].w+a[1].d+a[1].l));
-  const rs=m=>`<span class="match-result result-${m.r}" style="font-size:10px;padding:1px 5px;margin:1px">${m.gf}-${m.ga}</span>`;
-  document.getElementById("oppTbody").innerHTML=sorted.map(([name,o])=>{const t=o.w+o.d+o.l,gd=o.gf-o.ga,wp=o.w/t,ppg=(o.w*3+o.d)/t;return`<tr><td><b>${name}</b></td><td>${t}</td><td>${o.w}</td><td>${o.d}</td><td>${o.l}</td><td>${o.gf}</td><td>${o.ga}</td><td style="color:${gd>=0?"#4caf50":"#ef5350"}">${gd>=0?"+":""}${gd}</td><td>${(wp*100).toFixed(0)}%</td><td style="color:var(--orange);font-weight:bold">${ppg.toFixed(2)}</td><td>${o.hm.length?o.hm.map(rs).join(""):"—"}</td><td>${o.am.length?o.am.map(rs).join(""):"—"}</td></tr>`}).join("");
-}
-
-function renderSummary(){
   const hm=M.filter(m=>m.v==="Giga Arena"),am=M.filter(m=>m.v!=="Giga Arena");
-  const hw=hm.filter(m=>m.r==="W").length,aw=am.filter(m=>m.r==="W").length;
-  document.getElementById("seasonSummary").innerHTML=`<div style="line-height:1.8;font-size:13px"><h3 style="color:var(--orange);font-size:15px;margin-bottom:10px">Chốt kỳ 2026</h3><p><b style="color:#4caf50">Tấn công:</b> TB ${(T.gf/T.m).toFixed(1)} bàn/trận — hỏa lực mạnh nhờ bộ ba Cảm (13 bàn), Khâm & Văn Chung (7 bàn mỗi người). Quốc Long đóng góp 4 bàn từ tuyến giữa.</p><p style="margin-top:8px"><b style="color:#ef5350">Phòng ngự:</b> TB ${(T.ga/T.m).toFixed(1)} bàn thua/trận — hàng thủ cần cải thiện. Nguyễn Hoàng (${P.find(p=>p.n==="Nguyễn Hoàng").wp*100|0}% win khi ra sân) là trụ cột phòng ngự đáng tin cậy nhất.</p><p style="margin-top:8px"><b style="color:var(--orange)">Chuyển hóa:</b> ${T.d} trận hòa (${(T.d/T.m*100).toFixed(0)}%) — tỷ lệ cao. Cần tìm cách giải quyết trận đấu dứt khoát hơn.</p><p style="margin-top:8px"><b style="color:#fff">Nhân sự:</b> ${P.filter(p=>p.m>=8).length} cầu thủ đá từ 8 trận — chiều sâu đội hình tốt. Lucky Trần (MVP) ổn định với chỉ 1 trận thua khi ra sân. Mai Cồ Hiếu ra sân 100% — tinh thần chiến binh.</p><p style="margin-top:8px"><b style="color:#fff">Sân nhà vs Sân khách:</b> Sân khách ${(aw/am.length*100).toFixed(0)}% win (${aw}W/${am.length} trận) tốt hơn sân nhà Giga Arena ${(hw/hm.length*100).toFixed(0)}% win (${hw}W/${hm.length} trận).</p><h3 style="color:var(--orange);font-size:15px;margin:18px 0 10px">Mục tiêu kỳ tiếp theo</h3><ul style="padding-left:20px;color:#ccc"><li>Giảm bàn thua: mục tiêu TB ≤ 2.0 bàn/trận (hiện tại ${(T.ga/T.m).toFixed(1)})</li><li>Biến hòa thành thắng: giảm tỷ lệ hòa từ ${(T.d/T.m*100).toFixed(0)}% xuống dưới 20%</li><li>Nâng cao thành tích sân nhà Giga Arena — cần thắng ổn định hơn tại sân nhà</li><li>Duy trì lực lượng tấn công — phát huy Cảm, Khâm, Văn Chung</li><li>Tăng sự gắn kết: tạo cơ hội cho cầu thủ dự bị hòa nhập nhiều hơn</li></ul></div>`;
+  function vs(arr){const w=arr.filter(m=>m.r==="W").length,d=arr.filter(m=>m.r==="D").length,l=arr.filter(m=>m.r==="L").length,gf=arr.reduce((s,m)=>s+m.gf,0),ga=arr.reduce((s,m)=>s+m.ga,0);return{m:arr.length,w,d,l,gf,ga,gd:gf-ga,wp:arr.length?w/arr.length:0,ppg:arr.length?(w*3+d)/arr.length:0}}
+  const h=vs(hm),a=vs(am);
+  document.getElementById("venueEl").innerHTML=`<div class="vp">
+    <div class="vc"><div class="vc-n">Sân nhà · Giga Arena</div><div class="vc-w">${h.w}W ${h.d}D ${h.l}L</div><div class="vc-s">${h.m}T · ${(h.wp*100).toFixed(0)}% win · GD ${h.gd>=0?"+":""}${h.gd}</div><div style="font-family:var(--fd);font-size:16px;margin-top:7px"><span style="color:var(--grn)">${h.gf}</span><span style="color:var(--tx3)">–</span><span style="color:var(--red)">${h.ga}</span> · <span style="color:var(--or)">${h.ppg.toFixed(2)}</span> Đ/T</div></div>
+    <div class="vc"><div class="vc-n">Sân khách</div><div class="vc-w">${a.w}W ${a.d}D ${a.l}L</div><div class="vc-s">${a.m}T · ${(a.wp*100).toFixed(0)}% win · GD ${a.gd>=0?"+":""}${a.gd}</div><div style="font-family:var(--fd);font-size:16px;margin-top:7px"><span style="color:var(--grn)">${a.gf}</span><span style="color:var(--tx3)">–</span><span style="color:var(--red)">${a.ga}</span> · <span style="color:var(--or)">${a.ppg.toFixed(2)}</span> Đ/T</div></div>
+  </div>`;
+  const vns={};M.forEach(m=>{if(!vns[m.v])vns[m.v]=[];vns[m.v].push(m)});
+  document.getElementById("venBrkEl").innerHTML=Object.entries(vns).sort((a,b)=>b[1].length-a[1].length).map(([name,ms])=>{
+    const s=vs(ms);return`<div style="display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:1px solid var(--bd)">
+      <div style="width:96px;font-size:10px;font-weight:600;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:${name==="Giga Arena"?"var(--or)":"var(--tx)"}">${name}</div>
+      <div style="width:22px;font-size:9px;color:var(--tx3)">${s.m}T</div>
+      <div style="flex:1"><div class="bw"><div class="b ${s.wp>=.5?"bgrn":"bor"}" style="width:${Math.max(s.wp*100,15)}%">${s.w}W ${s.d}D ${s.l}L</div></div></div>
+      <div style="font-size:10px;min-width:36px;text-align:right;color:${s.gd>=0?"var(--grn)":"var(--red)"}">${s.gf}-${s.ga}</div>
+    </div>`}).join("");
 }
 
-function renderCompare(){
+function renderAwards(){
+  const lk=P.find(p=>p.n==="Lucky Trần"),cam=P.find(p=>p.n==="Cảm"),mch=P.find(p=>p.n==="Mai Cồ Hiếu"),nh=P.find(p=>p.n==="Nguyễn Hoàng"),ql=P.find(p=>p.n==="Quốc Long");
+  document.getElementById("awEl").innerHTML=[
+    {t:"MVP\nXuất sắc nhất",p:lk.n,s:`${lk.m}T · ${(lk.wp*100).toFixed(0)}% win`,d:`PPG ${((lk.w*3+lk.d)/lk.m).toFixed(2)} · Trụ cột tuyến giữa`},
+    {t:"Vua phá lưới\nTop Scorer",p:cam.n,s:`${cam.g} bàn / ${cam.m} trận`,d:`${(cam.g/cam.m).toFixed(2)} bàn/trận`},
+    {t:"Chiến binh thép\nIron Man",p:mch.n,s:`${mch.m}/${T.m} trận · 100%`,d:"Ra sân đầy đủ mọi trận"},
+    {t:"Hậu vệ xuất sắc\nBest Defender",p:nh.n,s:`${(nh.wp*100).toFixed(0)}% win · GD +${nh.gd}`,d:`${nh.m}T · ${nh.w}W ${nh.d}D ${nh.l}L`},
+    {t:"Tiền vệ xuất sắc\nBest Midfielder",p:ql.n,s:`${ql.g}B · Ast ${AST[ql.n]||0}`,d:`PPG ${((ql.w*3+ql.d)/ql.m).toFixed(2)}`},
+  ].map(a=>`<div class="aw"><div class="aw-t">${a.t.replace("\n","<br>")}</div><div class="aw-p">${a.p}</div><div class="aw-s">${a.s}</div><div class="aw-d">${a.d}</div></div>`).join("");
+}
+
+function renderSum(){
   const hm=M.filter(m=>m.v==="Giga Arena"),am=M.filter(m=>m.v!=="Giga Arena");
-  const S26={m:T.m,w:T.w,d:T.d,l:T.l,gf:T.gf,ga:T.ga,gd:T.gd,pts:T.w*3+T.d,ppg:T.ppg,wp:T.w/T.m,
-    home:{m:hm.length,w:hm.filter(m=>m.r==="W").length,d:hm.filter(m=>m.r==="D").length,l:hm.filter(m=>m.r==="L").length,gf:hm.reduce((s,m)=>s+m.gf,0),ga:hm.reduce((s,m)=>s+m.ga,0)},
-    away:{m:am.length,w:am.filter(m=>m.r==="W").length,d:am.filter(m=>m.r==="D").length,l:am.filter(m=>m.r==="L").length,gf:am.reduce((s,m)=>s+m.gf,0),ga:am.reduce((s,m)=>s+m.ga,0)}};
-  S26.home.gd=S26.home.gf-S26.home.ga;S26.away.gd=S26.away.gf-S26.away.ga;
-  function cmp(a,b,inv){const d=a-b;if(Math.abs(d)<0.01)return{cls:"cmp-same",arr:"="};return inv?(d>0?{cls:"cmp-worse",arr:"▲"}:{cls:"cmp-better",arr:"▼"}):(d>0?{cls:"cmp-better",arr:"▲"}:{cls:"cmp-worse",arr:"▼"})}
-  function row(label,v25,v26,fmt,inv){const c=cmp(v26,v25,inv);return`<div class="cmp-row"><div class="cmp-label">${label}</div><div class="cmp-val">${fmt(v25)}</div><div class="cmp-arrow ${c.cls}">${c.arr}</div><div class="cmp-val ${c.cls}">${fmt(v26)}</div></div>`}
-  const n=v=>v,f1=v=>v.toFixed(1),f2=v=>v.toFixed(2),pct=v=>(v*100).toFixed(1)+"%",wdl=o=>`${o.w}W ${o.d}D ${o.l}L`;
-  const el=document.getElementById("compareSection");
-  el.innerHTML=`<p class="hint" style="margin-bottom:12px">Chỉ tính trận Sân 11. Xanh = cải thiện, Đỏ = giảm so với 2025.</p>
-  <div class="cmp-grid">
-    <div class="cmp-card"><div class="cmp-year">2025</div><div class="cmp-big">${S25.w}W ${S25.d}D ${S25.l}L</div><div style="font-size:12px;color:#8a9bb5">${S25.m} trận · ${(S25.wp*100).toFixed(1)}% win</div></div>
-    <div class="cmp-card"><div class="cmp-year">2026</div><div class="cmp-big">${S26.w}W ${S26.d}D ${S26.l}L</div><div style="font-size:12px;color:#8a9bb5">${S26.m} trận · ${(S26.wp*100).toFixed(1)}% win</div></div>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
-    <div class="cmp-card"><div style="font-size:11px;color:var(--orange);margin-bottom:8px;font-weight:bold">TỔNG QUAN</div>
-      <div class="cmp-row"><div class="cmp-label"></div><div class="cmp-val" style="color:var(--orange)">2025</div><div class="cmp-arrow"></div><div class="cmp-val" style="color:var(--orange)">2026</div></div>
-      ${row("Trận",S25.m,S26.m,n)}${row("% Thắng",S25.wp,S26.wp,pct)}${row("Điểm/trận",S25.ppg,S26.ppg,f2)}${row("Tổng điểm",S25.pts,S26.pts,n)}${row("GF",S25.gf,S26.gf,n)}${row("GA",S25.ga,S26.ga,n,true)}${row("GD",S25.gd,S26.gd,n)}${row("GF/trận",S25.gf/S25.m,S26.gf/S26.m,f1)}${row("GA/trận",S25.ga/S25.m,S26.ga/S26.m,f1,true)}
+  document.getElementById("sumEl").innerHTML=`<div class="sumg">
+    <div class="sumb">
+      <h3>Phân tích mùa giải 2026</h3>
+      <p><b style="color:var(--grn)">Tấn công:</b> TB ${(T.gf/T.m).toFixed(1)} bàn/trận. Cảm (13B) · Văn Chung (8B) · Khâm (7B) — bộ ba sát thủ hàng đầu. Assist dẫn đầu: Khâm & Gia Lộc.</p>
+      <p><b style="color:var(--red)">Phòng ngự:</b> TB ${(T.ga/T.m).toFixed(1)} bàn thua/trận. Đức Khoa (${GKD["Đức Khoa"]?.h1||0}H1·${GKD["Đức Khoa"]?.h2||0}H2) và Văn Tới* (${GKD["Văn Tới"]?.h1||0}H1·${GKD["Văn Tới"]?.h2||0}H2) bảo vệ khung thành.</p>
+      <p><b style="color:var(--amb)">Chuyển hóa:</b> ${T.d} trận hòa (${(T.d/T.m*100).toFixed(0)}%) — cần kết thúc trận quyết đoán hơn.</p>
+      <p><b style="color:var(--or)">Sân đấu:</b> Giga Arena ${(hm.filter(m=>m.r==="W").length/hm.length*100).toFixed(0)}% win · Sân khách ${(am.filter(m=>m.r==="W").length/am.length*100).toFixed(0)}% win.</p>
     </div>
-    <div class="cmp-card"><div style="font-size:11px;color:var(--orange);margin-bottom:8px;font-weight:bold">SÂN NHÀ (GIGA ARENA)</div>
-      <div class="cmp-row"><div class="cmp-label"></div><div class="cmp-val" style="color:var(--orange)">2025</div><div class="cmp-arrow"></div><div class="cmp-val" style="color:var(--orange)">2026</div></div>
-      ${row("Trận",S25.home.m,S26.home.m,n)}${row("Thắng",S25.home.w,S26.home.w,n)}${row("Hòa",S25.home.d,S26.home.d,n)}${row("Thua",S25.home.l,S26.home.l,n,true)}${row("% Thắng",S25.home.w/S25.home.m,S26.home.w/S26.home.m,pct)}${row("GF",S25.home.gf,S26.home.gf,n)}${row("GA",S25.home.ga,S26.home.ga,n,true)}${row("GD",S25.home.gd,S26.home.gd,n)}${row("GF/trận",S25.home.gf/S25.home.m,S26.home.gf/S26.home.m,f1)}${row("GA/trận",S25.home.ga/S25.home.m,S26.home.ga/S26.home.m,f1,true)}
-    </div>
-    <div class="cmp-card"><div style="font-size:11px;color:var(--orange);margin-bottom:8px;font-weight:bold">SÂN KHÁCH</div>
-      <div class="cmp-row"><div class="cmp-label"></div><div class="cmp-val" style="color:var(--orange)">2025</div><div class="cmp-arrow"></div><div class="cmp-val" style="color:var(--orange)">2026</div></div>
-      ${row("Trận",S25.away.m,S26.away.m,n)}${row("% Thắng",S25.away.w/S25.away.m,S26.away.w/S26.away.m,pct)}${row("GF",S25.away.gf,S26.away.gf,n)}${row("GA",S25.away.ga,S26.away.ga,n,true)}${row("GD",S25.away.gd,S26.away.gd,n)}${row("GF/trận",S25.away.gf/S25.away.m,S26.away.gf/S26.away.m,f1)}${row("GA/trận",S25.away.ga/S25.away.m,S26.away.ga/S26.away.m,f1,true)}
+    <div class="sumb">
+      <h3>Mục tiêu kỳ tới</h3>
+      <ul>
+        <li>Giảm GA/trận: mục tiêu ≤ 2.0 (hiện ${(T.ga/T.m).toFixed(1)})</li>
+        <li>Giảm hòa từ ${(T.d/T.m*100).toFixed(0)}% xuống &lt;20%</li>
+        <li>Nâng PPG từ ${T.ppg.toFixed(2)} lên ≥ 2.00</li>
+        <li>Duy trì bộ ba Cảm – Khâm – Văn Chung</li>
+        <li>Nhập đầy đủ dữ liệu goal detail mỗi tuần</li>
+        <li>Theo dõi thêm GK cản penalty</li>
+      </ul>
     </div>
   </div>`;
 }
 
-renderOverview();renderWinRate();renderGoals();renderForm();renderCompare();renderAwards();renderMatches();renderTopScorers();renderPosTabs();renderPlayerTable();renderAbsentTable();renderAttendance();renderImpact();renderGoalsByPos();renderVenue();renderOpponents();renderFormation();renderSummary();
+function renderTk(){
+  const bw=M.reduce((b,m)=>m.gf-m.ga>b.gf-b.ga?m:b,M[0]);
+  const lw=M.reduce((b,m)=>m.gf-m.ga<b.gf-b.ga?m:b,M[0]);
+  const hg=M.reduce((b,m)=>m.gf>b.gf?m:b,M[0]);
+  const cs=[];let run=0,max=0;M.forEach(m=>{if(m.r==="W"){run++;max=Math.max(max,run)}else run=0});
+  const pen_tot=Object.values(PEN).reduce((s,v)=>s+v.sc,0);
+  const pen_ms=Object.values(PEN).reduce((s,v)=>s+v.ms,0);
+  document.getElementById("tkEl").innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+    ${[
+      {l:"Thắng đậm nhất",v:`${bw.gf}–${bw.ga}`,s:`vs ${bw.vs}`,c:"grn"},
+      {l:"Thua đậm nhất",v:`${lw.gf}–${lw.ga}`,s:`vs ${lw.vs}`,c:"red"},
+      {l:"Trận ghi nhiều nhất",v:`${hg.gf} bàn`,s:`vs ${hg.vs}`,c:"or"},
+      {l:"Chuỗi thắng dài nhất",v:`${max} trận`,s:"liên tiếp",c:"grn"},
+      {l:"Penalty thành công",v:`${pen_tot}/${pen_tot+pen_ms}`,s:`${pen_ms} hỏng`,c:"amb"},
+      {l:"GF / GA tỉ lệ",v:`${(T.gf/T.ga).toFixed(2)}`,s:`${T.gf} : ${T.ga}`,c:"or"},
+    ].map(x=>`<div class="card" style="text-align:center;padding:16px">
+      <div style="font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx3);margin-bottom:8px">${x.l}</div>
+      <div style="font-family:var(--fd);font-size:28px;font-weight:700;color:var(--${x.c})">${x.v}</div>
+      <div style="font-size:10px;color:var(--tx3);margin-top:4px">${x.s}</div>
+    </div>`).join("")}
+  </div>`;
+}
+
+const NAVS={
+  club:["grp-ov|Tổng quan","grp-mt|Trận đấu","grp-pl|Cầu thủ","grp-atk|Tấn công","grp-def|Phòng ngự","grp-an|Phân tích","grp-fm|Đội hình","grp-tk|Tổng kết","grp-vd|Vinh danh","grp-dg|Đánh giá"],
+  stats:["grp-ov|Tổng quan","grp-mt|Trận đấu","grp-pl|Cầu thủ","grp-atk|Tấn công","grp-def|Phòng ngự","grp-an|Phân tích","grp-vd|Vinh danh","grp-dg|Đánh giá"],
+  match:["grp-mt|Trận đấu","grp-ov|Tổng quan","grp-atk|Tấn công","grp-def|Phòng ngự","grp-pl|Cầu thủ","grp-vd|Vinh danh","grp-dg|Đánh giá"],
+};
+
+function renderNav(t){
+  document.getElementById("snavEl").innerHTML=(NAVS[t]||NAVS.club).map(x=>{const[id,lbl]=x.split("|");return`<a class="sl" href="#${id}">${lbl}</a>`}).join("");
+  const sls=document.querySelectorAll(".sl");
+  const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const id=e.target.id;sls.forEach(l=>l.classList.remove("on"));const a=document.querySelector(`.sl[href="#${id}"]`);if(a)a.classList.add("on")}})},{rootMargin:"-8% 0px -62% 0px"});
+  document.querySelectorAll(".grp[id]").forEach(s=>io.observe(s));
+}
+
+function setTmpl(t,btn){
+  document.documentElement.dataset.tmpl=t;
+  document.querySelectorAll(".tb").forEach(b=>b.classList.remove("on"));
+  if(btn)btn.classList.add("on");
+  document.getElementById("grp-mt").style.order=t==="match"?"-1":"";
+  renderNav(t);
+}
+
+// ===== INIT =====
+renderOv();renderWinRate();renderGoals();renderForm();
+renderScorers();renderAssists();renderPen();renderHalfGf();renderGpm();
+renderGK();renderHalfGa();
+renderMatches();renderOpponents();
+renderPosF();renderPT();renderAtt();renderImp();
+renderFm();renderVenue();
+renderAwards();renderSum();renderTk();
+renderNav("club");
 </script>
 </body>
 </html>
