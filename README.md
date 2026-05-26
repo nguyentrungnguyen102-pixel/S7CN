@@ -1,5 +1,6 @@
-# S7CN - Sơ đồ đội hình
+# S7CN - LAIRAI FC
 
-Web app quản lý đội hình bóng đá S7CN.
+Thống kê đội bóng LAIRAI FC mùa giải 2026.
 
-🔗 **https://nguyentrungnguyen102-pixel.github.io/S7CN/**
+- [Dashboard](https://nguyentrungnguyen102-pixel.github.io/S7CN/stats.html)
+- [Dashboard v2](https://nguyentrungnguyen102-pixel.github.io/S7CN/statsver2.html)
