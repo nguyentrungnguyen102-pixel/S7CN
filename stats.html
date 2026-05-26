@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>S7-CN FC · Dashboard 2026</title>
+<title>LAIRAI FC · Thống kê 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#0C0907;--bg2:#110E09;--sf:#181410;--sf2:#1F1B15;--sf3:#282119;
   --bd:#362D22;--bd2:#4A4035;
-  --or:#E8701A;--or2:#F5893A;--or-d:rgba(232,112,26,.13);--or-g:rgba(232,112,26,.28);
+  --or:#DC1A1A;--or2:#F03030;--or-d:rgba(220,26,26,.13);--or-g:rgba(220,26,26,.28);
   --tl:#2A8BAE;--tl-d:rgba(42,139,174,.13);
   --tx:#F0ECE6;--tx2:#A09286;--tx3:#6A584E;
   --grn:#3CB870;--grn-d:rgba(60,184,112,.13);
@@ -212,8 +212,8 @@ tr.cl:hover td{background:var(--sf2)}
   <div class="hero-i">
     <div class="logo-wrap"><svg viewBox="0 0 78 78" class="hero-logo"><circle cx="39" cy="39" r="37" fill="#1a1510" stroke="var(--or)" stroke-width="2"/><text x="39" y="30" text-anchor="middle" fill="var(--or)" font-family="'Playfair Display',serif" font-size="15" font-weight="700">S7-CN</text><text x="39" y="48" text-anchor="middle" fill="#fff" font-family="'Playfair Display',serif" font-size="13" font-weight="600">FC</text><text x="39" y="62" text-anchor="middle" fill="#A09286" font-family="'Be Vietnam Pro',sans-serif" font-size="6" letter-spacing="2">SINCE 2018</text></svg></div>
     <div class="hero-info">
-      <div class="hero-eye">S7-CN FC · SINCE 2018</div>
-      <h1 class="hero-name">S7-CN FC</h1>
+      <div class="hero-eye">LAIRAI FC · SINCE 2018</div>
+      <h1 class="hero-name">LAIRAI FC</h1>
       <p class="hero-sub">Mùa giải 2026 &nbsp;·&nbsp; Cập nhật sau 14 trận &nbsp;·&nbsp; Dữ liệu chi tiết từ tuần 11</p>
     </div>
     <div class="hero-kpi">
@@ -386,14 +386,15 @@ const P=[
   {n:"D.Chí Hoàng",p:"DF",no:"24",g:0,m:9,mp:.64,wp:.444,fa:["D","L","W","N","L"],w:4,d:3,l:2,gf:29,ga:23,gd:6,t:"main"},
   {n:"Minh Hoàng",p:"DF",no:"12",g:0,m:9,mp:.64,wp:.556,fa:["N","N","W","W","L"],w:5,d:2,l:2,gf:33,ga:21,gd:12,t:"main"},
   {n:"Trung Nguyên",p:"MF",no:"14",g:2,m:13,mp:.93,wp:.462,fa:["D","L","W","W","L"],w:6,d:4,l:3,gf:44,ga:31,gd:13,t:"main"},
-  {n:"Tài Củi",p:"FW",no:"30",g:1,m:12,mp:.86,wp:.417,fa:["D","L","N","W","L"],w:5,d:4,l:3,gf:39,ga:28,gd:11,t:"main"},
-  {n:"Văn Chung",p:"FW",no:"6",g:8,m:9,mp:.64,wp:.444,fa:["D","L","W","N","L"],w:4,d:2,l:3,gf:28,ga:23,gd:5,t:"main"},
+  {n:"Tài Ba",p:"DF",no:"3",g:1,m:12,mp:.86,wp:.417,fa:["D","L","N","W","L"],w:5,d:4,l:3,gf:39,ga:28,gd:11,t:"main"},
+  {n:"Văn Chung",p:"FW",no:"9",g:8,m:9,mp:.64,wp:.444,fa:["D","L","W","N","L"],w:4,d:2,l:3,gf:28,ga:23,gd:5,t:"main"},
   {n:"Gia Lộc",p:"MF",no:"75",g:2,m:10,mp:.71,wp:.5,fa:["D","L","W","W","L"],w:5,d:2,l:3,gf:33,ga:23,gd:10,t:"main"},
   {n:"Phú Bình",p:"DF",no:"15",g:0,m:4,mp:.29,wp:.5,fa:["N","L","N","N","N"],w:2,d:1,l:1,gf:11,ga:8,gd:3,t:"main"},
   {n:"Khâm",p:"FW",no:"22",g:7,m:10,mp:.71,wp:.5,fa:["N","L","W","W","L"],w:5,d:2,l:3,gf:32,ga:22,gd:10,t:"main"},
   {n:"Cảm",p:"FW",no:"7",g:13,m:12,mp:.86,wp:.417,fa:["D","L","W","W","L"],w:5,d:4,l:3,gf:41,ga:30,gd:11,t:"main"},
-  {n:"Hoàng Đại",p:"FW",no:"",g:1,m:3,mp:.21,wp:.333,fa:["D","N","N","W","N"],w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"main"},
-  {n:"Lâm",p:"MF",no:"",g:3,m:6,mp:.43,wp:.5,fa:["D","L","W","W","N"],w:3,d:2,l:1,gf:28,ga:18,gd:10,t:"main"},
+  {n:"Hoàng Đại",p:"FW",no:"17",g:1,m:3,mp:.21,wp:.333,fa:["D","N","N","W","N"],w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"main"},
+  {n:"Lâm",p:"MF",no:"6",g:3,m:6,mp:.43,wp:.5,fa:["D","L","W","W","N"],w:3,d:2,l:1,gf:28,ga:18,gd:10,t:"main"},
+  {n:"Hữu Nghĩa",p:"DF",no:"5",g:0,m:3,mp:.21,wp:.667,fa:["N","N","W","W","L"],w:2,d:0,l:1,gf:14,ga:7,gd:7,t:"sub"},
   {n:"Anh Sơn",p:"MF",no:"",g:0,m:3,mp:.21,wp:.333,fa:["D","N","N","N","N"],w:1,d:2,l:0,gf:11,ga:9,gd:2,t:"sub"},
   {n:"Chí Quỹ",p:"MF",no:"4",g:0,m:2,mp:.14,wp:.5,fa:["N","N","N","N","N"],w:1,d:1,l:0,gf:7,ga:5,gd:2,t:"sub"},
   {n:"Tiến",p:"DF",no:"",g:0,m:3,mp:.21,wp:.333,fa:["D","N","N","W","N"],w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"sub"},
@@ -401,11 +402,11 @@ const P=[
 ];
 
 const PM={"Mai Cồ Hiếu":[0,0,0,1,0,0,0,0,0,0,0,0,2,0],"Văn Quang":[1,0,0,0,0,null,0,null,0,0,null,null,0,0],"Nguyên Khôi":[0,0,0,0,null,0,null,0,null,null,null,0,0,0],"Lucky Trần":[0,0,null,0,0,0,0,0,0,null,0,null,0,0],"Quốc Long":[1,0,0,1,0,null,0,null,0,0,2,null,0,0],"Hữu Duyên":[0,0,0,0,1,0,0,0,null,0,0,0,0,0],"Nguyễn Hoàng":[0,0,0,0,0,null,0,0,0,0,null,0,0,0],"Văn Tới":[null,null,null,null,null,null,0,null,null,null,null,0,0,null],
-  "Đức Khoa":[0,0,0,0,0,0,null,0,0,0,0,null,null,0],"D.Chí Hoàng":[0,0,null,0,null,0,null,0,null,0,0,0,null,0],"Minh Hoàng":[0,0,0,null,null,null,0,0,0,null,null,0,0,0],"Trung Nguyên":[null,1,0,0,0,0,0,0,0,1,0,0,0,0],"Tài Củi":[null,0,0,0,0,0,0,1,0,0,0,null,0,0],"Văn Chung":[1,null,0,null,1,2,null,null,0,0,1,2,null,1],"Gia Lộc":[1,null,0,0,0,null,null,0,null,null,1,null,0,0],"Phú Bình":[null,null,null,0,0,null,0,null,null,null,0,null,null,null],"Khâm":[null,2,0,0,1,1,2,null,null,null,0,0,1,0],"Cảm":[null,1,0,0,null,0,1,2,3,1,0,2,3,0],"Hoàng Đại":[null,null,null,null,null,null,null,0,null,0,null,null,1,null],"Lâm":[null,null,null,null,null,null,null,0,1,1,0,0,1,null],"Anh Sơn":[0,null,null,null,null,0,null,null,null,0,null,null,null,null],"Chí Quỹ":[null,0,null,null,null,null,0,null,null,null,null,null,null,null],"Tiến":[null,null,null,null,null,null,null,0,null,0,null,null,0,null],"Mới":[null,null,null,null,null,null,null,null,1,0,null,null,null,null]};
+  "Đức Khoa":[0,0,0,0,0,0,null,0,0,0,0,null,null,0],"D.Chí Hoàng":[0,0,null,0,null,0,null,0,null,0,0,0,null,0],"Minh Hoàng":[0,0,0,null,null,null,0,0,0,null,null,0,0,0],"Trung Nguyên":[null,1,0,0,0,0,0,0,0,1,0,0,0,0],"Tài Ba":[null,0,0,0,0,0,0,1,0,0,0,null,0,0],"Hữu Nghĩa":[null,null,null,null,null,null,null,null,null,null,null,0,0,0],"Văn Chung":[1,null,0,null,1,2,null,null,0,0,1,2,null,1],"Gia Lộc":[1,null,0,0,0,null,null,0,null,null,1,null,0,0],"Phú Bình":[null,null,null,0,0,null,0,null,null,null,0,null,null,null],"Khâm":[null,2,0,0,1,1,2,null,null,null,0,0,1,0],"Cảm":[null,1,0,0,null,0,1,2,3,1,0,2,3,0],"Hoàng Đại":[null,null,null,null,null,null,null,0,null,0,null,null,1,null],"Lâm":[null,null,null,null,null,null,null,0,1,1,0,0,1,null],"Anh Sơn":[0,null,null,null,null,0,null,null,null,0,null,null,null,null],"Chí Quỹ":[null,0,null,null,null,null,0,null,null,null,null,null,null,null],"Tiến":[null,null,null,null,null,null,null,0,null,0,null,null,0,null],"Mới":[null,null,null,null,null,null,null,null,1,0,null,null,null,null]};
 
 const BXI={
   "4-4-2":[{n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},{n:"Gia Lộc",p:"DF",top:"73%",left:"15%"},{n:"Hữu Duyên",p:"DF",top:"76%",left:"37%"},{n:"D.Chí Hoàng",p:"DF",top:"76%",left:"63%"},{n:"Nguyễn Hoàng",p:"DF",top:"73%",left:"85%"},{n:"Mai Cồ Hiếu",p:"MF",top:"50%",left:"15%"},{n:"Quốc Long",p:"MF",top:"52%",left:"37%"},{n:"Lucky Trần",p:"MF",top:"52%",left:"63%"},{n:"Trung Nguyên",p:"MF",top:"50%",left:"85%"},{n:"Cảm",p:"FW",top:"24%",left:"38%"},{n:"Văn Chung",p:"FW",top:"24%",left:"62%"}],
-  "3-5-2":[{n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},{n:"Minh Hoàng",p:"DF",top:"76%",left:"25%"},{n:"Hữu Duyên",p:"DF",top:"78%",left:"50%"},{n:"D.Chí Hoàng",p:"DF",top:"76%",left:"75%"},{n:"Nguyễn Hoàng",p:"MF",top:"53%",left:"8%"},{n:"Tài Củi",p:"MF",top:"55%",left:"30%"},{n:"Mai Cồ Hiếu",p:"MF",top:"45%",left:"50%"},{n:"Lucky Trần",p:"MF",top:"55%",left:"70%"},{n:"Gia Lộc",p:"MF",top:"53%",left:"92%"},{n:"Cảm",p:"FW",top:"24%",left:"38%"},{n:"Khâm",p:"FW",top:"24%",left:"62%"}],
+  "3-5-2":[{n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},{n:"Tài Ba",p:"DF",top:"76%",left:"25%"},{n:"Hữu Duyên",p:"DF",top:"78%",left:"50%"},{n:"D.Chí Hoàng",p:"DF",top:"76%",left:"75%"},{n:"Nguyễn Hoàng",p:"MF",top:"53%",left:"8%"},{n:"Minh Hoàng",p:"MF",top:"55%",left:"30%"},{n:"Mai Cồ Hiếu",p:"MF",top:"45%",left:"50%"},{n:"Lucky Trần",p:"MF",top:"55%",left:"70%"},{n:"Gia Lộc",p:"MF",top:"53%",left:"92%"},{n:"Cảm",p:"FW",top:"24%",left:"38%"},{n:"Khâm",p:"FW",top:"24%",left:"62%"}],
   "4-5-1":[{n:"Văn Tới",p:"GK",top:"90%",left:"50%"},{n:"Nguyễn Hoàng",p:"DF",top:"73%",left:"15%"},{n:"Hữu Duyên",p:"DF",top:"76%",left:"37%"},{n:"D.Chí Hoàng",p:"DF",top:"76%",left:"63%"},{n:"Nguyên Khôi",p:"DF",top:"73%",left:"85%"},{n:"Văn Quang",p:"MF",top:"48%",left:"12%"},{n:"Quốc Long",p:"MF",top:"50%",left:"32%"},{n:"Lâm",p:"MF",top:"58%",left:"50%"},{n:"Lucky Trần",p:"MF",top:"50%",left:"68%"},{n:"Mai Cồ Hiếu",p:"MF",top:"48%",left:"88%"},{n:"Cảm",p:"FW",top:"22%",left:"50%"}],
 };
 
@@ -527,7 +528,7 @@ function renderGpm(){
 
 function renderGK(){
   document.getElementById("gkEl").innerHTML=Object.entries(GKD).map(([n,d])=>`<div class="gkc">
-    <div class="gkn">${n}</div><div class="gkp">GK · S7-CN FC${n==="Văn Tới"?" · <span style='color:var(--tx3);font-size:7px'>* Tạm tính</span>":""}</div>
+    <div class="gkn">${n}</div><div class="gkp">GK · LAIRAI FC${n==="Văn Tới"?" · <span style='color:var(--tx3);font-size:7px'>* Tạm tính</span>":""}</div>
     <div class="gkg">
       <div class="gks"><div class="gks-n" style="color:var(--red)">${d.conc}</div><div class="gks-l">Bàn thua</div></div>
       <div class="gks"><div class="gks-n" style="color:var(--grn)">${d.h1}</div><div class="gks-l">Thua H1</div></div>
@@ -705,7 +706,7 @@ function renderSum(){
   document.getElementById("sumEl").innerHTML=`<div class="sumg">
     <div class="sumb">
       <h3>Phân tích mùa giải 2026</h3>
-      <p><b style="color:var(--grn)">Tấn công:</b> TB ${(T.gf/T.m).toFixed(1)} bàn/trận. Cảm (13B) · Văn Chung (8B) · Khâm (7B) — bộ ba sát thủ hàng đầu. Assist dẫn đầu: Khâm & Gia Lộc.</p>
+      <p><b style="color:var(--grn)">Tấn công:</b> TB ${(T.gf/T.m).toFixed(1)} bàn/trận. Cảm (13B) · Văn Chung (8B) · Khâm (7B) — bộ ba sát thủ hàng đầu. Assist dẫn đầu: Khâm & Trung Nguyên.</p>
       <p><b style="color:var(--red)">Phòng ngự:</b> TB ${(T.ga/T.m).toFixed(1)} bàn thua/trận. Đức Khoa (${GKD["Đức Khoa"]?.h1||0}H1·${GKD["Đức Khoa"]?.h2||0}H2) và Văn Tới* (${GKD["Văn Tới"]?.h1||0}H1·${GKD["Văn Tới"]?.h2||0}H2) bảo vệ khung thành.</p>
       <p><b style="color:var(--amb)">Chuyển hóa:</b> ${T.d} trận hòa (${(T.d/T.m*100).toFixed(0)}%) — cần kết thúc trận quyết đoán hơn.</p>
       <p><b style="color:var(--or)">Sân đấu:</b> Giga Arena ${(hm.filter(m=>m.r==="W").length/hm.length*100).toFixed(0)}% win · Sân khách ${(am.filter(m=>m.r==="W").length/am.length*100).toFixed(0)}% win.</p>
