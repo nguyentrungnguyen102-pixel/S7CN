@@ -1,0 +1,46 @@
+name: Sync stats from Google Sheets
+
+on:
+  # Chạy mỗi thứ Hai lúc 4:00 sáng (giờ VN = Chủ nhật 21:00 UTC)
+  schedule:
+    - cron: '0 21 * * 0'
+  # Cho phép chạy thủ công từ tab Actions
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install gspread google-auth
+
+      - name: Update stats from Google Sheets
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        run: python scripts/update_stats.py
+
+      - name: Commit and push if stats changed
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add stats.html
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: auto-update stats from Google Sheets [skip ci]"
+            git push origin main
+          fi
