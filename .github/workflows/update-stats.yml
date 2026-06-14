@@ -1,0 +1,50 @@
+name: Cập nhật thống kê từ Google Sheets
+
+on:
+  # Chạy tự động mỗi Chủ Nhật lúc 06:00 UTC (13:00 giờ VN)
+  schedule:
+    - cron: "0 6 * * 0"
+  # Cho phép kích hoạt thủ công từ GitHub Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cài Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Cài thư viện
+        run: pip install -r scripts/requirements.txt
+
+      - name: Chạy script cập nhật
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+        run: python scripts/update_stats.py
+
+      - name: Commit và push nếu có thay đổi
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add stats.html
+          if git diff --staged --quiet; then
+            echo "Không có thay đổi - bỏ qua commit."
+          else
+            MATCHES=$(grep -oP '(?<=Cập nhật sau )\d+(?= trận)' stats.html || echo "?")
+            git commit -m "chore: tự động cập nhật thống kê sau ${MATCHES} trận [skip ci]"
+            git push origin main
+            echo "✓ Đã push stats.html lên main → GitHub Pages sẽ tự triển khai."
+          fi
