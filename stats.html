@@ -158,6 +158,27 @@ tr.cl:hover td{background:var(--sf2)}
 .crl{color:var(--tx3)}.crv{font-weight:600;min-width:26px;text-align:right}
 .ig{color:var(--grn)}.ir{color:var(--red)}.ia{color:var(--amb)}
 
+.mx{display:grid;gap:1px;background:var(--bd)}
+.mx-corner{background:var(--sf);padding:4px 3px;position:sticky;left:0;z-index:2}
+.mx-mh{background:var(--sf);padding:5px 2px;text-align:center;font-size:8px;font-weight:700;color:var(--tx3)}
+.mx-pn{background:var(--sf);padding:4px 6px;font-size:9px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--tx2);position:sticky;left:0;z-index:2;border-right:1px solid var(--bd2)}
+.mx-c{display:flex;align-items:center;justify-content:center;min-width:28px;height:22px;font-size:7px;font-weight:700;color:#fff;border-radius:2px}
+.mx-w{background:rgba(60,184,112,.55)}
+.mx-d{background:rgba(232,160,48,.45)}
+.mx-l{background:rgba(229,69,69,.50)}
+.mx-a{background:var(--sf)}
+.mx-g{text-shadow:0 1px 2px rgba(0,0,0,.7)}
+.mx-sum{background:var(--sf);padding:4px 3px;text-align:center;font-size:9px;font-weight:600;color:var(--or)}
+.wi-row{display:flex;align-items:center;gap:6px;margin:3px 0}
+.wi-name{width:100px;font-size:10px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--tx2);flex-shrink:0}
+.wi-bars{flex:1;display:flex;flex-direction:column;gap:2px}
+.wi-bar-wrap{display:flex;align-items:center;gap:4px}
+.wi-lbl{width:18px;font-size:7px;color:var(--tx3);text-align:right;flex-shrink:0}
+.wi-track{flex:1;height:9px;background:var(--sf3);border-radius:3px;overflow:hidden}
+.wi-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding:0 4px;font-size:7px;font-weight:700;color:#fff;white-space:nowrap}
+.wi-delta{width:40px;font-size:9px;font-weight:700;text-align:right;flex-shrink:0}
+.wi-pos{color:var(--grn)}.wi-neg{color:var(--red)}.wi-neu{color:var(--tx3)}
+
 .pw{display:flex;justify-content:center;padding:8px 0 12px}
 .pt{position:relative;width:310px;aspect-ratio:2/3;border:1.5px solid rgba(255,255,255,.15);border-radius:6px;overflow:hidden;background:linear-gradient(180deg,#1a5e2a,#1e6b30)}
 .pt::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(0,0,0,.08) 27px,rgba(0,0,0,.08) 54px)}
@@ -202,8 +223,9 @@ tr.cl:hover td{background:var(--sf2)}
   .content{padding:18px 16px 60px}.g2,.g3{grid-template-columns:1fr}
   .ovs{grid-template-columns:repeat(4,1fr)}.aws{grid-template-columns:1fr 1fr}.cmcols{grid-template-columns:1fr}.sumg{grid-template-columns:1fr}
   .hero-name{font-size:38px}.tbar,.hero{padding-left:16px;padding-right:16px}.mven{display:none}
+  .mx-pn{max-width:70px;font-size:8px} .wi-name{width:70px;font-size:9px}
 }
-@media(max-width:480px){.ovs{grid-template-columns:repeat(2,1fr)}.aws{grid-template-columns:1fr}}
+@media(max-width:480px){.ovs{grid-template-columns:repeat(2,1fr)}.aws{grid-template-columns:1fr}.mx-pn{max-width:55px;font-size:7px} .mx-c{min-width:22px;height:18px;font-size:6px} .wi-name{width:55px;font-size:8px}}
 </style>
 </head>
 <body>
@@ -214,12 +236,12 @@ tr.cl:hover td{background:var(--sf2)}
     <div class="hero-info">
       <div class="hero-eye">LAIRAI FC · SINCE 2018</div>
       <h1 class="hero-name">LAIRAI FC</h1>
-      <p class="hero-sub">Mùa giải 2026 &nbsp;·&nbsp; Cập nhật sau 14 trận &nbsp;·&nbsp; Dữ liệu chi tiết từ tuần 21</p>
+      <p class="hero-sub">Mùa giải 2026 &nbsp;·&nbsp; Cập nhật sau 17 trận &nbsp;·&nbsp; Dữ liệu chi tiết từ tuần 21</p>
     </div>
     <div class="hero-kpi">
-      <div class="kp"><div class="kp-n">14</div><div class="kp-l">Trận</div></div>
-      <div class="kp"><div class="kp-n sm">7W · 4D · 3L</div><div class="kp-l">Thành tích</div></div>
-      <div class="kp"><div class="kp-n or">25</div><div class="kp-l">Điểm</div></div>
+      <div class="kp"><div class="kp-n">17</div><div class="kp-l">Trận</div></div>
+      <div class="kp"><div class="kp-n sm">10W · 4D · 3L</div><div class="kp-l">Thành tích</div></div>
+      <div class="kp"><div class="kp-n or">34</div><div class="kp-l">Điểm</div></div>
     </div>
   </div>
 </header>
@@ -253,9 +275,14 @@ tr.cl:hover td{background:var(--sf2)}
       <div style="display:flex;gap:5px;margin-bottom:11px;flex-wrap:wrap" id="posF"></div>
       <div class="sx"><table><thead><tr id="pTh"></tr></thead><tbody id="pTb"></tbody></table></div>
     </div>
-    <div class="g2">
-      <div class="card"><div class="ct">Tỷ lệ tham gia</div><div id="attEl"></div></div>
-      <div class="card"><div class="ct">Điểm / trận khi thi đấu</div><div id="impEl"></div></div>
+    <div class="card">
+      <div class="ct">Ma trận nhân sự</div>
+      <p style="font-size:9px;color:var(--tx3);margin:4px 0 8px">🟩 Thắng · 🟨 Hòa · 🟥 Thua · ⬛ Vắng · Số = bàn thắng</p>
+      <div class="sx" id="matEl"></div>
+    </div>
+    <div class="card">
+      <div class="ct">Tỉ lệ tham gia &amp; Ảnh hưởng thắng</div>
+      <div id="wipEl"></div>
     </div>
   </div>
 
@@ -323,8 +350,7 @@ tr.cl:hover td{background:var(--sf2)}
 
 <script>
 // ===== CORE DATA =====
-const T={m:14,gf:48,ga:33,gd:15,w:7,d:4,l:3,form:["D","L","W","W","L"]};
-T.pts=T.w*3+T.d; T.ppg=T.pts/T.m;
+const T={n:"LAIRAI FC",m:17,w:10,d:4,l:3,gf:61,ga:38,gd:23,pts:34,ppg:2.0,form:["W","W","L","W","W"]};
 
 const M=[
   {wk:1,dt:"04/01",vs:"Thiết Bị Việt FC",gf:4,ga:2,r:"W",v:"Etihad Q12"},
@@ -341,12 +367,18 @@ const M=[
   {wk:19,dt:"10/05",vs:"Sân Cáp",gf:5,ga:3,r:"W",v:"ĐH TDTT"},
   {wk:20,dt:"17/05",vs:"Lên Bia FC",gf:8,ga:2,r:"W",v:"Dĩ An"},
   {wk:21,dt:"24/05",vs:"AE Bình Định",gf:1,ga:2,r:"L",v:"Giga Arena"},
+  {wk:23,dt:"07/06",vs:"ĐH TDTT",gf:4,ga:1,r:"W",v:"ĐH TDTT"},
+  {wk:24,dt:"14/06",vs:"Skynet",gf:3,ga:1,r:"W",v:"Phú Nhuận"},
+  {wk:25,dt:"21/06",vs:"X.factor",gf:6,ga:3,r:"W",v:"ĐH TDTT"},
 ];
 
 // ===== GOAL DETAIL (Tuần 21) =====
 // s=scored [{sc,as,t:"normal"|"pen",h:1|2}]  ms=missed pen  c=conceded [{gk,h,t}]  pf/ps=pen faced/saved
 const MG={
   21:{s:[{sc:"Văn Chung",as:"Văn Quang",t:"normal",h:1}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2}],pf:0,ps:0},
+  23:{s:[{sc:"Đức Khoa",t:"normal",h:1},{sc:"Cảm",t:"normal",h:1},{sc:"Lâm",t:"normal",h:2},{sc:"Hào",as:"Lucky Trần",t:"normal",h:2}],c:[{gk:"Đức Khoa",h:1}],pf:0,ps:0},
+  24:{s:[{sc:"Cảm",as:"Khâm",t:"normal",h:1},{sc:"Văn Quang",as:"Khâm",t:"normal",h:1},{sc:"Cảm",as:"Trung Nguyên",t:"normal",h:2}],c:[{gk:"Đức Khoa",h:2}],pf:0,ps:0},
+  25:{s:[{sc:"Tĩnh",as:"Quốc Long",t:"normal",h:1},{sc:"Trung Nguyên",as:"Văn Quang",t:"normal",h:1},{sc:"Mai Cồ Hiếu",as:"Trung Nguyên",t:"normal",h:1},{sc:"Chí Quỹ",as:"Mai Cồ Hiếu",t:"normal",h:1},{sc:"Cảm",t:"pen",h:1},{sc:"Cảm",as:"Mai Cồ Hiếu",t:"normal",h:2}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2}],pf:0,ps:0},
 };
 
 // Compute aggregates
@@ -368,35 +400,35 @@ const AST=Object.fromEntries(Object.entries(AST_H).map(([k,v])=>[k,v.h1+v.h2]));
 
 // ===== PLAYERS =====
 const P=[
-  {n:"Mai Cồ Hiếu",p:"LW",no:"23",g:3,m:14,mp:1,wp:.5,fa:["D","L","W","W","L"],w:7,d:4,l:3,gf:48,ga:33,gd:15,t:"main"},
-  {n:"Văn Quang",p:"RW",no:"10",g:1,m:10,mp:.71,wp:.6,fa:["D","N","N","W","L"],w:6,d:2,l:2,gf:34,ga:20,gd:14,t:"main"},
-  {n:"Nguyên Khôi",p:"RB",no:"19",g:0,m:9,mp:.64,wp:.556,fa:["N","N","W","W","L"],w:5,d:2,l:2,gf:30,ga:19,gd:11,t:"main"},
-  {n:"Lucky Trần",p:"CM",no:"11",g:0,m:11,mp:.79,wp:.545,fa:["N","L","N","W","L"],w:6,d:3,l:2,gf:39,ga:24,gd:15,t:"main"},
-  {n:"Quốc Long",p:"CM",no:"8",g:4,m:11,mp:.79,wp:.545,fa:["D","L","N","W","L"],w:6,d:2,l:3,gf:37,ga:24,gd:13,t:"main"},
-  {n:"Hữu Duyên",p:"CB",no:"47",g:1,m:13,mp:.93,wp:.462,fa:["D","L","W","W","L"],w:6,d:4,l:3,gf:43,ga:31,gd:12,t:"main"},
-  {n:"Nguyễn Hoàng",p:"LB",no:"39",g:0,m:12,mp:.86,wp:.583,fa:["D","N","W","W","L"],w:7,d:3,l:2,gf:42,ga:26,gd:16,t:"main"},
-  {n:"Văn Tới",p:"GK",no:"16",g:0,m:3,mp:.21,wp:.667,fa:["N","N","W","W","N"],w:2,d:1,l:0,gf:16,ga:8,gd:8,t:"main"},
-  {n:"Đức Khoa",p:"GK",no:"01",g:0,m:11,mp:.79,wp:.455,fa:["D","L","N","N","L"],w:5,d:3,l:3,gf:32,ga:25,gd:7,t:"main"},
-  {n:"D.Chí Hoàng",p:"CB",no:"24",g:0,m:9,mp:.64,wp:.444,fa:["D","L","W","N","L"],w:4,d:3,l:2,gf:29,ga:23,gd:6,t:"main"},
-  {n:"Minh Hoàng",p:"LB",no:"12",g:0,m:9,mp:.64,wp:.556,fa:["N","N","W","W","L"],w:5,d:2,l:2,gf:33,ga:21,gd:12,t:"main"},
-  {n:"Trung Nguyên",p:"CM",no:"14",g:2,m:13,mp:.93,wp:.462,fa:["D","L","W","W","L"],w:6,d:4,l:3,gf:44,ga:31,gd:13,t:"main"},
-  {n:"Tài Ba",p:"CB",no:"3",g:1,m:12,mp:.86,wp:.417,fa:["D","L","N","W","L"],w:5,d:4,l:3,gf:39,ga:28,gd:11,t:"main"},
-  {n:"Văn Chung",p:"ST",no:"9",g:8,m:9,mp:.64,wp:.444,fa:["D","L","W","N","L"],w:4,d:2,l:3,gf:28,ga:23,gd:5,t:"main"},
-  {n:"Gia Lộc",p:"LM",no:"75",g:2,m:10,mp:.71,wp:.5,fa:["D","L","W","W","L"],w:5,d:2,l:3,gf:33,ga:23,gd:10,t:"main"},
-  {n:"Phú Bình",p:"CB",no:"15",g:0,m:4,mp:.29,wp:.5,fa:["N","L","N","N","N"],w:2,d:1,l:1,gf:11,ga:8,gd:3,t:"main"},
-  {n:"Khâm",p:"RW",no:"22",g:7,m:10,mp:.71,wp:.5,fa:["N","L","W","W","L"],w:5,d:2,l:3,gf:32,ga:22,gd:10,t:"main"},
-  {n:"Cảm",p:"LW",no:"7",g:13,m:12,mp:.86,wp:.417,fa:["D","L","W","W","L"],w:5,d:4,l:3,gf:41,ga:30,gd:11,t:"main"},
-  {n:"Hoàng Đại",p:"ST",no:"17",g:1,m:3,mp:.21,wp:.333,fa:["D","N","N","W","N"],w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"main"},
-  {n:"Lâm",p:"CM",no:"6",g:3,m:6,mp:.43,wp:.5,fa:["D","L","W","W","N"],w:3,d:2,l:1,gf:28,ga:18,gd:10,t:"main"},
-  {n:"Hữu Nghĩa",p:"LB",no:"5",g:0,m:3,mp:.21,wp:.667,fa:["N","N","W","W","L"],w:2,d:0,l:1,gf:14,ga:7,gd:7,t:"sub"},
-  {n:"Anh Sơn",p:"MF",no:"",g:0,m:3,mp:.21,wp:.333,fa:["D","N","N","N","N"],w:1,d:2,l:0,gf:11,ga:9,gd:2,t:"sub"},
-  {n:"Chí Quỹ",p:"MF",no:"4",g:0,m:2,mp:.14,wp:.5,fa:["N","N","N","N","N"],w:1,d:1,l:0,gf:7,ga:5,gd:2,t:"sub"},
-  {n:"Tiến",p:"DF",no:"",g:0,m:3,mp:.21,wp:.333,fa:["D","N","N","W","N"],w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"sub"},
-  {n:"Mới",p:"MF",no:"",g:1,m:2,mp:.14,wp:.5,fa:["D","N","N","N","N"],w:1,d:1,l:0,gf:9,ga:6,gd:3,t:"sub"},
+  {n:"Mai Cồ Hiếu",p:"LW",no:"23",g:4,m:17,mp:1,wp:.5882,fa:["W","W","L","W","W"],w:10,d:4,l:3,gf:61,ga:38,gd:23,t:"main"},
+  {n:"Văn Quang",p:"RW",no:"10",g:2,m:13,mp:.76,wp:.6923,fa:["W","W","L","W","W"],w:9,d:2,l:2,gf:47,ga:25,gd:22,t:"main"},
+  {n:"Nguyên Khôi",p:"RB",no:"19",g:0,m:10,mp:.59,wp:.6,fa:["W","L","N","N","W"],w:6,d:2,l:2,gf:36,ga:22,gd:14,t:"main"},
+  {n:"Lucky Trần",p:"CM",no:"11",g:0,m:13,mp:.76,wp:.6154,fa:["W","L","W","W","N"],w:8,d:3,l:2,gf:46,ga:26,gd:20,t:"main"},
+  {n:"Quốc Long",p:"CM",no:"8",g:4,m:12,mp:.71,wp:.5833,fa:["W","L","N","N","W"],w:7,d:2,l:3,gf:43,ga:27,gd:16,t:"main"},
+  {n:"Hữu Duyên",p:"CB",no:"47",g:1,m:15,mp:.88,wp:.5333,fa:["W","L","W","N","W"],w:8,d:4,l:3,gf:53,ga:35,gd:18,t:"main"},
+  {n:"Nguyễn Hoàng",p:"LB",no:"39",g:0,m:14,mp:.82,wp:.6429,fa:["W","L","N","W","W"],w:9,d:3,l:2,gf:51,ga:30,gd:21,t:"main"},
+  {n:"Văn Tới",p:"GK",no:"16",g:0,m:3,mp:.18,wp:.667,fa:["N","N","W","W","N"],w:2,d:1,l:0,gf:16,ga:8,gd:8,t:"main"},
+  {n:"Đức Khoa",p:"GK",no:"01",g:1,m:14,mp:.82,wp:.5714,fa:["N","L","W","W","W"],w:8,d:3,l:3,gf:45,ga:30,gd:15,t:"main"},
+  {n:"D.Chí Hoàng",p:"CB",no:"24",g:0,m:12,mp:.71,wp:.5833,fa:["N","L","W","W","W"],w:7,d:3,l:2,gf:42,ga:28,gd:14,t:"main"},
+  {n:"Minh Hoàng",p:"LB",no:"12",g:0,m:10,mp:.59,wp:.6,fa:["W","L","N","N","W"],w:6,d:2,l:2,gf:39,ga:24,gd:15,t:"main"},
+  {n:"Trung Nguyên",p:"CM",no:"14",g:3,m:15,mp:.88,wp:.5333,fa:["W","L","N","W","W"],w:8,d:4,l:3,gf:53,ga:35,gd:18,t:"main"},
+  {n:"Tài Ba",p:"CB",no:"3",g:1,m:14,mp:.82,wp:.5,fa:["W","L","N","W","W"],w:7,d:4,l:3,gf:48,ga:32,gd:16,t:"main"},
+  {n:"Văn Chung",p:"ST",no:"9",g:8,m:11,mp:.65,wp:.5455,fa:["N","L","W","W","N"],w:6,d:2,l:3,gf:35,ga:25,gd:10,t:"main"},
+  {n:"Gia Lộc",p:"LM",no:"75",g:2,m:10,mp:.59,wp:.5,fa:["W","L","N","N","N"],w:5,d:2,l:3,gf:33,ga:23,gd:10,t:"main"},
+  {n:"Phú Bình",p:"CB",no:"15",g:0,m:4,mp:.24,wp:.5,fa:["N","N","N","N","N"],w:2,d:1,l:1,gf:11,ga:8,gd:3,t:"main"},
+  {n:"Khâm",p:"RW",no:"22",g:7,m:12,mp:.71,wp:.5833,fa:["W","L","W","W","N"],w:7,d:2,l:3,gf:39,ga:24,gd:15,t:"main"},
+  {n:"Cảm",p:"LW",no:"7",g:17,m:15,mp:.88,wp:.5333,fa:["W","L","W","W","W"],w:8,d:4,l:3,gf:54,ga:35,gd:19,t:"main"},
+  {n:"Hoàng Đại",p:"ST",no:"17",g:1,m:3,mp:.18,wp:.333,fa:["W","N","N","N","N"],w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"main"},
+  {n:"Lâm",p:"CM",no:"6",g:3,m:6,mp:.35,wp:.5,fa:["W","N","N","N","N"],w:3,d:2,l:1,gf:28,ga:18,gd:10,t:"sub"},
+  {n:"Hữu Nghĩa",p:"LB",no:"5",g:0,m:4,mp:.24,wp:.75,fa:["W","L","N","W","N"],w:3,d:0,l:1,gf:17,ga:8,gd:9,t:"sub"},
+  {n:"Anh Sơn",p:"LM",no:"",g:0,m:3,mp:.18,wp:.333,fa:["N","N","N","N","N"],w:1,d:2,l:0,gf:11,ga:9,gd:2,t:"sub"},
+  {n:"Chí Quỹ",p:"RM",no:"4",g:1,m:3,mp:.18,wp:.6667,fa:["N","N","N","N","W"],w:2,d:1,l:0,gf:13,ga:8,gd:5,t:"sub"},
+  {n:"Tiến",p:"DF",no:"",g:0,m:3,mp:.18,wp:.333,fa:["W","N","N","N","N"],w:1,d:2,l:0,gf:15,ga:9,gd:6,t:"sub"},
+  {n:"Mới",p:"MF",no:"",g:1,m:2,mp:.12,wp:.5,fa:["N","N","N","N","N"],w:1,d:1,l:0,gf:9,ga:6,gd:3,t:"sub"},
 ];
 
-const PM={"Mai Cồ Hiếu":[0,0,0,1,0,0,0,0,0,0,0,0,2,0],"Văn Quang":[1,0,0,0,0,null,0,null,0,0,null,null,0,0],"Nguyên Khôi":[0,0,0,0,null,0,null,0,null,null,null,0,0,0],"Lucky Trần":[0,0,null,0,0,0,0,0,0,null,0,null,0,0],"Quốc Long":[1,0,0,1,0,null,0,null,0,0,2,null,0,0],"Hữu Duyên":[0,0,0,0,1,0,0,0,null,0,0,0,0,0],"Nguyễn Hoàng":[0,0,0,0,0,null,0,0,0,0,null,0,0,0],"Văn Tới":[null,null,null,null,null,null,0,null,null,null,null,0,0,null],
-  "Đức Khoa":[0,0,0,0,0,0,null,0,0,0,0,null,null,0],"D.Chí Hoàng":[0,0,null,0,null,0,null,0,null,0,0,0,null,0],"Minh Hoàng":[0,0,0,null,null,null,0,0,0,null,null,0,0,0],"Trung Nguyên":[null,1,0,0,0,0,0,0,0,1,0,0,0,0],"Tài Ba":[null,0,0,0,0,0,0,1,0,0,0,null,0,0],"Hữu Nghĩa":[null,null,null,null,null,null,null,null,null,null,null,0,0,0],"Văn Chung":[1,null,0,null,1,2,null,null,0,0,1,2,null,1],"Gia Lộc":[1,null,0,0,0,null,null,0,null,null,1,null,0,0],"Phú Bình":[null,null,null,0,0,null,0,null,null,null,0,null,null,null],"Khâm":[null,2,0,0,1,1,2,null,null,null,0,0,1,0],"Cảm":[null,1,0,0,null,0,1,2,3,1,0,2,3,0],"Hoàng Đại":[null,null,null,null,null,null,null,0,null,0,null,null,1,null],"Lâm":[null,null,null,null,null,null,null,0,1,1,0,0,1,null],"Anh Sơn":[0,null,null,null,null,0,null,null,null,0,null,null,null,null],"Chí Quỹ":[null,0,null,null,null,null,0,null,null,null,null,null,null,null],"Tiến":[null,null,null,null,null,null,null,0,null,0,null,null,0,null],"Mới":[null,null,null,null,null,null,null,null,1,0,null,null,null,null]};
+const PM={"Mai Cồ Hiếu":[0,0,0,1,0,0,0,0,0,0,0,0,2,0,0,0,1],"Văn Quang":[1,0,0,0,0,null,0,null,0,0,null,null,0,0,0,1,0],"Nguyên Khôi":[0,0,0,0,null,0,null,0,null,null,null,0,0,0,null,null,0],"Lucky Trần":[0,0,null,0,0,0,0,0,0,null,0,null,0,0,0,0,null],"Quốc Long":[1,0,0,1,0,null,0,null,0,0,2,null,0,0,null,null,0],"Hữu Duyên":[0,0,0,0,1,0,0,0,null,0,0,0,0,0,0,null,0],"Nguyễn Hoàng":[0,0,0,0,0,null,0,0,0,0,null,0,0,0,null,0,0],"Văn Tới":[null,null,null,null,null,null,0,null,null,null,null,0,0,null,null,null,null],
+  "Đức Khoa":[0,0,0,0,0,0,null,0,0,0,0,null,null,0,1,0,0],"D.Chí Hoàng":[0,0,null,0,null,0,null,0,null,0,0,0,null,0,0,0,0],"Minh Hoàng":[0,0,0,null,null,null,0,0,0,null,null,0,0,0,null,null,0],"Trung Nguyên":[null,1,0,0,0,0,0,0,0,1,0,0,0,0,null,0,1],"Tài Ba":[null,0,0,0,0,0,0,1,0,0,0,null,0,0,null,0,0],"Hữu Nghĩa":[null,null,null,null,null,null,null,null,null,null,null,0,0,0,null,0,null],"Văn Chung":[1,null,0,null,1,2,null,null,0,0,1,2,null,1,0,0,null],"Gia Lộc":[1,null,0,0,0,null,null,0,null,null,1,null,0,0,null,null,null],"Phú Bình":[null,null,null,0,0,null,0,null,null,null,0,null,null,null,null,null,null],"Khâm":[null,2,0,0,1,1,2,null,null,null,0,0,1,0,0,0,null],"Cảm":[null,1,0,0,null,0,1,2,3,1,0,2,3,0,1,2,2],"Hoàng Đại":[null,null,null,null,null,null,null,0,null,0,null,null,1,null,null,null,null],"Lâm":[null,null,null,null,null,null,null,0,1,1,0,0,1,null,1,null,null],"Anh Sơn":[0,null,null,null,null,0,null,null,null,0,null,null,null,null,null,null,null],"Chí Quỹ":[null,0,null,null,null,null,0,null,null,null,null,null,null,null,null,null,1],"Tiến":[null,null,null,null,null,null,null,0,null,0,null,null,0,null,null,null,null],"Mới":[null,null,null,null,null,null,null,null,1,0,null,null,null,null,null,null,null]};
 
 const BXI={
   "4-4-2":[{n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},{n:"Gia Lộc",p:"LM",top:"73%",left:"15%"},{n:"Hữu Duyên",p:"CB",top:"76%",left:"37%"},{n:"D.Chí Hoàng",p:"CB",top:"76%",left:"63%"},{n:"Nguyễn Hoàng",p:"LB",top:"73%",left:"85%"},{n:"Mai Cồ Hiếu",p:"LW",top:"50%",left:"15%"},{n:"Quốc Long",p:"CM",top:"52%",left:"37%"},{n:"Lucky Trần",p:"CM",top:"52%",left:"63%"},{n:"Trung Nguyên",p:"CM",top:"50%",left:"85%"},{n:"Cảm",p:"LW",top:"24%",left:"38%"},{n:"Văn Chung",p:"ST",top:"24%",left:"62%"}],
@@ -648,14 +680,83 @@ function togPD(tr,name){
   td.innerHTML=h;det.appendChild(td);tr.after(det);
 }
 
-function renderAtt(){
-  document.getElementById("attEl").innerHTML=P.filter(p=>p.m>0).sort((a,b)=>b.mp-a.mp).map(p=>`<div class="cb"><div class="cbn">${p.n}</div><div class="cbw"><div class="bw"><div class="b bor" style="width:${p.mp*100}%">${(p.mp*100).toFixed(0)}%</div></div></div><div class="cbv">${p.m}</div></div>`).join("");
+function renderMatrix(){
+  const N=M.length;
+  const grid=document.getElementById("matEl");
+  if(!grid)return;
+  const cols=`100px repeat(${N},28px) 36px`;
+  let h=`<div class="mx" style="grid-template-columns:${cols};min-width:${100+N*29+36}px">`;
+  // Header row
+  h+=`<div class="mx-corner"></div>`;
+  M.forEach(m=>{
+    const bg=m.r==="W"?"rgba(60,184,112,.4)":m.r==="D"?"rgba(232,160,48,.35)":"rgba(229,69,69,.4)";
+    h+=`<div class="mx-mh" style="background:${bg};color:#fff">T${m.wk}</div>`;
+  });
+  h+=`<div class="mx-mh" style="color:var(--or)">MP</div>`;
+  // Player rows sorted by mp desc
+  const sorted=[...P].filter(p=>p.m>0).sort((a,b)=>b.mp-a.mp);
+  sorted.forEach(p=>{
+    const pm=PM[p.n]||[];
+    h+=`<div class="mx-pn">${p.n}</div>`;
+    M.forEach((m,i)=>{
+      const v=pm[i];
+      if(v===null||v===undefined){
+        h+=`<div class="mx-c mx-a"></div>`;
+      } else {
+        const rc=m.r==="W"?"mx-w":m.r==="D"?"mx-d":"mx-l";
+        h+=`<div class="mx-c ${rc}${v>0?" mx-g":""}">${v>0?v:""}</div>`;
+      }
+    });
+    h+=`<div class="mx-sum">${p.m}</div>`;
+  });
+  // Score row
+  h+=`<div class="mx-corner" style="font-size:7px;color:var(--tx3)">Tỉ số</div>`;
+  M.forEach(m=>{
+    const col=m.r==="W"?"var(--grn)":m.r==="D"?"var(--amb)":"var(--red)";
+    h+=`<div class="mx-c" style="background:transparent;font-size:6px;color:${col};flex-direction:column;height:auto;padding:2px 0">${m.gf}<span style="color:var(--tx3)">–</span>${m.ga}</div>`;
+  });
+  h+=`<div class="mx-sum"></div>`;
+  h+=`</div>`;
+  grid.innerHTML=h;
 }
 
-function renderImp(){
-  const s=P.filter(p=>p.m>0).map(p=>({...p,ppg:(p.w*3+p.d)/p.m})).sort((a,b)=>b.ppg-a.ppg),mx=s[0]?.ppg||1;
-  document.getElementById("impEl").innerHTML=`<div style="font-size:10px;color:var(--tx3);margin-bottom:7px">Đội TB: <b style="color:var(--or)">${T.ppg.toFixed(2)}</b> Đ/T</div>`+
-    s.map(p=>{const c=p.ppg>=T.ppg?"bgrn":p.ppg>=1.5?"bor":"bred";return`<div class="cb"><div class="cbn">${p.n}</div><div class="cbw"><div class="bw"><div class="b ${c}" style="width:${p.ppg/mx*100}%">${p.ppg.toFixed(2)}</div></div></div></div>`}).join("");
+function renderWinImpact(){
+  const el=document.getElementById("wipEl");
+  if(!el)return;
+  const players=P.filter(p=>p.m>0);
+  const rows=players.map(p=>{
+    const wpWithout=p.m===T.m?null:(T.w-p.w)/(T.m-p.m);
+    const delta=wpWithout===null?null:(p.wp-wpWithout);
+    return{...p,wpWithout,delta};
+  }).sort((a,b)=>{
+    if(a.delta===null&&b.delta===null)return 0;
+    if(a.delta===null)return 1;
+    if(b.delta===null)return -1;
+    return b.delta-a.delta;
+  });
+  let h=`<div style="display:flex;gap:12px;flex-wrap:wrap;font-size:8px;color:var(--tx3);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--bd)">
+    <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:4px;background:var(--tl);border-radius:2px;display:inline-block"></span>Tỉ lệ tham gia</span>
+    <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:4px;background:var(--grn);border-radius:2px;display:inline-block"></span>% thắng khi có mặt</span>
+  </div>`;
+  rows.forEach(p=>{
+    const dStr=p.delta===null?"N/A":(p.delta>=0?`+${(p.delta*100).toFixed(0)}%`:`${(p.delta*100).toFixed(0)}%`);
+    const dc=p.delta===null?"wi-neu":p.delta>=0?"wi-pos":"wi-neg";
+    h+=`<div class="wi-row">
+      <div class="wi-name">${p.n}</div>
+      <div class="wi-bars">
+        <div class="wi-bar-wrap">
+          <div class="wi-lbl">T</div>
+          <div class="wi-track"><div class="wi-fill" style="width:${(p.mp*100).toFixed(0)}%;background:var(--tl)">${(p.mp*100).toFixed(0)}%</div></div>
+        </div>
+        <div class="wi-bar-wrap">
+          <div class="wi-lbl">W</div>
+          <div class="wi-track"><div class="wi-fill" style="width:${(p.wp*100).toFixed(0)}%;background:var(--grn)">${(p.wp*100).toFixed(0)}%</div></div>
+        </div>
+      </div>
+      <div class="wi-delta ${dc}">${dStr}</div>
+    </div>`;
+  });
+  el.innerHTML=h;
 }
 
 let curF="4-4-2";
@@ -701,7 +802,7 @@ function renderSum(){
   document.getElementById("sumEl").innerHTML=`<div class="sumg">
     <div class="sumb">
       <h3>Phân tích mùa giải 2026</h3>
-      <p><b style="color:var(--grn)">Tấn công:</b> TB ${(T.gf/T.m).toFixed(1)} bàn/trận. Cảm (13B) · Văn Chung (8B) · Khâm (7B) — bộ ba sát thủ hàng đầu. Assist dẫn đầu: Khâm & Trung Nguyên.</p>
+      <p><b style="color:var(--grn)">Tấn công:</b> TB ${(T.gf/T.m).toFixed(1)} bàn/trận. Cảm (17B) · Văn Chung (8B) · Khâm (7B) — bộ ba sát thủ hàng đầu. Assist dẫn đầu: Khâm & Trung Nguyên.</p>
       <p><b style="color:var(--red)">Phòng ngự:</b> TB ${(T.ga/T.m).toFixed(1)} bàn thua/trận. Đức Khoa bảo vệ khung thành chính (${GKD["Đức Khoa"]?.conc||0} bàn thua từ dữ liệu tuần 21).</p>
       <p><b style="color:var(--amb)">Chuyển hóa:</b> ${T.d} trận hòa (${(T.d/T.m*100).toFixed(0)}%) — cần kết thúc trận quyết đoán hơn.</p>
       <p><b style="color:var(--or)">Sân đấu:</b> Giga Arena ${(hm.filter(m=>m.r==="W").length/hm.length*100).toFixed(0)}% win · Sân khách ${(am.filter(m=>m.r==="W").length/am.length*100).toFixed(0)}% win.</p>
@@ -769,7 +870,7 @@ renderOv();renderWinRate();renderGoals();renderForm();
 renderScorers();renderAssists();renderPen();renderHalfGf();renderGpm();
 renderGK();renderHalfGa();
 renderMatches();renderOpponents();
-renderPosF();renderPT();renderAtt();renderImp();
+renderPosF();renderPT();renderMatrix();renderWinImpact();
 renderFm();renderVenue();
 renderAwards();renderSum();renderTk();
 renderNav("club");
