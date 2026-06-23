@@ -4,4 +4,5 @@
 [[redirects]]
   from = "/"
   to = "/stats.html"
-  status = 200
+  status = 301
+  force = true
