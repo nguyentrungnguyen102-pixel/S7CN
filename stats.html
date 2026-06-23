@@ -631,6 +631,10 @@ function renderPosF(){
   document.getElementById("posF").innerHTML=tabs.map(t=>`<button class="twb${t===curPos?" on":""}" style="min-width:64px" onclick="curPos='${t}';renderPosF();renderPT()">${names[t]}</button>`).join("");
 }
 
+function getForm(name){
+  const pm=PM[name]||[];const last5=M.slice(-5);
+  return last5.map((m,i)=>{const v=pm[M.length-5+i];return(v===null||v===undefined)?"N":m.r;});
+}
 function renderPT(){
   const h=["#","Tên","POS","Áo","Trận","%T","Bàn","Ast","%Win","Phong độ","W","D","L","GD","Đ/T"];
   document.getElementById("pTh").innerHTML=h.map(x=>`<th>${x}</th>`).join("");
@@ -648,7 +652,7 @@ function renderPT(){
       <td><b style="color:var(--or)">${p.g}</b></td>
       <td style="color:var(--tl)">${ast||"—"}</td>
       <td>${(p.wp*100).toFixed(0)}%</td>
-      <td><div class="fds">${p.fa.map(f=>`<div class="fd fd${f}">${lb[f]}</div>`).join("")}</div></td>
+      <td><div class="fds">${getForm(p.n).map(f=>`<div class="fd fd${f}">${lb[f]}</div>`).join("")}</div></td>
       <td style="color:var(--grn)">${p.w}</td><td style="color:var(--amb)">${p.d}</td><td style="color:var(--red)">${p.l}</td>
       <td style="color:${p.gd>0?"var(--grn)":"var(--amb)"}">${p.gd>0?"+":""}${p.gd}</td>
       <td><span class="${c}">${ppg.toFixed(2)}</span></td>
