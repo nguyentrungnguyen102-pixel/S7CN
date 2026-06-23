@@ -229,7 +229,7 @@ tr.cl:hover td{background:var(--sf2)}
     <div class="hero-info">
       <div class="hero-eye">LAIRAI FC · SINCE 2018</div>
       <h1 class="hero-name">LAIRAI FC</h1>
-      <p class="hero-sub">Mùa giải 2026 &nbsp;·&nbsp; Cập nhật sau 17 trận &nbsp;·&nbsp; Dữ liệu chi tiết từ tuần 21</p>
+      <p class="hero-sub" id="heroSub">Mùa giải 2026 &nbsp;·&nbsp; Cập nhật sau 17 trận</p>
     </div>
     <div class="hero-kpi">
       <div class="kp"><div class="kp-n">17</div><div class="kp-l">Trận</div></div>
@@ -443,6 +443,8 @@ const BXI={
 // ===== RENDERS =====
 function renderOv(){
   document.getElementById("ovStrip").innerHTML=[{n:T.m,l:"Trận",c:""},{n:T.w,l:"Thắng",c:"grn"},{n:T.d,l:"Hòa",c:"amb"},{n:T.l,l:"Thua",c:"red"},{n:T.gf,l:"Bàn thắng",c:"or"},{n:T.ga,l:"Bàn thua",c:"red"},{n:"+"+T.gd,l:"Hiệu số",c:"grn"},{n:T.ppg.toFixed(2),l:"Điểm/trận",c:"or"}].map(c=>`<div class="ovc"><div class="ovn ${c.c}">${c.n}</div><div class="ovl">${c.l}</div></div>`).join("");
+  const firstWk=Math.min(...Object.keys(MG).map(Number));
+  document.getElementById("heroSub").innerHTML=`Mùa giải 2026 &nbsp;·&nbsp; Cập nhật sau ${T.m} trận &nbsp;·&nbsp; Dữ liệu chi tiết từ tuần ${firstWk}`;
 }
 
 function renderWinRate(){
@@ -501,7 +503,8 @@ function renderScorers(){
 
 function renderAssists(){
   const s=Object.entries(AST_H).sort((a,b)=>(b[1].h1+b[1].h2)-(a[1].h1+a[1].h2)),mx=Math.max(...Object.values(AST_H).map(v=>v.h1+v.h2),1);
-  document.getElementById("assists").innerHTML=!s.length?`<p style="color:var(--tx3);font-size:11px;font-style:italic">Cập nhật từ tuần 21.</p>`:
+  const _fw=Math.min(...Object.keys(MG).map(Number));
+  document.getElementById("assists").innerHTML=!s.length?`<p style="color:var(--tx3);font-size:11px;font-style:italic">Cập nhật từ tuần ${_fw}.</p>`:
     s.map(([n,v],i)=>{const p=P.find(x=>x.n===n),tot=v.h1+v.h2;return`<div class="scr">
       <div class="rk ${i===0?"rk1":i===1?"rk2":i===2?"rk3":"rkn"}">${i+1}</div>
       ${p?`<span class="pos ${p.p}">${p.p}</span>`:""}
@@ -532,7 +535,7 @@ function renderPen(){
       </div>
     </div>
     ${en.map(([n,v])=>`<div class="pr"><span class="pr-n">${n}</span><div style="display:flex;gap:10px;align-items:center"><span class="pv" style="color:var(--grn)">${v.sc}</span><span style="color:var(--tx3);font-size:9px">|</span><span class="pv" style="color:var(--red)">${v.ms}</span></div></div>`).join("")}
-    ${!en.length?`<p style="color:var(--tx3);font-size:10px;font-style:italic">Dữ liệu từ tuần 21.</p>`:""}`;
+    ${!en.length?`<p style="color:var(--tx3);font-size:10px;font-style:italic">Dữ liệu từ tuần ${Math.min(...Object.keys(MG).map(Number))}.</p>`:""}`;
 }
 
 function renderHalfGf(){
@@ -549,7 +552,7 @@ function renderHalfGf(){
         <div class="cbw"><div class="bw" style="height:14px"><div class="b bor" style="width:${HGF.h2/tot*100}%">${HGF.h2} bàn · ${(HGF.h2/tot*100).toFixed(0)}%</div></div></div>
       </div>
     </div>
-    <div style="font-size:9px;color:var(--tx3);margin-top:7px;text-align:center">${HGF.h1+HGF.h2} bàn có dữ liệu (từ tuần 21)</div>`;
+    <div style="font-size:9px;color:var(--tx3);margin-top:7px;text-align:center">${HGF.h1+HGF.h2} bàn có dữ liệu (từ tuần ${Math.min(...Object.keys(MG).map(Number))})</div>`;
 }
 
 function renderGpm(){
@@ -568,7 +571,7 @@ function renderGK(){
       <div class="gks"><div class="gks-n" style="color:var(--grn)">${d.ps}</div><div class="gks-l">Pen cản</div></div>
       <div class="gks"><div class="gks-n">${(d.conc/Math.max(Object.keys(MG).filter(wk=>MG[wk].c?.some(c=>c.gk===n)).length,1)).toFixed(2)}</div><div class="gks-l">BThua/T</div></div>
     </div>
-  </div>`).join('<div style="margin-top:8px"></div>')+`<div style="font-size:9px;color:var(--tx3);margin-top:8px;font-style:italic">Dữ liệu chi tiết từ tuần 21.</div>`;
+  </div>`).join('<div style="margin-top:8px"></div>')+`<div style="font-size:9px;color:var(--tx3);margin-top:8px;font-style:italic">Dữ liệu chi tiết từ tuần ${Math.min(...Object.keys(MG).map(Number))}.</div>`;
 }
 
 function renderHalfGa(){
@@ -809,7 +812,7 @@ function renderSum(){
     <div class="sumb">
       <h3>Phân tích mùa giải 2026</h3>
       <p><b style="color:var(--grn)">Tấn công:</b> TB ${(T.gf/T.m).toFixed(1)} bàn/trận. ${P.filter(p=>p.g>0).sort((a,b)=>b.g-a.g).slice(0,3).map(p=>`${p.n} (${p.g}B)`).join(" · ")} — bộ ba sát thủ hàng đầu. Assist dẫn đầu: ${Object.entries(AST).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([n,v])=>n).join(" & ")}.</p>
-      <p><b style="color:var(--red)">Phòng ngự:</b> TB ${(T.ga/T.m).toFixed(1)} bàn thua/trận. Đức Khoa bảo vệ khung thành chính (${GKD["Đức Khoa"]?.conc||0} bàn thua từ dữ liệu tuần 21).</p>
+      <p><b style="color:var(--red)">Phòng ngự:</b> TB ${(T.ga/T.m).toFixed(1)} bàn thua/trận. ${(([gkn,gkd])=>`${gkn} bảo vệ khung thành chính (${gkd.conc} bàn thua từ tuần ${Math.min(...Object.keys(MG).map(Number))})`)( Object.entries(GKD).sort((a,b)=>b[1].conc-a[1].conc)[0]||["—",{conc:0}])}.</p>
       <p><b style="color:var(--amb)">Chuyển hóa:</b> ${T.d} trận hòa (${(T.d/T.m*100).toFixed(0)}%) — cần kết thúc trận quyết đoán hơn.</p>
       <p><b style="color:var(--or)">Sân đấu:</b> Giga Arena ${(hm.filter(m=>m.r==="W").length/hm.length*100).toFixed(0)}% win · Sân khách ${(am.filter(m=>m.r==="W").length/am.length*100).toFixed(0)}% win.</p>
     </div>
