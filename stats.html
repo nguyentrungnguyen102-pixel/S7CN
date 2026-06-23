@@ -437,7 +437,7 @@ const PM={"Mai Cồ Hiếu":[0,0,0,1,0,0,0,0,0,0,0,0,2,0,0,0,1],"Văn Quang":[1,
 const BXI={
   "4-4-2":[{n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},{n:"Gia Lộc",p:"LM",top:"73%",left:"15%"},{n:"Hữu Duyên",p:"CB",top:"76%",left:"37%"},{n:"D.Chí Hoàng",p:"CB",top:"76%",left:"63%"},{n:"Nguyễn Hoàng",p:"LB",top:"73%",left:"85%"},{n:"Mai Cồ Hiếu",p:"LW",top:"50%",left:"15%"},{n:"Quốc Long",p:"CM",top:"52%",left:"37%"},{n:"Lucky Trần",p:"CM",top:"52%",left:"63%"},{n:"Trung Nguyên",p:"CM",top:"50%",left:"85%"},{n:"Cảm",p:"LW",top:"24%",left:"38%"},{n:"Văn Chung",p:"ST",top:"24%",left:"62%"}],
   "3-5-2":[{n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},{n:"Minh Hoàng",p:"LB",top:"76%",left:"25%"},{n:"Hữu Duyên",p:"CB",top:"78%",left:"50%"},{n:"D.Chí Hoàng",p:"CB",top:"76%",left:"75%"},{n:"Nguyễn Hoàng",p:"LB",top:"53%",left:"8%"},{n:"Quốc Long",p:"CM",top:"55%",left:"30%"},{n:"Mai Cồ Hiếu",p:"LW",top:"45%",left:"50%"},{n:"Lucky Trần",p:"CM",top:"55%",left:"70%"},{n:"Gia Lộc",p:"LM",top:"53%",left:"92%"},{n:"Cảm",p:"LW",top:"24%",left:"38%"},{n:"Văn Chung",p:"ST",top:"24%",left:"62%"}],
-  "4-5-1":[{n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},{n:"Nguyễn Hoàng",p:"LB",top:"73%",left:"15%"},{n:"Hữu Duyên",p:"CB",top:"76%",left:"37%"},{n:"D.Chí Hoàng",p:"CB",top:"76%",left:"63%"},{n:"Nguyên Khôi",p:"RB",top:"73%",left:"85%"},{n:"Lâm",p:"CM",top:"48%",left:"12%"},{n:"Quốc Long",p:"CM",top:"50%",left:"32%"},{n:"Trung Nguyên",p:"CM",top:"58%",left:"50%"},{n:"Lucky Trần",p:"CM",top:"50%",left:"68%"},{n:"Mai Cồ Hiếu",p:"LW",top:"48%",left:"88%"},{n:"Cảm",p:"LW",top:"22%",left:"50%"}],
+  "4-5-1":[{n:"Đức Khoa",p:"GK",top:"90%",left:"50%"},{n:"Nguyễn Hoàng",p:"LB",top:"73%",left:"15%"},{n:"Hữu Duyên",p:"CB",top:"76%",left:"37%"},{n:"D.Chí Hoàng",p:"CB",top:"76%",left:"63%"},{n:"Nguyên Khôi",p:"RB",top:"73%",left:"85%"},{n:"Khâm",p:"RW",top:"48%",left:"12%"},{n:"Quốc Long",p:"CM",top:"50%",left:"32%"},{n:"Trung Nguyên",p:"CM",top:"58%",left:"50%"},{n:"Lucky Trần",p:"CM",top:"50%",left:"68%"},{n:"Mai Cồ Hiếu",p:"LW",top:"48%",left:"88%"},{n:"Cảm",p:"LW",top:"22%",left:"50%"}],
 };
 
 // ===== RENDERS =====
@@ -786,13 +786,20 @@ function renderVenue(){
 }
 
 function renderAwards(){
-  const lk=P.find(p=>p.n==="Lucky Trần"),cam=P.find(p=>p.n==="Cảm"),mch=P.find(p=>p.n==="Mai Cồ Hiếu"),nh=P.find(p=>p.n==="Nguyễn Hoàng"),ql=P.find(p=>p.n==="Quốc Long");
+  const main=P.filter(p=>p.t==="main"&&p.m>=3);
+  const mvp=[...main].sort((a,b)=>(b.mp*b.wp*((b.w*3+b.d)/b.m))-(a.mp*a.wp*((a.w*3+a.d)/a.m)))[0];
+  const scorer=[...main].sort((a,b)=>b.g-a.g||b.g/b.m-a.g/a.m)[0];
+  const iron=[...main].sort((a,b)=>b.mp-a.mp||b.m-a.m)[0];
+  const defs=main.filter(p=>["CB","LB","RB","DF"].includes(p.p));
+  const bdef=defs.length?[...defs].sort((a,b)=>b.wp-a.wp||b.gd-a.gd)[0]:main[0];
+  const mids=main.filter(p=>["CM","LM","RM","MF"].includes(p.p));
+  const bmid=mids.length?[...mids].sort((a,b)=>(b.g+(AST[b.n]||0))-(a.g+(AST[a.n]||0))||b.wp-a.wp)[0]:main[0];
   document.getElementById("awEl").innerHTML=[
-    {t:"MVP\nXuất sắc nhất",p:lk.n,s:`${lk.m}T · ${(lk.wp*100).toFixed(0)}% win`,d:`PPG ${((lk.w*3+lk.d)/lk.m).toFixed(2)} · Trụ cột tuyến giữa`},
-    {t:"Vua phá lưới\nTop Scorer",p:cam.n,s:`${cam.g} bàn / ${cam.m} trận`,d:`${(cam.g/cam.m).toFixed(2)} bàn/trận`},
-    {t:"Chiến binh thép\nIron Man",p:mch.n,s:`${mch.m}/${T.m} trận · 100%`,d:"Ra sân đầy đủ mọi trận"},
-    {t:"Hậu vệ xuất sắc\nBest Defender",p:nh.n,s:`${(nh.wp*100).toFixed(0)}% win · GD +${nh.gd}`,d:`${nh.m}T · ${nh.w}W ${nh.d}D ${nh.l}L`},
-    {t:"Tiền vệ xuất sắc\nBest Midfielder",p:ql.n,s:`${ql.g}B · Ast ${AST[ql.n]||0}`,d:`PPG ${((ql.w*3+ql.d)/ql.m).toFixed(2)}`},
+    {t:"MVP\nXuất sắc nhất",p:mvp.n,s:`${mvp.m}T · ${(mvp.wp*100).toFixed(0)}% win`,d:`PPG ${((mvp.w*3+mvp.d)/mvp.m).toFixed(2)}`},
+    {t:"Vua phá lưới\nTop Scorer",p:scorer.n,s:`${scorer.g} bàn / ${scorer.m} trận`,d:`${(scorer.g/scorer.m).toFixed(2)} bàn/trận`},
+    {t:"Chiến binh thép\nIron Man",p:iron.n,s:`${iron.m}/${T.m} trận · ${(iron.mp*100).toFixed(0)}%`,d:iron.mp===1?"Ra sân đầy đủ mọi trận":`Chuyên cần nhất đội`},
+    {t:"Hậu vệ xuất sắc\nBest Defender",p:bdef.n,s:`${(bdef.wp*100).toFixed(0)}% win · GD +${bdef.gd}`,d:`${bdef.m}T · ${bdef.w}W ${bdef.d}D ${bdef.l}L`},
+    {t:"Tiền vệ xuất sắc\nBest Midfielder",p:bmid.n,s:`${bmid.g}B · Ast ${AST[bmid.n]||0}`,d:`PPG ${((bmid.w*3+bmid.d)/bmid.m).toFixed(2)}`},
   ].map(a=>`<div class="aw"><div class="aw-t">${a.t.replace("\n","<br>")}</div><div class="aw-p">${a.p}</div><div class="aw-s">${a.s}</div><div class="aw-d">${a.d}</div></div>`).join("");
 }
 
@@ -801,7 +808,7 @@ function renderSum(){
   document.getElementById("sumEl").innerHTML=`<div class="sumg">
     <div class="sumb">
       <h3>Phân tích mùa giải 2026</h3>
-      <p><b style="color:var(--grn)">Tấn công:</b> TB ${(T.gf/T.m).toFixed(1)} bàn/trận. Cảm (17B) · Văn Chung (8B) · Khâm (7B) — bộ ba sát thủ hàng đầu. Assist dẫn đầu: Khâm & Trung Nguyên.</p>
+      <p><b style="color:var(--grn)">Tấn công:</b> TB ${(T.gf/T.m).toFixed(1)} bàn/trận. ${P.filter(p=>p.g>0).sort((a,b)=>b.g-a.g).slice(0,3).map(p=>`${p.n} (${p.g}B)`).join(" · ")} — bộ ba sát thủ hàng đầu. Assist dẫn đầu: ${Object.entries(AST).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([n,v])=>n).join(" & ")}.</p>
       <p><b style="color:var(--red)">Phòng ngự:</b> TB ${(T.ga/T.m).toFixed(1)} bàn thua/trận. Đức Khoa bảo vệ khung thành chính (${GKD["Đức Khoa"]?.conc||0} bàn thua từ dữ liệu tuần 21).</p>
       <p><b style="color:var(--amb)">Chuyển hóa:</b> ${T.d} trận hòa (${(T.d/T.m*100).toFixed(0)}%) — cần kết thúc trận quyết đoán hơn.</p>
       <p><b style="color:var(--or)">Sân đấu:</b> Giga Arena ${(hm.filter(m=>m.r==="W").length/hm.length*100).toFixed(0)}% win · Sân khách ${(am.filter(m=>m.r==="W").length/am.length*100).toFixed(0)}% win.</p>
@@ -812,7 +819,7 @@ function renderSum(){
         <li>Giảm GA/trận: mục tiêu ≤ 2.0 (hiện ${(T.ga/T.m).toFixed(1)})</li>
         <li>Giảm hòa từ ${(T.d/T.m*100).toFixed(0)}% xuống &lt;20%</li>
         <li>Nâng PPG từ ${T.ppg.toFixed(2)} lên ≥ 2.00</li>
-        <li>Duy trì bộ ba Cảm – Khâm – Văn Chung</li>
+        <li>Duy trì bộ ba ${P.filter(p=>p.g>0).sort((a,b)=>b.g-a.g).slice(0,3).map(p=>p.n).join(" – ")}</li>
         <li>Nhập đầy đủ dữ liệu goal detail mỗi tuần</li>
         <li>Theo dõi thêm GK cản penalty</li>
       </ul>
