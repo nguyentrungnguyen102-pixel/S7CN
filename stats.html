@@ -357,7 +357,7 @@ tr.cl:hover td{background:var(--sf2)}
 
 <script>
 // ===== CORE DATA =====
-const T={n:"LAIRAI FC",m:17,w:10,d:4,l:3,gf:61,ga:38,gd:23,pts:34,ppg:2.0,form:["W","W","L","W","W"]};
+const T={n:"LAIRAI FC",m:17,w:10,d:4,l:3,gf:61,ga:38,gd:23,pts:34,ppg:2.0};
 
 const M=[
   {wk:1,dt:"04/01",vs:"Thiết Bị Việt FC",gf:4,ga:2,r:"W",v:"Etihad Q12"},
@@ -476,14 +476,15 @@ function renderGoals(){
 }
 
 function renderForm(){
+  const form=M.slice(-5).map(m=>m.r);
   const lb={W:"T",D:"H",L:"B"},full={W:"Thắng",D:"Hòa",L:"Thua"},clr={W:"var(--grn)",D:"var(--amb)",L:"var(--red)"};
   document.getElementById("formViz").innerHTML=`
     <div style="display:flex;gap:7px;justify-content:center;margin:6px 0 10px">
-      ${T.form.map(f=>`<div style="width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:15px;font-weight:600;color:#fff;background:${clr[f]}">${lb[f]}</div>`).join("")}
+      ${form.map(f=>`<div style="width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:15px;font-weight:600;color:#fff;background:${clr[f]}">${lb[f]}</div>`).join("")}
     </div>
-    <div style="text-align:center;font-size:10px;color:var(--tx3);margin-bottom:12px">${T.form.map(f=>full[f]).join(" → ")}</div>
+    <div style="text-align:center;font-size:10px;color:var(--tx3);margin-bottom:12px">${form.map(f=>full[f]).join(" → ")}</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;text-align:center;border-top:1px solid var(--bd);padding-top:10px">
-      ${[["W","THẮNG","grn"],["D","HÒA","amb"],["L","THUA","red"]].map(([r,lbl,c])=>`<div><div style="font-family:var(--fd);font-size:17px;color:var(--${c})">${T.form.filter(f=>f===r).length}</div><div style="font-size:8px;color:var(--tx3);letter-spacing:1px">${lbl}</div></div>`).join("")}
+      ${[["W","THẮNG","grn"],["D","HÒA","amb"],["L","THUA","red"]].map(([r,lbl,c])=>`<div><div style="font-family:var(--fd);font-size:17px;color:var(--${c})">${form.filter(f=>f===r).length}</div><div style="font-size:8px;color:var(--tx3);letter-spacing:1px">${lbl}</div></div>`).join("")}
     </div>`;
 }
 
