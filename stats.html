@@ -435,28 +435,41 @@ const PM={"Mai Cồ Hiếu":[0,0,0,1,0,0,0,0,0,0,0,0,2,0,0,0,1],"Văn Quang":[1,
   "Đức Khoa":[0,0,0,0,0,0,null,0,0,0,0,null,null,0,1,0,0],"D.Chí Hoàng":[0,0,null,0,null,0,null,0,null,0,0,0,null,0,0,0,0],"Minh Hoàng":[0,0,0,null,null,null,0,0,0,null,null,0,0,0,null,null,0],"Trung Nguyên":[null,1,0,0,0,0,0,0,0,1,0,0,0,0,null,0,1],"Tài Ba":[null,0,0,0,0,0,0,1,0,0,0,null,0,0,null,0,0],"Hữu Nghĩa":[null,null,null,null,null,null,null,null,null,null,null,0,0,0,null,0,null],"Văn Chung":[1,null,0,null,1,2,null,null,0,0,1,2,null,1,0,0,null],"Gia Lộc":[1,null,0,0,0,null,null,0,null,null,1,null,0,0,null,null,null],"Phú Bình":[null,null,null,0,0,null,0,null,null,null,0,null,null,null,null,null,null],"Khâm":[null,2,0,0,1,1,2,null,null,null,0,0,1,0,0,0,null],"Cảm":[null,1,0,0,null,0,1,2,3,1,0,2,3,0,1,2,2],"Hoàng Đại":[null,null,null,null,null,null,null,0,null,0,null,null,1,null,null,null,null],"Lâm":[null,null,null,null,null,null,null,0,1,1,0,0,1,null,1,null,null],"Anh Sơn":[0,null,null,null,null,0,null,null,null,0,null,null,null,null,null,null,null],"Chí Quỹ":[null,0,null,null,null,null,0,null,null,null,null,null,null,null,null,null,1]};
 
 function genBXI(){
-  const gk=P.filter(p=>p.t==="main"&&p.p==="GK");
-  const df=P.filter(p=>p.t==="main"&&["CB","LB","RB"].includes(p.p)).sort((a,b)=>b.m-a.m);
-  const mf=P.filter(p=>p.t==="main"&&["CM","LM","RM","MF"].includes(p.p)).sort((a,b)=>b.m-a.m);
-  const fw=P.filter(p=>p.t==="main"&&["LW","RW","ST","FW"].includes(p.p)).sort((a,b)=>b.m-a.m);
+  const main=P.filter(p=>p.t==="main"&&p.m>=2).sort((a,b)=>b.m-a.m);
+  const gk=main.filter(p=>p.p==="GK");
+  const df=main.filter(p=>["CB","LB","RB"].includes(p.p));
+  const cm=main.filter(p=>p.p==="CM");
+  const att=main.filter(p=>["LW","RW","ST","LM","FW"].includes(p.p));
   function pick(pool,n,off){const r=[];for(let i=0;i<n;i++)r.push(pool[(off+i)%pool.length]);return r;}
-  const slots={
-    "4-4-2":{d:[{top:"73%",left:"15%"},{top:"76%",left:"37%"},{top:"76%",left:"63%"},{top:"73%",left:"85%"}],m:[{top:"50%",left:"15%"},{top:"52%",left:"37%"},{top:"52%",left:"63%"},{top:"50%",left:"85%"}],f:[{top:"24%",left:"38%"},{top:"24%",left:"62%"}]},
-    "3-5-2":{d:[{top:"76%",left:"25%"},{top:"78%",left:"50%"},{top:"76%",left:"75%"}],m:[{top:"53%",left:"8%"},{top:"55%",left:"30%"},{top:"45%",left:"50%"},{top:"55%",left:"70%"},{top:"53%",left:"92%"}],f:[{top:"24%",left:"38%"},{top:"24%",left:"62%"}]},
-    "4-3-3":{d:[{top:"73%",left:"15%"},{top:"76%",left:"37%"},{top:"76%",left:"63%"},{top:"73%",left:"85%"}],m:[{top:"52%",left:"28%"},{top:"55%",left:"50%"},{top:"52%",left:"72%"}],f:[{top:"26%",left:"22%"},{top:"22%",left:"50%"},{top:"26%",left:"78%"}]}
+  // Each formation: df slots, cm slots (center mid), att slots (wings+fwd merged)
+  // att slots listed wing-first then fwd so pick() fills wings before strikers
+  const schemas={
+    "4-4-2":{
+      df:[{top:"73%",left:"15%"},{top:"76%",left:"37%"},{top:"76%",left:"63%"},{top:"73%",left:"85%"}],
+      cm:[{top:"52%",left:"37%"},{top:"52%",left:"63%"}],
+      att:[{top:"50%",left:"15%"},{top:"50%",left:"85%"},{top:"24%",left:"38%"},{top:"24%",left:"62%"}]
+    },
+    "3-5-2":{
+      df:[{top:"77%",left:"25%"},{top:"78%",left:"50%"},{top:"77%",left:"75%"}],
+      cm:[{top:"52%",left:"28%"},{top:"52%",left:"50%"},{top:"52%",left:"72%"}],
+      att:[{top:"53%",left:"8%"},{top:"53%",left:"92%"},{top:"24%",left:"38%"},{top:"24%",left:"62%"}]
+    },
+    "4-3-3":{
+      df:[{top:"73%",left:"15%"},{top:"76%",left:"37%"},{top:"76%",left:"63%"},{top:"73%",left:"85%"}],
+      cm:[{top:"52%",left:"28%"},{top:"55%",left:"50%"},{top:"52%",left:"72%"}],
+      att:[{top:"26%",left:"22%"},{top:"22%",left:"50%"},{top:"26%",left:"78%"}]
+    }
   };
   const bxi={};
-  const fms=Object.keys(slots);
-  let dOff=0,mOff=0,fOff=0;
-  fms.forEach((fm)=>{
-    const s=slots[fm];
+  let dOff=0,cOff=0,aOff=0;
+  for(const[fm,s]of Object.entries(schemas)){
     const lineup=[{n:gk[0].n,p:gk[0].p,top:"90%",left:"50%"}];
-    pick(df,s.d.length,dOff).forEach((pl,i)=>lineup.push({n:pl.n,p:pl.p,...s.d[i]}));
-    pick(mf,s.m.length,mOff).forEach((pl,i)=>lineup.push({n:pl.n,p:pl.p,...s.m[i]}));
-    pick(fw,s.f.length,fOff).forEach((pl,i)=>lineup.push({n:pl.n,p:pl.p,...s.f[i]}));
-    dOff+=s.d.length;mOff+=s.m.length;fOff+=s.f.length;
+    pick(df,s.df.length,dOff).forEach((pl,i)=>lineup.push({n:pl.n,p:pl.p,...s.df[i]}));
+    pick(cm,s.cm.length,cOff).forEach((pl,i)=>lineup.push({n:pl.n,p:pl.p,...s.cm[i]}));
+    pick(att,s.att.length,aOff).forEach((pl,i)=>lineup.push({n:pl.n,p:pl.p,...s.att[i]}));
+    dOff+=s.df.length;cOff+=s.cm.length;aOff+=s.att.length;
     bxi[fm]=lineup;
-  });
+  }
   return bxi;
 }
 
