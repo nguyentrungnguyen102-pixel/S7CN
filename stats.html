@@ -436,38 +436,42 @@ const PM={"Mai Cồ Hiếu":[0,0,0,1,0,0,0,0,0,0,0,0,2,0,0,0,1],"Văn Quang":[1,
 
 function genBXI(){
   const main=P.filter(p=>p.t==="main"&&p.m>=2).sort((a,b)=>b.m-a.m);
-  const gk=main.filter(p=>p.p==="GK");
-  const df=main.filter(p=>["CB","LB","RB"].includes(p.p));
-  const cm=main.filter(p=>p.p==="CM");
-  const att=main.filter(p=>["LW","RW","ST","LM","FW"].includes(p.p));
+  const pools={
+    gk:main.filter(p=>p.p==="GK"),
+    lb:main.filter(p=>p.p==="LB"),
+    cb:main.filter(p=>p.p==="CB"),
+    rb:main.filter(p=>p.p==="RB"),
+    cm:main.filter(p=>p.p==="CM"),
+    lw:main.filter(p=>["LW","LM"].includes(p.p)),
+    rw:main.filter(p=>p.p==="RW"),
+    st:main.filter(p=>p.p==="ST")
+  };
   function pick(pool,n,off){const r=[];for(let i=0;i<n;i++)r.push(pool[(off+i)%pool.length]);return r;}
-  // Each formation: df slots, cm slots (center mid), att slots (wings+fwd merged)
-  // att slots listed wing-first then fwd so pick() fills wings before strikers
   const schemas={
     "4-4-2":{
-      df:[{top:"73%",left:"15%"},{top:"76%",left:"37%"},{top:"76%",left:"63%"},{top:"73%",left:"85%"}],
-      cm:[{top:"52%",left:"37%"},{top:"52%",left:"63%"}],
-      att:[{top:"50%",left:"15%"},{top:"50%",left:"85%"},{top:"24%",left:"38%"},{top:"24%",left:"62%"}]
+      lb:[{top:"73%",left:"15%"}],cb:[{top:"76%",left:"37%"},{top:"76%",left:"63%"}],rb:[{top:"73%",left:"85%"}],
+      lw:[{top:"50%",left:"15%"}],cm:[{top:"52%",left:"37%"},{top:"52%",left:"63%"}],rw:[{top:"50%",left:"85%"}],
+      st:[{top:"24%",left:"38%"},{top:"24%",left:"62%"}]
     },
     "3-5-2":{
-      df:[{top:"77%",left:"25%"},{top:"78%",left:"50%"},{top:"77%",left:"75%"}],
-      cm:[{top:"52%",left:"28%"},{top:"52%",left:"50%"},{top:"52%",left:"72%"}],
-      att:[{top:"53%",left:"8%"},{top:"53%",left:"92%"},{top:"24%",left:"38%"},{top:"24%",left:"62%"}]
+      cb:[{top:"77%",left:"25%"},{top:"78%",left:"50%"},{top:"77%",left:"75%"}],
+      lw:[{top:"53%",left:"8%"}],cm:[{top:"52%",left:"28%"},{top:"55%",left:"50%"},{top:"52%",left:"72%"}],rw:[{top:"53%",left:"92%"}],
+      st:[{top:"24%",left:"38%"},{top:"24%",left:"62%"}]
     },
     "4-3-3":{
-      df:[{top:"73%",left:"15%"},{top:"76%",left:"37%"},{top:"76%",left:"63%"},{top:"73%",left:"85%"}],
+      lb:[{top:"73%",left:"15%"}],cb:[{top:"76%",left:"37%"},{top:"76%",left:"63%"}],rb:[{top:"73%",left:"85%"}],
       cm:[{top:"52%",left:"28%"},{top:"55%",left:"50%"},{top:"52%",left:"72%"}],
-      att:[{top:"26%",left:"22%"},{top:"22%",left:"50%"},{top:"26%",left:"78%"}]
+      lw:[{top:"26%",left:"22%"}],st:[{top:"22%",left:"50%"}],rw:[{top:"26%",left:"78%"}]
     }
   };
+  const off={lb:0,cb:0,rb:0,cm:0,lw:0,rw:0,st:0};
   const bxi={};
-  let dOff=0,cOff=0,aOff=0;
   for(const[fm,s]of Object.entries(schemas)){
-    const lineup=[{n:gk[0].n,p:gk[0].p,top:"90%",left:"50%"}];
-    pick(df,s.df.length,dOff).forEach((pl,i)=>lineup.push({n:pl.n,p:pl.p,...s.df[i]}));
-    pick(cm,s.cm.length,cOff).forEach((pl,i)=>lineup.push({n:pl.n,p:pl.p,...s.cm[i]}));
-    pick(att,s.att.length,aOff).forEach((pl,i)=>lineup.push({n:pl.n,p:pl.p,...s.att[i]}));
-    dOff+=s.df.length;cOff+=s.cm.length;aOff+=s.att.length;
+    const lineup=[{n:pools.gk[0].n,p:pools.gk[0].p,top:"90%",left:"50%"}];
+    for(const k of Object.keys(s)){
+      pick(pools[k],s[k].length,off[k]).forEach((pl,i)=>lineup.push({n:pl.n,p:pl.p,...s[k][i]}));
+      off[k]+=s[k].length;
+    }
     bxi[fm]=lineup;
   }
   return bxi;
