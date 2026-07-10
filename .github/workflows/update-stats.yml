@@ -1,0 +1,37 @@
+name: Tự động cập nhật thống kê
+
+on:
+  schedule:
+    # Chạy mỗi thứ Hai 09:00 giờ Việt Nam (02:00 UTC)
+    - cron: '0 2 * * 1'
+  workflow_dispatch:   # Cho phép chạy thủ công từ tab Actions
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cập nhật dữ liệu từ Google Sheet
+        run: python scripts/update_stats.py
+
+      - name: Commit & push nếu có thay đổi
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet stats.html; then
+            git add stats.html
+            git commit -m "chore: cập nhật thống kê $(date +'%Y-%m-%d')"
+            git push
+          else
+            echo "Không có thay đổi, bỏ qua commit."
+          fi
