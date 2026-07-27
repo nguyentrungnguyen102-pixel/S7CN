@@ -65,6 +65,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fb);line-height:1.5;
 .ct::after{content:'';flex:1;height:1px;background:var(--bd)}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.g2>*,.g3>*{min-width:0}
 
 .ovs{display:grid;grid-template-columns:repeat(8,1fr);gap:1px;background:var(--bd);border-radius:var(--r);overflow:hidden;border:1px solid var(--bd)}
 .ovc{background:var(--sf);padding:17px 6px;text-align:center;transition:background .15s}
@@ -173,8 +174,10 @@ tr.cl:hover td{background:var(--sf2)}
 .wi-score{font-weight:900;font-size:14px;color:#fbbf24}
 .wi-score-label{font-size:9px;color:var(--tx3)}
 
+.lv{display:inline-flex;align-items:center;gap:2px;font-size:8px;font-weight:700;letter-spacing:.5px;color:#fff;background:var(--red);border-radius:3px;padding:1px 5px;margin-left:6px;text-decoration:none;vertical-align:middle;transition:filter .15s}
+.lv:hover{filter:brightness(1.2)}
 .pw{display:flex;justify-content:center;padding:8px 0 12px}
-.pt{position:relative;width:310px;aspect-ratio:2/3;border:1.5px solid rgba(255,255,255,.15);border-radius:6px;overflow:hidden;background:linear-gradient(180deg,#1a5e2a,#1e6b30)}
+.pt{position:relative;width:min(310px,100%);aspect-ratio:2/3;border:1.5px solid rgba(255,255,255,.15);border-radius:6px;overflow:hidden;background:linear-gradient(180deg,#1a5e2a,#1e6b30)}
 .pt::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(0,0,0,.08) 27px,rgba(0,0,0,.08) 54px)}
 .pml{position:absolute;top:50%;left:0;right:0;height:1px;background:rgba(255,255,255,.22)}
 .pmc{position:absolute;top:50%;left:50%;width:62px;height:62px;border-radius:50%;border:1px solid rgba(255,255,255,.22);transform:translate(-50%,-50%)}
@@ -187,6 +190,22 @@ tr.cl:hover td{background:var(--sf2)}
 .pc-mf,.pc-cm,.pc-lm,.pc-rm{background:linear-gradient(135deg,#8a3a0a,#E8701A)}
 .pc-df,.pc-cb,.pc-lb,.pc-rb{background:linear-gradient(135deg,#1a5e35,var(--grn))}
 .pl{font-size:7px;color:rgba(255,255,255,.85);margin-top:2px;text-shadow:0 1px 3px rgba(0,0,0,.9);white-space:nowrap;max-width:56px;overflow:hidden;text-overflow:ellipsis}
+.pp{cursor:pointer}
+.pp .pc{transition:transform .15s,box-shadow .15s,border-color .15s}
+.pp:hover .pc{transform:scale(1.08)}
+.pp.on{z-index:9}
+.pp.on .pc{transform:scale(1.14);border-color:#fff;box-shadow:0 0 0 2px var(--or),0 3px 14px rgba(0,0,0,.7)}
+.fmd{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--rs);padding:12px 13px;margin-top:2px}
+.fmd-h{display:flex;align-items:center;gap:11px;margin-bottom:11px}
+.fmd-av{width:44px;height:44px;flex-shrink:0;font-size:8px}
+.fmd-n{font-family:var(--fd);font-size:16px;font-weight:700;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fmd-no{font-size:11px;color:var(--tx3);margin-left:7px;font-family:var(--fb)}
+.fmd-p{font-size:10px;color:var(--or);margin-top:2px;font-weight:600}
+.fmd-w{font-size:10px;color:var(--tx2);margin-top:4px;line-height:1.35}
+.fmd-g{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;text-align:center;border-top:1px solid var(--bd);padding-top:10px}
+.fmd-v{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--tx)}
+.fmd-l{font-size:8px;letter-spacing:1px;color:var(--tx3);text-transform:uppercase;margin-top:2px}
+.fmd-f{display:flex;align-items:center;gap:3px;border-top:1px solid var(--bd);margin-top:10px;padding-top:9px}
 
 .vp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
 .vc{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--rs);padding:13px;text-align:center}
@@ -219,7 +238,11 @@ tr.cl:hover td{background:var(--sf2)}
   .hero-name{font-size:38px}.tbar,.hero{padding-left:16px;padding-right:16px}.mven{display:none}
   .mx-pn{max-width:70px;font-size:8px} .wi-name{width:70px;font-size:9px}
 }
-@media(max-width:480px){.ovs{grid-template-columns:repeat(2,1fr)}.aws{grid-template-columns:1fr}.mx-pn{max-width:55px;font-size:7px} .mx-c{min-width:22px;height:18px;font-size:6px} .wi-name{width:55px;font-size:8px}}
+@media(max-width:480px){.ovs{grid-template-columns:repeat(2,1fr)}.aws{grid-template-columns:1fr}.mx-pn{max-width:55px;font-size:7px} .mx-c{min-width:22px;height:18px;font-size:6px} .wi-name{width:55px;font-size:8px}
+  .fmd-g{grid-template-columns:repeat(3,1fr);gap:9px 5px}
+  .kp{padding:14px 12px}.kp-n{font-size:22px}.kp-n.sm{font-size:13px}
+  .mdt{display:none}
+}
 </style>
 </head>
 <body>
@@ -360,8 +383,8 @@ const M=[
   {wk:1,dt:"04/01",vs:"Thiết Bị Việt FC",gf:4,ga:2,r:"W",v:"Etihad Quận 12"},
   {wk:2,dt:"11/01",vs:"Long Xuyên FC",gf:4,ga:2,r:"W",v:"Giga Arena"},
   {wk:3,dt:"18/01",vs:"Vườn Mai Phương Bình FC",gf:0,ga:2,r:"L",v:"Giga Arena"},
-  {wk:4,dt:"25/01",vs:"Long Xuyên FC",gf:2,ga:0,r:"W",v:"Giga Arena"},
-  {wk:9,dt:"01/03",vs:"Liên Quân FC",gf:3,ga:1,r:"W",v:"Etihad Quận 12"},
+  {wk:4,dt:"25/01",vs:"Long Xuyên FC",gf:2,ga:0,r:"W",v:"Giga Arena",lv:"https://www.youtube.com/watch?v=JUqqtitli5s"},
+  {wk:9,dt:"01/03",vs:"Liên Quân FC",gf:3,ga:1,r:"W",v:"Etihad Quận 12",lv:"https://www.youtube.com/watch?v=9Duu-RtPpp8"},
   {wk:10,dt:"08/03",vs:"Sân cáp",gf:3,ga:3,r:"D",v:"Giga Arena"},
   {wk:11,dt:"15/03",vs:"Long Xuyên FC",gf:3,ga:3,r:"D",v:"Giga Arena"},
   {wk:12,dt:"22/03",vs:"Friends FC",gf:3,ga:3,r:"D",v:"Etihad Quận 12"},
@@ -370,7 +393,7 @@ const M=[
   {wk:16,dt:"19/04",vs:"ĐH TDTT",gf:3,ga:4,r:"L",v:"ĐH TDTT"},
   {wk:19,dt:"10/05",vs:"Sân cáp",gf:5,ga:3,r:"W",v:"ĐH TDTT"},
   {wk:20,dt:"17/05",vs:"Lên Bia FC",gf:8,ga:2,r:"W",v:"Dĩ An"},
-  {wk:21,dt:"24/05",vs:"AE Bình Định",gf:1,ga:2,r:"L",v:"Giga Arena"},
+  {wk:21,dt:"24/05",vs:"AE Bình Định",gf:1,ga:2,r:"L",v:"Giga Arena",lv:"https://www.youtube.com/watch?v=6tgFK-mpDG4"},
   {wk:23,dt:"07/06",vs:"ĐH TDTT",gf:4,ga:1,r:"W",v:"ĐH TDTT"},
   {wk:24,dt:"14/06",vs:"Skynet",gf:3,ga:1,r:"W",v:"Phú Nhuận"},
   {wk:25,dt:"21/06",vs:"X.factor",gf:6,ga:3,r:"W",v:"ĐH TDTT"},
@@ -387,7 +410,8 @@ const T=(()=>{
         gf=M.reduce((a,b)=>a+b.gf,0),
         ga=M.reduce((a,b)=>a+b.ga,0),
         pts=w*3+d;
-  return {n:"LAIRAI FC",m,w,d,l,gf,ga,gd:gf-ga,pts,ppg:m?pts/m:0};
+  const mxp=m*3;
+  return {n:"LAIRAI FC",m,w,d,l,gf,ga,gd:gf-ga,pts,ppg:m?pts/m:0,mxp,ptp:mxp?Math.round(pts/mxp*100):0};
 })();
 
 // ===== GOAL DETAIL =====
@@ -565,7 +589,7 @@ function renderOv(){
   document.getElementById("heroKpi").innerHTML=
     `<div class="kp"><div class="kp-n">${T.m}</div><div class="kp-l">Trận</div></div>`+
     `<div class="kp"><div class="kp-n sm">${T.w}W · ${T.d}D · ${T.l}L</div><div class="kp-l">Thành tích</div></div>`+
-    `<div class="kp"><div class="kp-n or">${T.pts}</div><div class="kp-l">Điểm</div></div>`;
+    `<div class="kp"><div class="kp-n or">${T.pts}<span style="font-size:15px;color:var(--tx3)">/${T.mxp}</span></div><div class="kp-l">Điểm · ${T.ptp}%</div></div>`;
 }
 
 function renderWinRate(){
@@ -579,7 +603,7 @@ function renderWinRate(){
     </svg>
     <div class="wdl-bar"><div class="ww" style="flex:${T.w}"></div><div class="wd" style="flex:${T.d}"></div><div class="wl" style="flex:${T.l}"></div></div>
     <div style="display:flex;justify-content:space-between;width:100%;font-size:10px;color:var(--tx2)"><span><b style="color:var(--grn)">${T.w}</b> T</span><span><b style="color:var(--amb)">${T.d}</b> H</span><span><b style="color:var(--red)">${T.l}</b> B</span></div>
-    <div style="text-align:center;font-size:10px;color:var(--tx3)">PPG <b style="color:var(--or);font-family:'Playfair Display',serif;font-size:14px">${T.ppg.toFixed(2)}</b> · Điểm <b style="color:var(--or);font-family:'Playfair Display',serif;font-size:14px">${T.pts}</b></div>
+    <div style="text-align:center;font-size:10px;color:var(--tx3)">PPG <b style="color:var(--or);font-family:'Playfair Display',serif;font-size:14px">${T.ppg.toFixed(2)}</b> · Điểm <b style="color:var(--or);font-family:'Playfair Display',serif;font-size:14px">${T.pts}</b>/${T.mxp} <b style="color:var(--or)">(${T.ptp}%)</b></div>
   </div>`;
 }
 
@@ -599,16 +623,20 @@ function renderGoals(){
 }
 
 function renderForm(){
-  const form=M.slice(-FORM_N).map(m=>m.r);
+  const last=M.slice(-FORM_N),form=last.map(m=>m.r);
   const lb={W:"T",D:"H",L:"B"},full={W:"Thắng",D:"Hòa",L:"Thua"},clr={W:"var(--grn)",D:"var(--amb)",L:"var(--red)"};
+  const gf=last.reduce((s,m)=>s+m.gf,0),ga=last.reduce((s,m)=>s+m.ga,0);
+  const pts=form.filter(f=>f==="W").length*3+form.filter(f=>f==="D").length,mx=last.length*3;
   document.getElementById("formTitle").textContent=`${FORM_N} trận gần nhất`;
   document.getElementById("formViz").innerHTML=`
     <div style="display:flex;gap:7px;justify-content:center;margin:6px 0 10px">
-      ${form.map(f=>`<div style="width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:15px;font-weight:600;color:#fff;background:${clr[f]}">${lb[f]}</div>`).join("")}
+      ${last.map((m,i)=>`<div title="T${m.wk} · ${m.vs} · ${m.gf}–${m.ga}" style="width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:15px;font-weight:600;color:#fff;background:${clr[form[i]]}">${lb[form[i]]}</div>`).join("")}
     </div>
     <div style="text-align:center;font-size:10px;color:var(--tx3);margin-bottom:12px">${form.map(f=>full[f]).join(" → ")}</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;text-align:center;border-top:1px solid var(--bd);padding-top:10px">
-      ${[["W","THẮNG","grn"],["D","HÒA","amb"],["L","THUA","red"]].map(([r,lbl,c])=>`<div><div style="font-family:var(--fd);font-size:17px;color:var(--${c})">${form.filter(f=>f===r).length}</div><div style="font-size:8px;color:var(--tx3);letter-spacing:1px">${lbl}</div></div>`).join("")}
+      <div><div style="font-family:var(--fd);font-size:17px;color:var(--grn)">${gf}</div><div style="font-size:8px;color:var(--tx3);letter-spacing:1px">BÀN THẮNG</div></div>
+      <div><div style="font-family:var(--fd);font-size:17px;color:var(--red)">${ga}</div><div style="font-size:8px;color:var(--tx3);letter-spacing:1px">BÀN THUA</div></div>
+      <div><div style="font-family:var(--fd);font-size:17px;color:var(--or)">${pts}<span style="font-size:11px;color:var(--tx3)">/${mx}</span></div><div style="font-size:8px;color:var(--tx3);letter-spacing:1px">ĐIỂM · ${mx?Math.round(pts/mx*100):0}%</div></div>
     </div>`;
 }
 
@@ -730,7 +758,7 @@ function renderMatches(){
     return`<div class="mr" onclick="togDet(${idx})">
       <div class="mwk">T${m.wk}</div>
       <div class="mdt">${m.dt}</div>
-      <div class="mvs">${m.vs}${mg?`<span style="font-size:8px;color:var(--tl);margin-left:5px">▾ chi tiết</span>`:""}</div>
+      <div class="mvs">${m.vs}${mg?`<span style="font-size:8px;color:var(--tl);margin-left:5px">▾ chi tiết</span>`:""}${m.lv?`<a class="lv" href="${m.lv}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Xem lại trận đấu">▶ LIVE</a>`:""}</div>
       <div class="msc" style="color:${col}">${m.gf}–${m.ga}</div>
       <div class="rp r${m.r}">${m.r==="W"?"THẮNG":m.r==="D"?"HÒA":"THUA"}</div>
       <div class="mven">${m.v}</div>
@@ -859,7 +887,9 @@ function renderBubble(){
   document.getElementById("wiMinM").textContent=`Tổng hợp Chuyên Cần × Win% × PPG · Cầu thủ có ≥ ${MIN_M} trận`;
   // Bubble chart
   const cel=document.getElementById("cBubble");
-  if(cel){
+  if(cel&&typeof Chart==="undefined"){
+    cel.parentElement.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:100%;min-height:180px;color:var(--tx3);font-size:11px;text-align:center;padding:20px">Không tải được thư viện biểu đồ.<br/>Bảng xếp hạng Win Impact bên dưới vẫn đầy đủ.</div>`;
+  } else if(cel){
     dc('cBubble');
     const yMax=Math.max(80,Math.ceil(Math.max(...ps.map(p=>p.wp*100),0)));
     CR.cBubble=new Chart(cel,{
@@ -884,14 +914,53 @@ function renderBubble(){
   }
 }
 
-let curF="4-4-2";
+const POSVI={GK:"Thủ môn",CB:"Trung vệ",LB:"Hậu vệ trái",RB:"Hậu vệ phải",LM:"Tiền vệ trái",CM:"Tiền vệ trung tâm",RM:"Tiền vệ phải",LW:"Tiền đạo cánh trái",RW:"Tiền đạo cánh phải",ST:"Tiền đạo cắm"};
+
+// Lý do được chọn: xếp hạng trong nhóm cùng vị trí theo số trận
+function bxiWhy(p){
+  const peers=P.filter(x=>x.t==="main"&&x.m>=2&&x.p===p.p).sort((a,b)=>b.m-a.m);
+  const rk=peers.findIndex(x=>x.n===p.n)+1;
+  const grp=POSVI[p.p]||p.p;
+  if(peers.length<2)return `${grp} duy nhất của đội hình chính`;
+  if(rk===1)return `Đá nhiều nhất nhóm ${grp} — ${p.m}/${T.m} trận`;
+  return `${grp} thứ ${rk}/${peers.length} theo số trận — ${p.m}/${T.m} trận`;
+}
+
+let curF="4-4-2",curP=null;
+function selFm(n){curP=n;renderFmDesc();}
+function renderFmDesc(){
+  const el=document.getElementById("fmDescEl");if(!el)return;
+  const bxi=genBXI(),lineup=bxi[curF];
+  if(!lineup.some(s=>s.n===curP))curP=lineup.slice().sort((a,b)=>{const pa=P.find(x=>x.n===a.n),pb=P.find(x=>x.n===b.n);return (pb.g-pa.g)||(pb.m-pa.m)})[0].n;
+  document.querySelectorAll(".pp").forEach(e=>e.classList.toggle("on",e.dataset.n===curP));
+  const p=P.find(x=>x.n===curP);
+  if(!p){el.innerHTML="";return;}
+  const ast=AST[p.n]||0,form=getForm(p.n),lb={W:"T",D:"H",L:"B",N:"–"};
+  el.innerHTML=`<div class="fmd">
+    <div class="fmd-h">
+      <div class="pc pc-${p.p.toLowerCase()} fmd-av">${p.n}</div>
+      <div style="flex:1;min-width:0">
+        <div class="fmd-n">${p.n}${p.no?`<span class="fmd-no">#${p.no}</span>`:""}</div>
+        <div class="fmd-p">${POSVI[p.p]||p.p} · ${p.p}</div>
+        <div class="fmd-w">${bxiWhy(p)}</div>
+      </div>
+    </div>
+    <div class="fmd-g">
+      ${[["Trận",`${p.m}`],["Bàn",`${p.g}`],["Kiến tạo",`${ast}`],["% Thắng",`${(p.wp*100).toFixed(0)}%`],["Hiệu số",`${p.gd>=0?"+":""}${p.gd}`],["Đ/T",`${((p.w*3+p.d)/p.m).toFixed(2)}`]]
+        .map(([l,v])=>`<div><div class="fmd-v">${v}</div><div class="fmd-l">${l}</div></div>`).join("")}
+    </div>
+    <div class="fmd-f"><span class="fmd-l" style="margin-right:6px">PHONG ĐỘ</span>${form.map(f=>`<span class="fd fd${f}">${lb[f]}</span>`).join("")}</div>
+  </div>`;
+}
 function renderFm(){
   const bxi=genBXI();
-  document.getElementById("fmTabs").innerHTML=Object.keys(bxi).map(f=>`<button class="twb${f===curF?" on":""}" style="padding:6px 20px;font-family:var(--fd);font-size:13px" onclick="curF='${f}';renderFm()">${f}</button>`).join("");
+  document.getElementById("fmTabs").innerHTML=Object.keys(bxi).map(f=>`<button class="twb${f===curF?" on":""}" style="padding:6px 20px;font-family:var(--fd);font-size:13px" onclick="curF='${f}';curP=null;renderFm()">${f}</button>`).join("");
   document.getElementById("pitchEl").innerHTML=`<div class="pw"><div class="pt">
     <div class="pml"></div><div class="pmc"></div><div class="pmbt"></div><div class="pmbb"></div>
-    ${bxi[curF].map(s=>`<div class="pp" style="top:${s.top};left:${s.left}"><div class="pc pc-${s.p.toLowerCase()}">${s.n}</div><div class="pl">${s.p}</div></div>`).join("")}
-  </div></div>`;
+    ${bxi[curF].map(s=>`<div class="pp" data-n="${s.n}" onclick="selFm('${s.n.replace(/'/g,"\\'")}')" title="${s.n} · ${POSVI[s.p]||s.p}"><div class="pc pc-${s.p.toLowerCase()}">${s.n}</div><div class="pl">${s.p}</div></div>`).join("")}
+  </div></div><div id="fmDescEl"></div>`;
+  document.querySelectorAll("#pitchEl .pp").forEach((e,i)=>{const s=bxi[curF][i];e.style.top=s.top;e.style.left=s.left});
+  renderFmDesc();
 }
 
 function renderVenue(){
@@ -1025,15 +1094,17 @@ function validateData(){
 }
 
 // ===== INIT =====
-validateData();
-renderOv();renderWinRate();renderGoals();renderForm();
-renderScorers();renderAssists();renderPen();renderHalfGf();renderGpm();
-renderGK();renderHalfGa();
-renderMatches();renderOpponents();
-renderPosF();renderPT();renderHeatmap();renderBubble();
-renderFm();renderVenue();
-renderAwards();renderSum();renderTk();
-renderNav("club");
+// Mỗi khối chạy độc lập: một khối lỗi không được làm trắng các khối còn lại.
+[validateData,
+ renderOv,renderWinRate,renderGoals,renderForm,
+ renderScorers,renderAssists,renderPen,renderHalfGf,renderGpm,
+ renderGK,renderHalfGa,
+ renderMatches,renderOpponents,
+ renderPosF,renderPT,renderHeatmap,renderBubble,
+ renderFm,renderVenue,
+ renderAwards,renderSum,renderTk,
+ ()=>renderNav("club")
+].forEach(fn=>{try{fn()}catch(e){console.error("[render] "+(fn.name||"?")+": "+e.message)}});
 </script>
 </body>
 </html>
