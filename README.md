@@ -34,4 +34,4 @@ Google Sheet: https://docs.google.com/spreadsheets/d/1Ai6iYdSR4uXXduFNLvKvl9mwh9
 
 Deploy từ nhánh `main` lên Vercel, project `s7cn`.
 
-- Trang live: <điền sau khi deploy>
+- Trang live: https://s7cn.vercel.app/stats.html
