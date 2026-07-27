@@ -1,8 +1,0 @@
-[build]
-  publish = "."
-
-[[redirects]]
-  from = "/"
-  to = "/stats.html"
-  status = 301
-  force = true
