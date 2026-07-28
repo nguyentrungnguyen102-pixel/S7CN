@@ -202,9 +202,17 @@ tr.cl:hover td{background:var(--sf2)}
 .fmd-no{font-size:11px;color:var(--tx3);margin-left:7px;font-family:var(--fb)}
 .fmd-p{font-size:10px;color:var(--or);margin-top:2px;font-weight:600}
 .fmd-w{font-size:10px;color:var(--tx2);margin-top:4px;line-height:1.35}
-.fmd-b{display:flex;gap:14px;align-items:flex-start;border-top:1px solid var(--bd);padding-top:10px}
+.fmw{display:flex;gap:18px;align-items:flex-start}
+.fmw>#pitchEl{flex:0 0 310px;width:310px;max-width:100%}
+.fmside{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px}
+.fmn{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--rs);padding:12px 13px}
+.fmn-t{font-family:var(--fd);font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--or);margin-bottom:8px}
+.fmn-i{font-size:11px;color:var(--tx);line-height:1.5;margin-bottom:7px}
+.fmn-s{font-size:11px;color:var(--tx2);line-height:1.55}
+.fmn-c{font-size:10px;color:var(--tx3);font-style:italic;margin-top:8px;border-top:1px solid var(--bd);padding-top:7px;line-height:1.45}
+.fmd-b{display:flex;gap:16px;align-items:center;border-top:1px solid var(--bd);padding-top:12px}
 .fmd-bl{flex:1;min-width:0}
-.fmd-br{flex-shrink:0;width:230px}
+.fmd-br{flex:0 0 236px;max-width:236px}
 .fmd-g{display:grid;grid-template-columns:repeat(6,1fr);gap:9px 5px;text-align:center}
 .ab-bad{color:var(--red);font-weight:700}.ab-good{color:var(--grn);font-weight:700}.ab-neu{color:var(--tx3)}
 .fmd-v{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--tx)}
@@ -241,10 +249,11 @@ tr.cl:hover td{background:var(--sf2)}
   .ovs{grid-template-columns:repeat(4,1fr)}.aws{grid-template-columns:1fr 1fr}.cmcols{grid-template-columns:1fr}.sumg{grid-template-columns:1fr}
   .hero-name{font-size:38px}.tbar,.hero{padding-left:16px;padding-right:16px}.mven{display:none}
   .fmd-g{grid-template-columns:repeat(3,1fr)}
+  .fmw{flex-direction:column;gap:12px}.fmw>#pitchEl{flex:none;width:100%;align-self:center}
+  .fmd-b{flex-direction:column;gap:10px;align-items:stretch}.fmd-br{flex:none;max-width:100%}
   .mx-pn{max-width:70px;font-size:8px} .wi-name{width:70px;font-size:9px}
 }
 @media(max-width:480px){.ovs{grid-template-columns:repeat(2,1fr)}.aws{grid-template-columns:1fr}.mx-pn{max-width:55px;font-size:7px} .mx-c{min-width:22px;height:18px;font-size:6px} .wi-name{width:55px;font-size:8px}
-  .fmd-b{flex-direction:column;gap:10px}.fmd-br{width:100%}
   .kp{padding:14px 12px}.kp-n{font-size:22px}.kp-n.sm{font-size:13px}
   .mdt{display:none}
 }
@@ -276,7 +285,7 @@ tr.cl:hover td{background:var(--sf2)}
       <div class="card"><div class="ct">Bàn thắng / Thua</div><div id="goalsViz"></div></div>
       <div class="card"><div class="ct" id="formTitle"></div><div id="formViz"></div></div>
     </div>
-    <div class="card"><div class="ct">Diễn biến bàn thắng · bàn thua từng trận</div><p class="hint">Cột trên = bàn thắng, cột dưới = bàn thua. Đường cam = hiệu số cộng dồn.</p><div class="sx"><div id="trendEl"></div></div></div>
+    <div class="card"><div class="ct">Diễn biến bàn thắng · bàn thua từng trận</div><p class="hint">Cột xanh lên = bàn thắng, cột đỏ xuống = bàn thua, đường cam = hiệu số cộng dồn (thang bên phải). Rê vào cột để xem chi tiết trận.</p><div class="sx"><div id="trendEl"></div></div></div>
   </div>
 
   <div class="grp grp-mt" id="grp-mt" data-screen-label="02 Trận đấu">
@@ -322,13 +331,13 @@ tr.cl:hover td{background:var(--sf2)}
   <div class="grp grp-atk" id="grp-atk" data-screen-label="04 Tấn công">
     <div class="ghdr"><span class="gname">Tấn công</span><div class="gline"></div><span class="gbadge">ATTACK</span></div>
     <div class="g2">
-      <div class="card"><div class="ct">Vua phá lưới</div><div id="scorers"></div></div>
+      <div class="card"><div class="ct">Vua phá lưới</div><p class="hint minm"></p><div id="scorers"></div></div>
       <div class="card"><div class="ct">Kiến tạo · Assist</div><div id="assists"></div></div>
     </div>
     <div class="g3">
       <div class="card"><div class="ct">Penalty ghi bàn / hỏng</div><div id="penEl"></div></div>
       <div class="card"><div class="ct">Bàn thắng theo hiệp</div><div id="halfGf"></div></div>
-      <div class="card"><div class="ct">Hiệu suất bàn / trận</div><div id="gpmEl"></div></div>
+      <div class="card"><div class="ct">Hiệu suất bàn / trận</div><p class="hint minm"></p><div id="gpmEl"></div></div>
     </div>
   </div>
 
@@ -357,7 +366,7 @@ tr.cl:hover td{background:var(--sf2)}
     <div class="card">
       <div class="ct">Đội hình ra sân</div>
       <div style="display:flex;gap:8px;justify-content:center;margin-bottom:14px" id="fmTabs"></div>
-      <div id="pitchEl"></div>
+      <div class="fmw"><div id="pitchEl"></div><div class="fmside"><div id="fmDescEl"></div><div id="fmNoteEl"></div></div></div>
       <div style="display:flex;justify-content:center;gap:16px;margin-top:10px;font-size:10px;color:var(--tx3);flex-wrap:wrap">
         <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:var(--kfw);display:inline-block"></span>Tiền đạo · Đỏ</span>
         <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:#E8701A;display:inline-block"></span>Tiền vệ · Cam</span>
@@ -387,7 +396,7 @@ tr.cl:hover td{background:var(--sf2)}
 
 <script>
 // ===== CORE DATA =====
-const HOME_VENUE="Giga Arena",MIN_M=3,FORM_N=5;
+const HOME_VENUE="Giga Arena",MIN_M=3,FORM_N=5,BXI_MIN=5;
 
 const M=[
   {wk:1,dt:"04/01",vs:"Thiết Bị Việt FC",gf:4,ga:2,r:"W",v:"Etihad Quận 12"},
@@ -550,7 +559,7 @@ P.forEach(p=>{
 });
 
 function genBXI(){
-  const main=P.filter(p=>p.t==="main"&&p.m>=2).sort((a,b)=>b.m-a.m);
+  const main=P.filter(p=>p.t==="main"&&p.m>=BXI_MIN).sort((a,b)=>b.m-a.m);
   const pools={
     gk:main.filter(p=>p.p==="GK"),
     lb:main.filter(p=>p.p==="LB"),
@@ -561,7 +570,24 @@ function genBXI(){
     rw:main.filter(p=>p.p==="RW"),
     st:main.filter(p=>p.p==="ST")
   };
-  function pick(pool,n,off){const r=[];for(let i=0;i<n;i++)r.push(pool[(off+i)%pool.length]);return r;}
+  // Khi một tuyến ít người hơn số chỗ của sơ đồ, mượn từ tuyến gần nhất
+  // thay vì lặp lại một người hai lần trên cùng sân.
+  const FALLBACK={st:["lw","rw","cm"],lw:["st","cm","rw"],rw:["st","cm","lw"],
+                  cm:["lw","rw","cb"],cb:["lb","rb","cm"],lb:["cb","lw"],rb:["cb","rw"],gk:[]};
+  function pick(k,n,off,used){
+    const base=pools[k]||[],r=[];
+    for(let i=0;i<base.length&&r.length<n;i++){
+      const pl=base[(off+i)%base.length];
+      if(pl&&!used.has(pl.n)){r.push(pl);used.add(pl.n);}
+    }
+    for(const fk of FALLBACK[k]||[]){
+      for(const pl of pools[fk]||[]){
+        if(r.length>=n)break;
+        if(pl&&!used.has(pl.n)){r.push(pl);used.add(pl.n);}
+      }
+    }
+    return r;
+  }
   const schemas={
     "4-4-2":{
       lb:[{top:"73%",left:"15%"}],cb:[{top:"76%",left:"37%"},{top:"76%",left:"63%"}],rb:[{top:"73%",left:"85%"}],
@@ -582,9 +608,16 @@ function genBXI(){
   const off={lb:0,cb:0,rb:0,cm:0,lw:0,rw:0,st:0};
   const bxi={};
   for(const[fm,s]of Object.entries(schemas)){
-    const lineup=[{n:pools.gk[0].n,p:pools.gk[0].p,top:"90%",left:"50%"}];
+    const used=new Set();
+    const gk=pools.gk[0];
+    const lineup=gk?[{n:gk.n,p:gk.p,slot:"gk",top:"90%",left:"50%"}]:[];
+    if(gk)used.add(gk.n);
     for(const k of Object.keys(s)){
-      pick(pools[k],s[k].length,off[k]).forEach((pl,i)=>lineup.push({n:pl.n,p:pl.p,...s[k][i]}));
+      // Xếp người theo chân thuận: cánh trái nhận ô bên trái, cánh phải nhận ô bên phải.
+      const side=p=>({LW:-1,LM:-1,LB:-1}[p.p]??({RW:1,RM:1,RB:1}[p.p]??0));
+      const slots=s[k].map((c,i)=>({c,i})).sort((a,b)=>parseFloat(a.c.left)-parseFloat(b.c.left));
+      const men=pick(k,s[k].length,off[k],used).sort((a,b)=>side(a)-side(b));
+      men.forEach((pl,i)=>{const c=slots[i]?.c;if(pl&&c)lineup.push({n:pl.n,p:pl.p,slot:k,...c})});
       off[k]+=s[k].length;
     }
     bxi[fm]=lineup;
@@ -729,43 +762,54 @@ function renderAbsent(){
   }).join("");
 }
 
+function renderMinM(){document.querySelectorAll(".minm").forEach(e=>{e.textContent=`Chỉ tính cầu thủ có từ ${MIN_M} trận trở lên`});}
+
 function renderTrend(){
   const el=document.getElementById("trendEl");if(!el)return;
   const n=M.length;if(!n){el.innerHTML="";return;}
-  const cw=44,W=n*cw+40,H=300;
-  // ba dải tách bạch: cột bàn thắng/thua (14..210), đường cộng dồn (226..262), nhãn tuần (272+)
-  const mid=112,bTop=14,bBot=210,LT=226,LB=262,bw=cw*.30;
-  const mx=Math.max(...M.map(m=>Math.max(m.gf,m.ga)),1);
-  const sc=Math.min((mid-bTop)/mx,(bBot-mid)/mx);     // px cho mỗi bàn, không tràn dải
-  let cum=0;const pts=M.map((m,i)=>{cum+=m.gf-m.ga;return{x:20+i*cw+cw/2,c:cum}});
+  const cw=46,W=n*cw+52,H=250,bw=cw*.30;
+  // MỘT khung duy nhất: cột bàn thắng lên / bàn thua xuống quanh trục 0,
+  // đường hiệu số cộng dồn vẽ chồng lên cùng khung, dùng thang bên phải.
+  const top=22,bot=196,mid=Math.round((top+bot)/2);
+  const gmx=Math.max(...M.map(m=>Math.max(m.gf,m.ga)),1);
+  const sc=Math.min((mid-top)/gmx,(bot-mid)/gmx);
+  let cum=0;const pts=M.map((m,i)=>{cum+=m.gf-m.ga;return{x:26+i*cw+cw/2,c:cum,m}});
   const clo=Math.min(0,...pts.map(p=>p.c)),chi=Math.max(0,...pts.map(p=>p.c));
-  const ly=v=>LB-((v-clo)/((chi-clo)||1))*(LB-LT);
+  const ly=v=>bot-((v-clo)/((chi-clo)||1))*(bot-top);
   const path=pts.map((p,i)=>`${i?"L":"M"}${p.x.toFixed(1)},${ly(p.c).toFixed(1)}`).join(" ");
+  const area=`M${pts[0].x.toFixed(1)},${ly(clo<0?0:clo).toFixed(1)} `+
+    pts.map(p=>`L${p.x.toFixed(1)},${ly(p.c).toFixed(1)}`).join(" ")+
+    ` L${pts[pts.length-1].x.toFixed(1)},${ly(clo<0?0:clo).toFixed(1)} Z`;
+  const ticks=[clo,0,chi].filter((v,i,a)=>a.indexOf(v)===i).sort((a,b)=>a-b);
   el.innerHTML=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block;min-width:${W}px">
-    <line x1="8" y1="${mid}" x2="${W-8}" y2="${mid}" stroke="var(--bd2)" stroke-width="1"/>
-    <line x1="8" y1="${ly(0).toFixed(1)}" x2="${W-8}" y2="${ly(0).toFixed(1)}" stroke="var(--bd)" stroke-width=".8" stroke-dasharray="3 3"/>
+    <defs><linearGradient id="gdf" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="var(--or)" stop-opacity=".22"/><stop offset="100%" stop-color="var(--or)" stop-opacity="0"/>
+    </linearGradient></defs>
+    ${ticks.map(v=>`<g><line x1="22" y1="${ly(v).toFixed(1)}" x2="${W-30}" y2="${ly(v).toFixed(1)}" stroke="var(--bd)" stroke-width=".7" stroke-dasharray="${v===0?"0":"3 3"}"/>
+      <text x="${W-26}" y="${(ly(v)+3).toFixed(1)}" font-size="7.5" fill="var(--or)" opacity=".8">${v>0?"+":""}${v}</text></g>`).join("")}
+    <line x1="22" y1="${mid}" x2="${W-30}" y2="${mid}" stroke="var(--bd2)" stroke-width="1"/>
+    <path d="${area}" fill="url(#gdf)"/>
     ${M.map((m,i)=>{
-      const x=17+i*cw+cw/2, hf=m.gf*sc, ha=m.ga*sc;
+      const x=26+i*cw+cw/2, hf=m.gf*sc, ha=m.ga*sc;
       const col=m.r==="W"?"var(--grn)":m.r==="D"?"var(--amb)":"var(--red)";
-      return `<g><title>T${m.wk} · ${m.vs} · ${m.gf}–${m.ga} (${m.r==="W"?"Thắng":m.r==="D"?"Hòa":"Thua"})</title>
-        <rect x="${(x-bw).toFixed(1)}" y="${(mid-hf).toFixed(1)}" width="${(bw*2).toFixed(1)}" height="${hf.toFixed(1)}" rx="2" fill="var(--grn)" opacity=".9"/>
-        <rect x="${(x-bw).toFixed(1)}" y="${mid}" width="${(bw*2).toFixed(1)}" height="${ha.toFixed(1)}" rx="2" fill="var(--red)" opacity=".75"/>
+      return `<g><title>T${m.wk} · ${m.vs} · ${m.gf}–${m.ga} (${m.r==="W"?"Thắng":m.r==="D"?"Hòa":"Thua"}) · hiệu số cộng dồn ${pts[i].c>=0?"+":""}${pts[i].c}</title>
+        <rect x="${(x-bw).toFixed(1)}" y="${(mid-hf).toFixed(1)}" width="${(bw*2).toFixed(1)}" height="${hf.toFixed(1)}" rx="2" fill="var(--grn)" opacity=".85"/>
+        <rect x="${(x-bw).toFixed(1)}" y="${mid}" width="${(bw*2).toFixed(1)}" height="${ha.toFixed(1)}" rx="2" fill="var(--red)" opacity=".7"/>
         ${m.gf?`<text x="${x.toFixed(1)}" y="${(mid-hf-3).toFixed(1)}" text-anchor="middle" font-size="8" fill="var(--grn)" font-family="var(--fd)" font-weight="700">${m.gf}</text>`:""}
         ${m.ga?`<text x="${x.toFixed(1)}" y="${(mid+ha+9).toFixed(1)}" text-anchor="middle" font-size="8" fill="var(--red)" font-family="var(--fd)" font-weight="700">${m.ga}</text>`:""}
-        <circle cx="${x.toFixed(1)}" cy="${H-10}" r="3" fill="${col}"/>
-        <text x="${x.toFixed(1)}" y="${H-20}" text-anchor="middle" font-size="7.5" fill="var(--tx3)">T${m.wk}</text>
+        <circle cx="${x.toFixed(1)}" cy="${H-11}" r="3" fill="${col}"/>
+        <text x="${x.toFixed(1)}" y="${H-21}" text-anchor="middle" font-size="7.5" fill="var(--tx3)">T${m.wk}</text>
       </g>`}).join("")}
-    <path d="${path}" fill="none" stroke="var(--or)" stroke-width="1.8"/>
-    ${pts.map((p,i)=>`<g><title>Sau T${M[i].wk}: hiệu số cộng dồn ${p.c>=0?"+":""}${p.c}</title><circle cx="${p.x.toFixed(1)}" cy="${ly(p.c).toFixed(1)}" r="2.6" fill="var(--or)"/></g>`).join("")}
-    <text x="12" y="${(bTop+4).toFixed(0)}" font-size="8" fill="var(--grn)">Bàn thắng ↑</text>
-    <text x="12" y="${(mid+14).toFixed(0)}" font-size="8" fill="var(--red)">Bàn thua ↓</text>
-    <text x="12" y="${(LT-4).toFixed(0)}" font-size="8" fill="var(--or)">Hiệu số cộng dồn</text>
-    <text x="${(pts[pts.length-1].x+9).toFixed(1)}" y="${(ly(cum)+3).toFixed(1)}" font-size="10" fill="var(--or)" font-family="var(--fd)" font-weight="700">${cum>=0?"+":""}${cum}</text>
+    <path d="${path}" fill="none" stroke="var(--or)" stroke-width="1.9"/>
+    ${pts.map(p=>`<circle cx="${p.x.toFixed(1)}" cy="${ly(p.c).toFixed(1)}" r="2.4" fill="var(--or)"/>`).join("")}
+    <text x="24" y="${(top-8).toFixed(0)}" font-size="8" fill="var(--grn)">Bàn thắng ↑</text>
+    <text x="110" y="${(top-8).toFixed(0)}" font-size="8" fill="var(--red)">Bàn thua ↓</text>
+    <text x="186" y="${(top-8).toFixed(0)}" font-size="8" fill="var(--or)">━ Hiệu số cộng dồn (thang phải)</text>
   </svg>`;
 }
 
 function renderScorers(){
-  const s=P.filter(p=>p.g>0).sort((a,b)=>b.g-a.g),mx=s[0]?.g||1;
+  const s=P.filter(p=>p.g>0&&p.m>=MIN_M).sort((a,b)=>b.g-a.g),mx=s[0]?.g||1;
   document.getElementById("scorers").innerHTML=s.map((p,i)=>`<div class="scr">
     <div class="rk ${i===0?"rk1":i===1?"rk2":i===2?"rk3":"rkn"}">${i+1}</div>
     <span class="pos ${p.p}">${p.p}</span>
@@ -829,7 +873,7 @@ function renderHalfGf(){
 }
 
 function renderGpm(){
-  const s=P.filter(p=>p.g>0&&p.m>0).map(p=>({...p,gpm:p.g/p.m})).sort((a,b)=>b.gpm-a.gpm),mx=s[0]?.gpm||1;
+  const s=P.filter(p=>p.g>0&&p.m>=MIN_M).map(p=>({...p,gpm:p.g/p.m})).sort((a,b)=>b.gpm-a.gpm),mx=s[0]?.gpm||1;
   document.getElementById("gpmEl").innerHTML=s.map(p=>`<div class="cb"><div class="cbn">${p.n}</div><div class="cbw"><div class="bw"><div class="b bor" style="width:${p.gpm/mx*100}%">${p.gpm.toFixed(2)}</div></div></div><div class="cbv">${p.g}</div></div>`).join("");
 }
 
@@ -1050,6 +1094,31 @@ function bxiWhy(p){
   return `${grp} thứ ${rk}/${peers.length} theo số trận — ${p.m}/${T.m} trận`;
 }
 
+const SLOTVI={gk:"thủ môn",lb:"hậu vệ trái",cb:"trung vệ",rb:"hậu vệ phải",
+              cm:"tiền vệ trung tâm",lw:"cánh trái",rw:"cánh phải",st:"tiền đạo cắm"};
+// Nhận xét vì sao sơ đồ này chọn nhóm cầu thủ đó
+const FM_IDEA={
+  "4-4-2":"Hai tiền đạo cắm và bốn tiền vệ dàn ngang — cần cặp chạy cánh bền sức và hai tiền vệ trung tâm gánh khu giữa.",
+  "3-5-2":"Ba trung vệ, hai hậu vệ biên dâng cao thành wing-back, năm người tuyến giữa — ưu tiên người đá nhiều, thể lực tốt.",
+  "4-3-3":"Bộ ba tấn công dàn rộng, ba tiền vệ trung tâm — cần tiền đạo biên dứt điểm tốt và hàng thủ bốn người ổn định."
+};
+function fmNote(fm,lineup){
+  const ps=lineup.map(s=>P.find(x=>x.n===s.n)).filter(Boolean);
+  if(!ps.length)return"";
+  const byM=[...ps].sort((a,b)=>b.m-a.m),byG=[...ps].sort((a,b)=>b.g-a.g);
+  const avgM=(ps.reduce((s,p)=>s+p.m,0)/ps.length).toFixed(1);
+  const avgW=(ps.reduce((s,p)=>s+p.wp,0)/ps.length*100).toFixed(0);
+  const goals=ps.reduce((s,p)=>s+p.g,0);
+  const bits=[];
+  bits.push(`Trung bình ${avgM}/${T.m} trận mỗi người, tỷ lệ thắng ${avgW}%.`);
+  if(byG[0]&&byG[0].g>0)bits.push(`Đóng góp ${goals}/${T.gf} bàn của đội, dẫn đầu là ${byG[0].n} (${byG[0].g} bàn).`);
+  bits.push(`Chuyên cần nhất: ${byM[0].n} (${byM[0].m} trận).`);
+  const SLOTPOS={gk:["GK"],lb:["LB"],cb:["CB"],rb:["RB"],cm:["CM"],lw:["LW","LM"],rw:["RW"],st:["ST"]};
+  const borrowed=lineup.filter(s=>s.slot&&SLOTPOS[s.slot]&&!SLOTPOS[s.slot].includes(s.p));
+  if(borrowed.length)bits.push(`${borrowed.map(s=>`${s.n} (${s.p}) được kéo sang đá ${SLOTVI[s.slot]||s.slot}`).join("; ")} vì tuyến đó không đủ người đạt ${BXI_MIN} trận.`);
+  return`<p class="fmn-i">${FM_IDEA[fm]||""}</p><p class="fmn-s">${bits.join(" ")}</p>`;
+}
+
 let curF="4-4-2",curP=null;
 function selFm(n){curP=n;renderFmDesc();}
 function renderFmDesc(){
@@ -1087,8 +1156,11 @@ function renderFm(){
   document.getElementById("pitchEl").innerHTML=`<div class="pw"><div class="pt">
     <div class="pml"></div><div class="pmc"></div><div class="pmbt"></div><div class="pmbb"></div>
     ${bxi[curF].map(s=>`<div class="pp" data-n="${s.n}" onclick="selFm('${s.n.replace(/'/g,"\\'")}')" title="${s.n} · ${POSVI[s.p]||s.p}"><div class="pc pc-${s.p.toLowerCase()}">${s.n}</div><div class="pl">${s.p}</div></div>`).join("")}
-  </div></div><div id="fmDescEl"></div>`;
+  </div></div>`;
   document.querySelectorAll("#pitchEl .pp").forEach((e,i)=>{const s=bxi[curF][i];e.style.top=s.top;e.style.left=s.left});
+  const nb=document.getElementById("fmNoteEl");
+  if(nb)nb.innerHTML=`<div class="fmn"><div class="fmn-t">Vì sao sơ đồ ${curF} chọn nhóm này</div>${fmNote(curF,bxi[curF])}
+    <p class="fmn-c">Chỉ xét cầu thủ đội hình chính có từ ${BXI_MIN} trận trở lên. Mỗi tuyến luân phiên qua 3 sơ đồ để ai cũng được góp mặt.</p></div>`;
   renderFmDesc();
 }
 
@@ -1133,7 +1205,7 @@ function renderSum(){
   document.getElementById("sumEl").innerHTML=`<div class="sumg">
     <div class="sumb">
       <h3>Phân tích mùa giải 2026</h3>
-      <p><b style="color:var(--grn)">Tấn công:</b> TB ${(T.gf/T.m).toFixed(1)} bàn/trận. ${P.filter(p=>p.g>0).sort((a,b)=>b.g-a.g).slice(0,3).map(p=>`${p.n} (${p.g}B)`).join(" · ")} — bộ ba sát thủ hàng đầu. Assist dẫn đầu: ${Object.entries(AST).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([n,v])=>n).join(" & ")}.</p>
+      <p><b style="color:var(--grn)">Tấn công:</b> TB ${(T.gf/T.m).toFixed(1)} bàn/trận. ${P.filter(p=>p.g>0&&p.m>=MIN_M).sort((a,b)=>b.g-a.g).slice(0,3).map(p=>`${p.n} (${p.g}B)`).join(" · ")} — bộ ba sát thủ hàng đầu. Assist dẫn đầu: ${Object.entries(AST).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([n,v])=>n).join(" & ")}.</p>
       <p><b style="color:var(--red)">Phòng ngự:</b> TB ${(T.ga/T.m).toFixed(1)} bàn thua/trận. ${(([gkn,gkd])=>`${gkn} bảo vệ khung thành chính (${gkd.conc} bàn thua, chi tiết từ tuần ${DETAIL_WK})`)( Object.entries(GKD).sort((a,b)=>b[1].conc-a[1].conc)[0]||["—",{conc:0}])}.</p>
       <p><b style="color:var(--amb)">Chuyển hóa:</b> ${T.d} trận hòa (${(T.d/T.m*100).toFixed(0)}%) — cần kết thúc trận quyết đoán hơn.</p>
       <p><b style="color:var(--or)">Sân đấu:</b> ${HOME_VENUE} ${(hm.filter(m=>m.r==="W").length/hm.length*100).toFixed(0)}% win · Sân khách ${(am.filter(m=>m.r==="W").length/am.length*100).toFixed(0)}% win.</p>
@@ -1144,7 +1216,7 @@ function renderSum(){
         <li>Giảm GA/trận: mục tiêu ≤ 2.0 (hiện ${(T.ga/T.m).toFixed(1)})</li>
         <li>Giảm hòa từ ${(T.d/T.m*100).toFixed(0)}% xuống &lt;20%</li>
         <li>Nâng PPG từ ${T.ppg.toFixed(2)} lên ≥ 2.00</li>
-        <li>Duy trì bộ ba ${P.filter(p=>p.g>0).sort((a,b)=>b.g-a.g).slice(0,3).map(p=>p.n).join(" – ")}</li>
+        <li>Duy trì bộ ba ${P.filter(p=>p.g>0&&p.m>=MIN_M).sort((a,b)=>b.g-a.g).slice(0,3).map(p=>p.n).join(" – ")}</li>
         <li>Nhập đầy đủ dữ liệu goal detail mỗi tuần</li>
         <li>Theo dõi thêm GK cản penalty</li>
       </ul>
@@ -1225,7 +1297,7 @@ function validateData(){
 // ===== INIT =====
 // Mỗi khối chạy độc lập: một khối lỗi không được làm trắng các khối còn lại.
 [validateData,
- renderOv,renderWinRate,renderGoals,renderForm,renderTrend,
+ renderOv,renderWinRate,renderGoals,renderForm,renderTrend,renderMinM,
  renderScorers,renderAssists,renderPen,renderHalfGf,renderGpm,
  renderGK,renderHalfGa,
  renderMatches,renderOpponents,
