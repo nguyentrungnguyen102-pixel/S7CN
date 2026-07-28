@@ -34,8 +34,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fb);line-height:1.5;
 .hero-eye{font-size:10px;letter-spacing:4px;color:var(--or);text-transform:uppercase;margin-bottom:5px;font-weight:600;font-family:var(--fd)}
 .hero-name{font-family:'Playfair Display',serif;font-size:56px;font-weight:700;letter-spacing:2px;line-height:1;color:#fff;text-shadow:0 2px 30px var(--or-g)}
 .hero-sub{margin-top:7px;color:var(--tx2);font-size:12px;letter-spacing:.3px}
-.hero-kpi{display:flex;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;flex-shrink:0}
-.kp{padding:16px 22px;text-align:center;border-right:1px solid var(--bd)}
+.hero-kpi{display:flex;flex-wrap:wrap;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
+.kp{padding:16px 22px;text-align:center;border-right:1px solid var(--bd);flex:1 1 0;min-width:0}
 .kp:last-child{border:none}
 .kp-n{font-family:var(--fd);font-size:26px;font-weight:700;line-height:1}
 .kp-n.or{color:var(--or)}.kp-n.grn{color:var(--grn)}.kp-n.sm{font-size:15px;letter-spacing:.3px;margin-top:4px}
@@ -100,6 +100,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fb);line-height:1.5;
 
 .hc{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bd);border-radius:6px;overflow:hidden;margin-bottom:9px}
 .hcc{background:var(--sf2);padding:12px;text-align:center}
+.hc.hc3{grid-template-columns:1fr 1fr 1fr}
 .hcn{font-family:var(--fd);font-size:24px;font-weight:700}
 .hcl{font-size:8px;color:var(--tx3);letter-spacing:1.5px;text-transform:uppercase;margin-top:3px}
 
@@ -218,8 +219,33 @@ tr.cl:hover td{background:var(--sf2)}
 .gkr-u{font-size:8px;color:var(--tx3);margin-left:3px;font-family:var(--fb)}
 .gkr-s{grid-area:s;display:flex;gap:12px;flex-wrap:wrap;font-size:10px;color:var(--tx3)}
 .gkr-f{font-size:9px;color:var(--tx3);font-style:italic;margin-top:9px;padding-top:8px;border-top:1px solid var(--bd);line-height:1.45}
-.gkr-sp{display:flex;justify-content:space-between;font-size:10px;margin:6px 0 10px;padding-bottom:9px;border-bottom:1px solid var(--bd);color:var(--tx3)}
+.gkr-sp{display:flex;justify-content:space-between;font-size:10px;margin:6px 0 8px;color:var(--tx3)}
+.gkd-t{width:100%;padding:5px;margin-bottom:9px;background:none;border:1px solid var(--bd);border-radius:5px;color:var(--tx3);font-size:9.5px;font-family:var(--fb);cursor:pointer;transition:all .15s}
+.gkd-t:hover{background:var(--sf3);color:var(--tx2)}
+.gkd-p{margin:-4px 0 10px;padding-bottom:9px;border-bottom:1px solid var(--bd)}
+.gkd-r{display:flex;justify-content:space-between;align-items:baseline;gap:6px;font-size:10px;padding:3px 0;color:var(--tx2)}
+.gkd-m{flex-shrink:0;white-space:nowrap}
+.gkd-l{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--tx3)}
+.gkd-v{font-family:var(--fd);font-size:12px;color:var(--or);flex-shrink:0;white-space:nowrap}
+.gkr-vs{grid-column:1/-1;font-size:9px;color:var(--tx3);margin-top:2px}
+.gkr-vs b{color:var(--tx2)}
 .tkg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pv-sum{display:flex;flex-direction:column;gap:5px;margin-bottom:11px;padding-bottom:10px;border-bottom:1px solid var(--bd)}
+.pv-sr{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.pv-sv{font-size:10px;font-weight:600;color:var(--or);min-width:0;overflow:hidden}
+.pv-sn{display:block;font-size:8.5px;font-weight:400;color:var(--tx3)}
+.pv-sb{font-size:10px;color:var(--tx2);text-align:right;flex-shrink:0}
+.pv-sr2{color:var(--tx3);font-size:8.5px}
+.pvg{display:grid;gap:3px;align-items:center}
+.pv-h{font-size:9px;font-weight:700;color:var(--tx3);padding:3px 2px}
+.pv-n{font-size:10px;font-weight:600;padding:3px;display:flex;align-items:center;gap:4px;overflow:hidden}
+.pv-nt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pv-c{height:26px;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;border:1px solid var(--bd)}
+.pv-c b{font-size:11px;font-family:var(--fd);color:var(--tx)}
+.pv-mp{font-size:7.5px;color:var(--tx3);margin-top:1px}
+.pv-thin{opacity:.4;border-style:dashed}
+.pv-na{color:var(--tx3);font-size:10px;background:rgba(0,0,0,.2)}
+.pv-f{font-size:9px;color:var(--tx3);font-style:italic;margin-top:8px;line-height:1.5}
 .clpb{display:none;width:100%;margin-top:9px;padding:8px;background:var(--sf3);border:1px solid var(--bd2);border-radius:var(--rs);color:var(--tx2);font-size:11px;font-weight:600;font-family:var(--fb);cursor:pointer;transition:all .15s}
 .clpb:hover{background:var(--bd);color:var(--tx)}
 @media(max-width:600px){
@@ -309,11 +335,20 @@ tr.cl:hover td{background:var(--sf2)}
   .cmpv{width:46px}
   .cbn{width:74px}
 
+  /* ma trận theo sân: 96px tên + 4 cột 52px vượt khung 270px ở màn 320 */
+  .pvg{--pvn:72px;--pvc:38px;gap:2px}
+  .pv-c{height:23px}.pv-c b{font-size:10px}
+
   /* thẻ tổng kết: 3 cột 89px là quá hẹp */
   .tkg{grid-template-columns:1fr 1fr}
 
   /* ma trận nhân sự là lưới CSS, không cắt theo hàng được — giới hạn chiều cao có cuộn */
   #matEl{max-height:420px;overflow-y:auto}
+
+  /* panel chi tiết cầu thủ nằm trong td của bảng 15 cột (~700px) nên vốn trôi
+     ra ngoài màn hình; ghim theo mép trái vùng cuộn để đọc được không cần kéo ngang */
+  .dr td{position:sticky;left:0}
+  .di{width:calc(100vw - 50px);box-sizing:border-box}
 
   /* so sánh 2025: 3 bảng xếp chồng, siết hàng lại */
   .cmpg{gap:9px}
@@ -323,6 +358,7 @@ tr.cl:hover td{background:var(--sf2)}
 }
 @media(max-width:360px){
   .tkg{grid-template-columns:1fr}
+  .pvg{--pvn:58px;--pvc:32px}
   .dfn{width:78px}
   .ovs{grid-template-columns:repeat(2,1fr)}
 }
@@ -423,6 +459,7 @@ tr.cl:hover td{background:var(--sf2)}
     <div class="g2">
       <div class="card"><div class="ct">Sân nhà vs Sân khách</div><div id="venueEl"></div></div>
       <div class="card"><div class="ct">Chi tiết theo sân</div><div id="venBrkEl"></div></div>
+      <div class="card"><div class="ct">Cầu thủ theo sân</div><p class="hint">Ai ghi bàn tốt ở sân nào — ô đậm là hiệu suất cao. Sân đá dưới 2 trận để mờ vì quá ít để kết luận.</p><div id="pvEl"></div></div>
     </div>
     <div class="card"><div class="ct">So sánh mùa 2025 vs 2026</div><p class="hint" id="cmpHint"></p><div class="cmpg clp" id="cmpEl" data-n="1" data-unit="bảng"></div><button class="clpb" data-for="cmpEl" hidden></button></div>
     <div class="card"><div class="ct">Ảnh hưởng khi cầu thủ vắng mặt</div>
@@ -558,17 +595,29 @@ const MG={
 
 // Compute aggregates
 const DETAIL_WK=Math.min(...Object.entries(MG).filter(([,v])=>(v.s||[]).some(g=>g.h)||(v.c||[]).some(c=>c.h)).map(([k])=>+k));
-const AST_H={},PEN={},HGF={h1:0,h2:0},HGA={h1:0,h2:0},GKD={};
-Object.values(MG).forEach(mg=>{
+// Sân của từng tuần — MG khoá theo tuần, M[].wk khớp 1-1 nên nối được.
+const VEN_OF=Object.fromEntries(M.map(m=>[m.wk,m.v]));
+const isHomeWk=wk=>VEN_OF[wk]===HOME_VENUE;
+// unk = bàn KHÔNG có dữ liệu hiệp (h:null). Trước đây bị bỏ lặng nên tổng
+// hiệp không bao giờ cộng ra tổng bàn thua thật.
+const AST_H={},PEN={},GOAL_H={},HGF={h1:0,h2:0,unk:0},HGA={h1:0,h2:0,unk:0},GKD={};
+Object.entries(MG).forEach(([wk,mg])=>{
+  const home=isHomeWk(+wk);
   (mg.s||[]).forEach(g=>{
     if(g.as){if(!AST_H[g.as])AST_H[g.as]={h1:0,h2:0};if(g.h===1)AST_H[g.as].h1++;else if(g.h===2)AST_H[g.as].h2++;}
     if(g.t==="pen"){if(!PEN[g.sc])PEN[g.sc]={sc:0,ms:0};PEN[g.sc].sc++}
-    if(g.h===1)HGF.h1++;else if(g.h===2)HGF.h2++;
+    if(!GOAL_H[g.sc])GOAL_H[g.sc]={h1:0,h2:0,unk:0,pen:0,fk:0};
+    const gh=GOAL_H[g.sc];
+    if(g.h===1)gh.h1++;else if(g.h===2)gh.h2++;else gh.unk++;
+    if(g.t==="pen")gh.pen++;else if(g.t==="fk")gh.fk++;
+    if(g.h===1)HGF.h1++;else if(g.h===2)HGF.h2++;else HGF.unk++;
   });
   (mg.ms||[]).forEach(g=>{if(!PEN[g.sc])PEN[g.sc]={sc:0,ms:0};PEN[g.sc].ms++});
   (mg.c||[]).forEach(c=>{
-    if(!GKD[c.gk])GKD[c.gk]={conc:0,h1:0,h2:0,pf:0,ps:0};
-    GKD[c.gk].conc++;if(c.h===1){GKD[c.gk].h1++;HGA.h1++;}else if(c.h===2){GKD[c.gk].h2++;HGA.h2++;}
+    if(!GKD[c.gk])GKD[c.gk]={conc:0,h1:0,h2:0,unk:0,pf:0,ps:0,hc:0,ac:0,hw:new Set(),aw:new Set()};
+    const d=GKD[c.gk];d.conc++;
+    if(c.h===1){d.h1++;HGA.h1++;}else if(c.h===2){d.h2++;HGA.h2++;}else{d.unk++;HGA.unk++;}
+    if(home){d.hc++;d.hw.add(+wk)}else{d.ac++;d.aw.add(+wk)}
   });
   if(mg.pf)Object.values(GKD).forEach(d=>{d.pf+=mg.pf;d.ps+=mg.ps||0});
 });
@@ -726,7 +775,7 @@ function genBXI(){
 // ===== RENDERS =====
 function renderOv(){
   document.getElementById("ovStrip").innerHTML=[{n:T.m,l:"Trận",c:""},{n:T.w,l:"Thắng",c:"grn"},{n:T.d,l:"Hòa",c:"amb"},{n:T.l,l:"Thua",c:"red"},{n:T.gf,l:"Bàn thắng",c:"or"},{n:T.ga,l:"Bàn thua",c:"red"},{n:"+"+T.gd,l:"Hiệu số",c:"grn"},{n:T.ppg.toFixed(2),l:"Điểm/trận",c:"or"}].map(c=>`<div class="ovc"><div class="ovn ${c.c}">${c.n}</div><div class="ovl">${c.l}</div></div>`).join("");
-  document.getElementById("heroSub").innerHTML=`Mùa giải 2026 &nbsp;·&nbsp; Cập nhật sau ${T.m} trận &nbsp;·&nbsp; Dữ liệu chi tiết từ tuần ${DETAIL_WK}`;
+  document.getElementById("heroSub").innerHTML=`Mùa giải 2026 &nbsp;·&nbsp; Cập nhật đến tuần ${M[M.length-1].wk}`;
   document.getElementById("heroKpi").innerHTML=
     `<div class="kp"><div class="kp-n">${T.m}</div><div class="kp-l">Trận</div></div>`+
     `<div class="kp"><div class="kp-n sm">${T.w}W · ${T.d}D · ${T.l}L</div><div class="kp-l">Thành tích</div></div>`+
@@ -1093,10 +1142,19 @@ function renderGK(){
     return{n,d,avg:d.conc/mp};
   }).sort((a,b)=>a.avg-b.avg);
   const mx=Math.max(...rows.map(r=>r.avg),1);
-  const tot=HGA.h1+HGA.h2||1;
-  const head=`<div class="hc"><div class="hcc"><div class="hcn" style="color:var(--red)">${HGA.h1}</div><div class="hcl">Thua hiệp 1</div></div><div class="hcc"><div class="hcn" style="color:var(--amb)">${HGA.h2}</div><div class="hcl">Thua hiệp 2</div></div></div>
-    <div class="wdl-bar" style="height:5px"><div class="wl" style="flex:${HGA.h1}"></div><div style="background:var(--amb);flex:${HGA.h2}"></div></div>
-    <div class="gkr-sp"><span>${(HGA.h1/tot*100).toFixed(0)}% H1</span><span>${HGA.h1+HGA.h2} bàn có dữ liệu hiệp</span><span>${(HGA.h2/tot*100).toFixed(0)}% H2</span></div>`;
+  // Tổng gồm cả bàn chưa rõ hiệp — trước đây chỉ cộng h1+h2 nên dải hiệp
+  // hiện 20 trong khi đội thua 51 bàn.
+  const tot=HGA.h1+HGA.h2+HGA.unk||1;
+  const hm=M.filter(m=>m.v===HOME_VENUE),am=M.filter(m=>m.v!==HOME_VENUE);
+  const hga=hm.reduce((s,m)=>s+m.ga,0),aga=am.reduce((s,m)=>s+m.ga,0);
+  const head=`<div class="hc hc3"><div class="hcc"><div class="hcn" style="color:var(--red)">${HGA.h1}</div><div class="hcl">Thua hiệp 1</div></div><div class="hcc"><div class="hcn" style="color:var(--amb)">${HGA.h2}</div><div class="hcl">Thua hiệp 2</div></div><div class="hcc"><div class="hcn" style="color:var(--tx3)">${HGA.unk}</div><div class="hcl">Chưa rõ hiệp</div></div></div>
+    <div class="wdl-bar" style="height:5px"><div class="wl" style="flex:${HGA.h1}"></div><div style="background:var(--amb);flex:${HGA.h2}"></div><div style="background:var(--bd2);flex:${HGA.unk}"></div></div>
+    <div class="gkr-sp"><span><b style="color:var(--red)">${HGA.h1}</b> H1 · <b style="color:var(--amb)">${HGA.h2}</b> H2 · <b style="color:var(--tx3)">${HGA.unk}</b> chưa rõ</span><span>tổng <b style="color:var(--red)">${tot}</b> bàn thua</span></div>
+    <button class="gkd-t" onclick="togGKD(this)">Chi tiết theo sân ▾</button>
+    <div class="gkd-p" hidden>
+      <div class="gkd-r"><span class="gkd-l">Sân nhà · ${HOME_VENUE}</span><span class="gkd-m"><b style="color:var(--red)">${hga}</b> thua / ${hm.length} trận</span><span class="gkd-v">${(hga/(hm.length||1)).toFixed(2)} bt/t</span></div>
+      <div class="gkd-r"><span class="gkd-l">Sân khách</span><span class="gkd-m"><b style="color:var(--red)">${aga}</b> thua / ${am.length} trận</span><span class="gkd-v">${(aga/(am.length||1)).toFixed(2)} bt/t</span></div>
+    </div>`;
   document.getElementById("gkEl").innerHTML=head+rows.map(({n,d,avg})=>`<div class="gkr">
     <div class="gkr-n">${n}</div>
     <div class="gkr-b"><div class="gkr-bf" style="width:${Math.max(avg/mx*100,3)}%"></div></div>
@@ -1105,9 +1163,15 @@ function renderGK(){
       <span title="Tổng bàn thua"><b style="color:var(--red)">${d.conc}</b> thua</span>
       <span title="Thua hiệp 1"><b style="color:var(--grn)">${d.h1}</b> H1</span>
       <span title="Thua hiệp 2"><b style="color:var(--amb)">${d.h2}</b> H2</span>
+      <span title="Bàn thua chưa có dữ liệu hiệp"><b style="color:var(--tx3)">${d.unk}</b> chưa rõ</span>
       <span title="Penalty đối mặt · cản được"><b style="color:var(--tl)">${d.pf}</b>/<b style="color:var(--grn)">${d.ps}</b> pen</span>
     </div>
-  </div>`).join("")+`<div class="gkr-f">Bàn thua tính đủ ${T.m} tuần · chi tiết hiệp &amp; penalty từ tuần ${DETAIL_WK}. Cột = bàn thua/trận, thấp là tốt.</div>`;
+    <div class="gkr-vs">Sân nhà <b>${d.hc}</b>/${d.hw.size}T · Sân khách <b>${d.ac}</b>/${d.aw.size}T</div>
+  </div>`).join("")+`<div class="gkr-f">Bàn thua tính đủ ${T.m} tuần · chi tiết hiệp &amp; penalty từ tuần ${DETAIL_WK}, các tuần trước đó xếp vào "chưa rõ". Cột = bàn thua/trận, thấp là tốt.</div>`;
+}
+function togGKD(btn){
+  const p=btn.nextElementSibling;p.hidden=!p.hidden;
+  btn.textContent=p.hidden?"Chi tiết theo sân ▾":"Thu gọn ▴";
 }
 
 
@@ -1197,24 +1261,37 @@ function togPD(tr,name){
   const pm=PM[name];if(!pm)return;
   const det=document.createElement("tr");det.className="dr";
   const td=document.createElement("td");td.colSpan=document.getElementById("pTh").children.length;
-  const ast_h=AST_H[name],pen_s=PEN[name];
+  const ast_h=AST_H[name],pen_s=PEN[name],gh=GOAL_H[name];
   let h=`<div class="di"><div style="font-size:9px;color:var(--or);font-weight:700;margin-bottom:7px;letter-spacing:1px">${name.toUpperCase()} · CHI TIẾT</div>`;
-  if(ast_h||pen_s){h+=`<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:9px;padding-bottom:8px;border-bottom:1px solid var(--bd)">`;
-    if(ast_h)h+=`<span style="background:var(--tl-d);border:1px solid rgba(42,139,174,.25);border-radius:5px;padding:3px 8px;font-size:10px">🅰 Kiến tạo: <b style="color:var(--tl)">${ast_h.h1+ast_h.h2}</b> <span style="color:var(--tx3);font-size:8px">(H1:${ast_h.h1} · H2:${ast_h.h2})</span></span>`;
+  if(gh||ast_h||pen_s){h+=`<div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:9px;padding-bottom:8px;border-bottom:1px solid var(--bd)">`;
+    if(gh){const gt=gh.h1+gh.h2+gh.unk,br=[];
+      if(gh.h1)br.push(`H1:${gh.h1}`);if(gh.h2)br.push(`H2:${gh.h2}`);if(gh.unk)br.push(`${gh.unk} chưa rõ hiệp`);
+      if(gh.pen)br.push(`${gh.pen} pen`);if(gh.fk)br.push(`${gh.fk} đá phạt`);
+      h+=`<span style="background:var(--or-d,rgba(212,160,90,.1));border:1px solid rgba(212,160,90,.25);border-radius:5px;padding:3px 8px;font-size:10px">⚽ Bàn thắng: <b style="color:var(--or)">${gt}</b> <span style="color:var(--tx3);font-size:8px">(${br.join(" · ")})</span></span>`;}
+    if(ast_h){const at=ast_h.h1+ast_h.h2;
+      h+=`<span style="background:var(--tl-d);border:1px solid rgba(42,139,174,.25);border-radius:5px;padding:3px 8px;font-size:10px">🅰 Kiến tạo: <b style="color:var(--tl)">${at}</b> <span style="color:var(--tx3);font-size:8px">(H1:${ast_h.h1} · H2:${ast_h.h2})</span></span>`;}
     if(pen_s){h+=`<span style="background:var(--grn-d);border:1px solid rgba(60,184,112,.25);border-radius:5px;padding:3px 8px;font-size:10px">⚽ Pen vào: <b style="color:var(--grn)">${pen_s.sc}</b></span>`;
     h+=`<span style="background:var(--red-d);border:1px solid rgba(229,69,69,.25);border-radius:5px;padding:3px 8px;font-size:10px">✗ Pen hỏng: <b style="color:var(--red)">${pen_s.ms}</b></span>`;}
     h+=`</div>`;}
   h+=`<div style="display:flex;flex-wrap:wrap;gap:3px">`;
-  let tg=0;
+  let tg=0,ta=0;
   M.forEach((m,i)=>{const g=pm[i];const pl=g!==null;if(pl&&g>0)tg+=g;
+    // Chi tiết loại bàn & kiến tạo lấy từ MG (khoá theo tuần), PM chỉ có tổng số bàn.
+    const sl=(MG[m.wk]?.s)||[];
+    const pen=sl.filter(x=>x.sc===name&&x.t==="pen").length;
+    const fk=sl.filter(x=>x.sc===name&&x.t==="fk").length;
+    const as=sl.filter(x=>x.as===name).length;ta+=as;
     h+=`<div style="display:inline-flex;align-items:center;gap:4px;background:${pl?"var(--sf2)":"rgba(0,0,0,.3)"};border:1px solid var(--bd);border-radius:5px;padding:3px 6px;opacity:${pl?1:.35};font-size:10px;margin:1px">
       <span style="color:var(--tx3);font-size:8px">T${m.wk}</span>
       <span style="font-weight:600;color:${m.r==="W"?"var(--grn)":m.r==="D"?"var(--amb)":"var(--red)"}">${m.gf}-${m.ga}</span>
       <span style="color:${pl?"var(--grn)":"var(--red)"};font-size:9px">${pl?"✓":"✗"}</span>
-      ${pl&&g>0?`<span style="color:var(--or);font-weight:700">⚽${g}</span>`:""}
+      ${pl&&g>0?`<span style="color:var(--or);font-weight:700" title="Bàn thắng">⚽${g}</span>`:""}
+      ${pen?`<span style="color:var(--grn);font-weight:700;font-size:9px" title="Penalty">P${pen>1?pen:""}</span>`:""}
+      ${fk?`<span style="color:var(--amb);font-weight:700;font-size:9px" title="Đá phạt">F${fk>1?fk:""}</span>`:""}
+      ${as?`<span style="color:var(--tl);font-weight:700" title="Kiến tạo">🅰${as}</span>`:""}
     </div>`;
   });
-  h+=`</div><div style="margin-top:6px;font-size:10px;color:var(--tx3)">${pm.filter(x=>x!==null).length}/${T.m} trận · <b style="color:var(--or)">${tg}</b> bàn</div></div>`;
+  h+=`</div><div style="margin-top:6px;font-size:10px;color:var(--tx3)">${pm.filter(x=>x!==null).length}/${T.m} trận · <b style="color:var(--or)">${tg}</b> bàn${ta?` · <b style="color:var(--tl)">${ta}</b> kiến tạo`:""}<br><span style="font-size:8.5px">⚽ bàn · <b style="color:var(--grn)">P</b> pen · <b style="color:var(--amb)">F</b> đá phạt · 🅰 kiến tạo — pen/đá phạt/kiến tạo ghi nhận từ tuần ${DETAIL_WK}</span></div></div>`;
   td.innerHTML=h;det.appendChild(td);tr.after(det);
 }
 
@@ -1223,6 +1300,63 @@ const posClr={FW:"#fb7185",ST:"#fb7185",LW:"#fb7185",RW:"#fb7185",MF:"#fbbf24",C
 const CR={};
 function dc(id){if(CR[id]){CR[id].destroy();delete CR[id];}}
 if(typeof Chart!=='undefined'){Chart.defaults.color='#A09286';Chart.defaults.font.family="'Be Vietnam Pro',sans-serif";}
+// Ma trận cầu thủ × sân. Bàn thắng lấy từ PM (đủ 20 trận) chứ không từ MG,
+// vì MG chỉ có chi tiết loại bàn/kiến tạo từ tuần 21 — dùng MG sẽ thiên lệch
+// về các sân đá muộn trong mùa.
+const MIN_V=3;   // sân phải có từng này trận mới đứng thành cột riêng
+const MIN_VC=2;  // ô dưới từng này trận thì để mờ, không tô màu
+function venueMatrix(){
+  const byVen={};
+  M.forEach((m,i)=>{(byVen[m.v]=byVen[m.v]||[]).push(i)});
+  const big=Object.entries(byVen).filter(([,ix])=>ix.length>=MIN_V).sort((a,b)=>b[1].length-a[1].length);
+  const small=Object.entries(byVen).filter(([,ix])=>ix.length<MIN_V);
+  const cols=big.map(([v,ix])=>({v,ix,label:v}));
+  if(small.length)cols.push({v:"__other__",ix:small.flatMap(([,ix])=>ix),label:`Sân khác (${small.length})`});
+  const rows=Object.entries(PM).map(([n,arr])=>{
+    const cells=cols.map(c=>{let mp=0,g=0;
+      c.ix.forEach(i=>{if(arr[i]!==null){mp++;g+=arr[i]}});
+      return{mp,g,rate:mp?g/mp:0};});
+    return{n,cells,tot:cells.reduce((s,c)=>s+c.g,0)};
+  }).filter(r=>r.tot>0).sort((a,b)=>b.tot-a.tot);
+  return{cols,rows};
+}
+function renderPV(){
+  const el=document.getElementById("pvEl");if(!el)return;
+  const{cols,rows}=venueMatrix();
+  const mx=Math.max(...rows.flatMap(r=>r.cells.filter(c=>c.mp>=MIN_VC).map(c=>c.rate)),1);
+  // tóm tắt: ai hiệu suất cao nhất ở mỗi sân lớn
+  const best=cols.filter(c=>c.v!=="__other__").map((c,ci)=>{
+    const cand=rows.filter(r=>r.cells[ci].mp>=MIN_VC&&r.cells[ci].g>0)
+      .sort((a,b)=>b.cells[ci].rate-a.cells[ci].rate)[0];
+    const gf=c.ix.reduce((s,i)=>s+M[i].gf,0);
+    return{label:c.label,n:c.ix.length,gf,cand,ci};});
+  let html=`<div class="pv-sum">`+best.map(b=>`<div class="pv-sr">
+    <div class="pv-sv">${b.label}<span class="pv-sn">${b.n} trận · ${(b.gf/b.n).toFixed(2)} bàn/trận</span></div>
+    ${b.cand?`<div class="pv-sb"><b>${b.cand.n}</b> ${b.cand.cells[b.ci].g} bàn/${b.cand.cells[b.ci].mp}T <span class="pv-sr2">${b.cand.cells[b.ci].rate.toFixed(2)}/trận</span></div>`:`<div class="pv-sb" style="color:var(--tx3)">—</div>`}
+  </div>`).join("")+`</div>`;
+  html+=`<button class="gkd-t" onclick="togPV(this)">Xem ma trận đầy đủ (${rows.length} cầu thủ) ▾</button>`;
+  html+=`<div class="pv-wrap" hidden><div class="pvg" style="grid-template-columns:var(--pvn,96px) repeat(${cols.length},minmax(var(--pvc,52px),1fr))">`;
+  html+=`<div class="pv-h">Cầu thủ</div>`+cols.map(c=>`<div class="pv-h" style="text-align:center">${c.label}</div>`).join("");
+  rows.forEach(r=>{
+    const pObj=P.find(x=>x.n===r.n);
+    html+=`<div class="pv-n">${pObj?`<span style="font-size:8px;font-weight:700;color:${posClr[pObj.p]||"#64748b"};flex-shrink:0">${pObj.p}</span>`:""}<span class="pv-nt">${r.n}</span></div>`;
+    r.cells.forEach(c=>{
+      if(!c.mp){html+=`<div class="pv-c pv-na" title="Chưa đá trận nào ở sân này">—</div>`;return}
+      const thin=c.mp<MIN_VC;
+      const op=thin?0:Math.min(c.rate/mx,1);
+      html+=`<div class="pv-c${thin?" pv-thin":""}" style="background:rgba(212,160,90,${(op*.72).toFixed(2)})" title="${r.n} · ${c.g} bàn / ${c.mp} trận${thin?" (quá ít trận để đánh giá)":""}">
+        <b>${c.g}</b><span class="pv-mp">${c.mp}T</span></div>`;
+    });
+  });
+  html+=`</div><div class="pv-f">Ô ghi <b>số bàn</b> và <b>số trận</b> đã đá ở sân đó · càng đậm càng nhiều bàn/trận · <span style="opacity:.5">nét đứt</span> = dưới ${MIN_VC} trận, chưa đủ để kết luận · — = chưa đá sân đó.</div></div>`;
+  el.innerHTML=html;
+}
+function togPV(btn){
+  if(!btn.dataset.lbl)btn.dataset.lbl=btn.textContent;
+  const w=btn.nextElementSibling;w.hidden=!w.hidden;
+  btn.textContent=w.hidden?btn.dataset.lbl:"Thu gọn ma trận ▴";
+}
+
 function renderHeatmap(){
   const el=document.getElementById("matEl");
   if(!el)return;
@@ -1513,7 +1647,7 @@ function validateData(){
  renderPosF,renderPT,renderHeatmap,renderBubble,
  renderFm,renderVenue,renderCmp,renderAbsent,
  renderAwards,renderSum,renderTk,
- ()=>renderNav("club"),initCollapse
+ renderPV,()=>renderNav("club"),initCollapse
 ].forEach(fn=>{try{fn()}catch(e){console.error("[render] "+(fn.name||"?")+": "+e.message)}});
 </script>
 </body>

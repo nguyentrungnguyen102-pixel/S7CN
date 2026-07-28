@@ -208,21 +208,18 @@ def run_checks(M, MG, P, PM, report):
             bad4.append(f"wk{wk}: len(s)={len(mg.get('s', []))} != gf={m['gf']}")
         if len(mg.get("c", [])) != m["ga"]:
             bad4.append(f"wk{wk}: len(c)={len(mg.get('c', []))} != ga={m['ga']}")
-    # MG and M are both generated from the same sheet, so a mismatch here means the
-    # SHEET is internally inconsistent (a missing/extra event row), not that the
-    # generator is broken - that would surface in check 9 as an html-vs-xlsx diff.
-    # Report it loudly but do not fail the run, otherwise the gate is permanently red.
-    if bad4:
-        report.warn(
-            "4. len(MG[w].s) vs M[w].gf / len(MG[w].c) vs M[w].ga",
-            "; ".join(bad4) + "  -> sheet thiếu/thừa dòng sự kiện, cần sửa trong 'Log tuần'",
-        )
-    else:
-        report.check(
-            "4. len(MG[w].s)==M[w].gf and len(MG[w].c)==M[w].ga",
-            True,
-            f"all {len(MG)} weeks consistent",
-        )
+    # MG and M đều sinh từ cùng một sheet, nên lệch ở đây nghĩa là SHEET tự mâu
+    # thuẫn (thiếu/thừa một dòng sự kiện), không phải generator hỏng.
+    # Đây là LỖI THẬT: các thẻ trên trang sẽ cộng ra hai con số khác nhau cho
+    # cùng một đại lượng (ví dụ thẻ thủ môn ra 51 bàn thua còn tổng quan ra 50).
+    # Sửa trong sheet 'Log tuần' rồi tải lại + chạy rebuild_data.py.
+    report.check(
+        "4. len(MG[w].s)==M[w].gf and len(MG[w].c)==M[w].ga",
+        not bad4,
+        ("; ".join(bad4) + "  -> sheet thiếu/thừa dòng sự kiện trong 'Log tuần'; "
+         "tải lại sheet rồi chạy rebuild_data.py")
+        if bad4 else f"all {len(MG)} weeks consistent",
+    )
 
     # 5. every week key in MG exists in M
     missing_weeks = sorted(set(MG.keys()) - set(m_by_wk.keys()))
