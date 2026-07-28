@@ -1,2 +1,11 @@
 __pycache__/
 *.pyc
+
+# Ảnh chụp màn hình do script kiểm tra giao diện sinh ra
+shot-*.png
+fm-*.png
+mt-*.png
+ov-*.png
+trend-*.png
+radar-*.png
+abs-*.png
