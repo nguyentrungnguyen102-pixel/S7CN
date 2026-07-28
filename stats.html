@@ -215,6 +215,42 @@ tr.cl:hover td{background:var(--sf2)}
 .fmd-br{flex:0 0 236px;max-width:236px}
 .fmd-g{display:grid;grid-template-columns:repeat(6,1fr);gap:9px 5px;text-align:center}
 .ab-bad{color:var(--red);font-weight:700}.ab-good{color:var(--grn);font-weight:700}.ab-neu{color:var(--tx3)}
+.dfr{display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--bd)}
+.dfr:last-of-type{border:none}
+.dfn{display:flex;align-items:center;gap:5px;width:126px;flex-shrink:0;min-width:0}
+.dfnm{font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dfm{font-size:9px;color:var(--tx3);flex-shrink:0}
+.dfb{flex:1.4;height:9px;border-radius:2px;background:var(--sf3);position:relative;overflow:hidden;min-width:40px}
+.dfbf{height:100%;border-radius:2px}
+.dfavg{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--tx2);opacity:.85}
+.dfv{font-family:var(--fd);font-size:13px;font-weight:700;width:36px;text-align:right;flex-shrink:0}
+.dfg{flex:1;height:9px;border-radius:2px;background:var(--sf3);position:relative;min-width:34px}
+.dfgz{position:absolute;top:-2px;bottom:-2px;width:1px;background:var(--bd2)}
+.dfgf{position:absolute;top:0;bottom:0;border-radius:2px;opacity:.85}
+.dfv2{font-family:var(--fd);font-size:12px;font-weight:700;width:38px;text-align:right;flex-shrink:0}
+.dfleg{display:flex;gap:14px;flex-wrap:wrap;margin-top:9px;padding-top:8px;border-top:1px solid var(--bd);font-size:9px;color:var(--tx3)}
+.dfleg span{display:flex;align-items:center;gap:4px}
+.dfk{width:8px;height:8px;border-radius:2px;display:inline-block}
+.gkr{padding:9px 0;border-bottom:1px solid var(--bd);display:grid;grid-template-columns:1fr 84px 58px;grid-template-areas:"n b v" "s s s";align-items:center;gap:4px 8px}
+.gkr:last-of-type{border:none}
+.gkr-n{grid-area:n;font-family:var(--fd);font-size:15px;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gkr-b{grid-area:b;height:9px;border-radius:2px;background:var(--sf3);overflow:hidden}
+.gkr-bf{height:100%;border-radius:2px;background:linear-gradient(90deg,#8a1a1a,var(--red))}
+.gkr-v{grid-area:v;font-family:var(--fd);font-size:15px;font-weight:700;text-align:right;color:var(--tx)}
+.gkr-u{font-size:8px;color:var(--tx3);margin-left:3px;font-family:var(--fb)}
+.gkr-s{grid-area:s;display:flex;gap:12px;flex-wrap:wrap;font-size:10px;color:var(--tx3)}
+.gkr-f{font-size:9px;color:var(--tx3);font-style:italic;margin-top:9px;padding-top:8px;border-top:1px solid var(--bd);line-height:1.45}
+.cmpg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.cmpb{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--rs);padding:11px 12px}
+.cmph{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--or);margin-bottom:8px;text-align:center}
+.cmpr{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid var(--bd)}
+.cmpr:last-child{border:none}
+.cmpr-hd{border-bottom:1px solid var(--bd2);padding-bottom:5px;margin-bottom:2px}
+.cmpr-hd .cmpv{font-size:9px;letter-spacing:1px;color:var(--tx3);font-family:var(--fb);font-weight:600}
+.cmpl{flex:1;font-size:10px;color:var(--tx2);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmpv{width:52px;text-align:right;font-family:var(--fd);font-size:13px;font-weight:700;flex-shrink:0}
+.cmpa{width:13px;text-align:center;font-size:9px;flex-shrink:0}
+.cmp-up{color:var(--grn)}.cmp-down{color:var(--red)}.cmp-same{color:var(--tx3)}
 .fmd-v{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--tx)}
 .fmd-l{font-size:8px;letter-spacing:1px;color:var(--tx3);text-transform:uppercase;margin-top:2px}
 .fmd-f{display:flex;align-items:center;gap:3px;border-top:1px solid var(--bd);margin-top:10px;padding-top:9px}
@@ -249,6 +285,7 @@ tr.cl:hover td{background:var(--sf2)}
   .ovs{grid-template-columns:repeat(4,1fr)}.aws{grid-template-columns:1fr 1fr}.cmcols{grid-template-columns:1fr}.sumg{grid-template-columns:1fr}
   .hero-name{font-size:38px}.tbar,.hero{padding-left:16px;padding-right:16px}.mven{display:none}
   .fmd-g{grid-template-columns:repeat(3,1fr)}
+  .cmpg{grid-template-columns:1fr}
   .fmw{flex-direction:column;gap:12px}.fmw>#pitchEl{flex:none;width:100%;align-self:center}
   .fmd-b{flex-direction:column;gap:10px;align-items:stretch}.fmd-br{flex:none;max-width:100%}
   .mx-pn{max-width:70px;font-size:8px} .wi-name{width:70px;font-size:9px}
@@ -344,9 +381,10 @@ tr.cl:hover td{background:var(--sf2)}
   <div class="grp grp-def" id="grp-def" data-screen-label="05 Phòng ngự">
     <div class="ghdr"><span class="gname">Phòng ngự</span><div class="gline"></div><span class="gbadge">DEFENSE</span></div>
     <div class="g2">
-      <div class="card"><div class="ct">Thống kê thủ môn</div><div id="gkEl"></div></div>
-      <div class="card"><div class="ct">Bàn thua theo hiệp</div><div id="halfGa"></div></div>
+      <div class="card"><div class="ct">Thủ môn</div><div id="gkEl"></div></div>
+      <div class="card"><div class="ct">Chỉ số phòng ngự · Hậu vệ</div><p class="hint" id="defHint"></p><div id="defEl"></div></div>
     </div>
+    <div class="card"><div class="ct">Bàn thua theo hiệp</div><div id="halfGa"></div></div>
   </div>
 
   <div class="grp grp-an" id="grp-an" data-screen-label="06 Phân tích">
@@ -355,6 +393,7 @@ tr.cl:hover td{background:var(--sf2)}
       <div class="card"><div class="ct">Sân nhà vs Sân khách</div><div id="venueEl"></div></div>
       <div class="card"><div class="ct">Chi tiết theo sân</div><div id="venBrkEl"></div></div>
     </div>
+    <div class="card"><div class="ct">So sánh mùa 2025 vs 2026</div><p class="hint" id="cmpHint"></p><div class="cmpg" id="cmpEl"></div></div>
     <div class="card"><div class="ct">Ảnh hưởng khi cầu thủ vắng mặt</div>
       <p class="hint" id="absHint"></p>
       <div class="sx"><table><thead><tr id="absTh"></tr></thead><tbody id="absTb"></tbody></table></div>
@@ -432,6 +471,34 @@ const T=(()=>{
   const mxp=m*3;
   return {n:"LAIRAI FC",m,w,d,l,gf,ga,gd:gf-ga,pts,ppg:m?pts/m:0,mxp,ptp:mxp?Math.round(pts/mxp*100):0};
 })();
+
+// ===== MÙA 2025 (đối chiếu) =====
+// Danh sách trận Sân 11 mùa 2025, lấy từ sheet "Thống kê 2025".
+// Chỉ Sân 11 để so cùng loại sân với 2026. Mọi con số bên dưới đều được TÍNH từ mảng này.
+const M25=[
+  {wk:8,dt:"23/02",vs:"TSN",gf:1,ga:7,r:"L",v:"SVĐ Quận 8"},
+  {wk:12,dt:"23/03",vs:"Xóm Công Giáo",gf:10,ga:1,r:"W",v:"Giga Arena"},
+  {wk:15,dt:"13/04",vs:"Lên Bia FC",gf:7,ga:1,r:"W",v:"Giga Arena"},
+  {wk:20,dt:"18/05",vs:"Sân cáp",gf:6,ga:1,r:"W",v:"Giga Arena"},
+  {wk:22,dt:"01/06",vs:"Sân cáp",gf:5,ga:2,r:"W",v:"Giga Arena"},
+  {wk:24,dt:"15/06",vs:"Thiên Yến Vân",gf:4,ga:1,r:"W",v:"Etihad Quận 12"},
+  {wk:26,dt:"29/06",vs:"Sân cáp",gf:4,ga:2,r:"W",v:"Giga Arena"},
+  {wk:27,dt:"06/07",vs:"Sân cáp",gf:3,ga:4,r:"L",v:"Giga Arena"},
+  {wk:29,dt:"20/07",vs:"Sân cáp",gf:9,ga:3,r:"W",v:"Giga Arena"},
+  {wk:31,dt:"03/08",vs:"Sân cáp",gf:3,ga:2,r:"W",v:"Giga Arena"},
+  {wk:34,dt:"24/08",vs:"Sân cáp",gf:4,ga:3,r:"W",v:"Giga Arena"},
+  {wk:36,dt:"07/09",vs:"C1000",gf:1,ga:4,r:"L",v:"Etihad Quận 12"},
+  {wk:37,dt:"14/09",vs:"Sân cáp",gf:5,ga:5,r:"D",v:"Tân Sơn"},
+  {wk:39,dt:"28/09",vs:"Liên Quân FC",gf:3,ga:5,r:"L",v:"Sport Plus Hóc Môn"},
+  {wk:41,dt:"12/10",vs:"TRÂU VÀNG FC",gf:1,ga:1,r:"D",v:"Giga Arena"},
+  {wk:42,dt:"19/10",vs:"đội cựu học sinh THPT TĂNG BẠ HỔ",gf:1,ga:2,r:"L",v:"Giga Arena"},
+  {wk:44,dt:"02/11",vs:"Cầu vồng",gf:2,ga:9,r:"L",v:"Etihad Quận 12"},
+  {wk:45,dt:"09/11",vs:"BK 98",gf:2,ga:0,r:"W",v:"Giga Arena"},
+  {wk:47,dt:"23/11",vs:"Long Xuyên FC",gf:2,ga:1,r:"W",v:"Giga Arena"},
+  {wk:48,dt:"30/11",vs:"Sân cáp",gf:2,ga:0,r:"W",v:"Giga Arena"},
+  {wk:49,dt:"07/12",vs:"BK 98",gf:5,ga:2,r:"W",v:"Hồng Hà"},
+  {wk:52,dt:"28/12",vs:"Green Architect fc",gf:2,ga:1,r:"W",v:"Giga Arena"},
+];
 
 // ===== GOAL DETAIL =====
 // s=scored [{sc,as,t:"normal"|"pen"|"fk",h:1|2|null}]  ms=missed pen  c=conceded [{gk,h,t}]  pf/ps=pen faced/saved
@@ -762,6 +829,76 @@ function renderAbsent(){
   }).join("");
 }
 
+// ===== SO SÁNH 2025 vs 2026 =====
+// Gộp một mảng trận thành cụm chỉ số. Dùng chung cho cả hai mùa nên không lệch cách tính.
+function aggM(ms){
+  const m=ms.length,w=ms.filter(x=>x.r==="W").length,d=ms.filter(x=>x.r==="D").length,
+        l=ms.filter(x=>x.r==="L").length,gf=ms.reduce((a,b)=>a+b.gf,0),ga=ms.reduce((a,b)=>a+b.ga,0);
+  return{m,w,d,l,gf,ga,gd:gf-ga,pts:w*3+d,wp:m?w/m:0,ppg:m?(w*3+d)/m:0,agf:m?gf/m:0,aga:m?ga/m:0};
+}
+function renderCmp(){
+  const el=document.getElementById("cmpEl");if(!el)return;
+  const home=ms=>ms.filter(x=>x.v===HOME_VENUE),away=ms=>ms.filter(x=>x.v!==HOME_VENUE);
+  const sets=[["Tổng cộng",aggM(M25),aggM(M)],
+              ["Sân nhà",aggM(home(M25)),aggM(home(M))],
+              ["Sân khách",aggM(away(M25)),aggM(away(M))]];
+  const hint=document.getElementById("cmpHint");
+  if(hint)hint.textContent=`Mùa 2025 chỉ tính ${M25.length} trận Sân 11 để so cùng loại sân với 2026. Xanh = tốt lên, đỏ = kém đi.`;
+  // inv=true: chỉ số càng thấp càng tốt (bàn thua)
+  const metrics=[["Số trận",o=>o.m,v=>v,false,true],["Thắng-Hòa-Thua",o=>o.w,o=>o,false,true],
+    ["Tỷ lệ thắng",o=>o.wp,v=>(v*100).toFixed(0)+"%",false],
+    ["Điểm/trận",o=>o.ppg,v=>v.toFixed(2),false],
+    ["Bàn thắng/trận",o=>o.agf,v=>v.toFixed(2),false],
+    ["Bàn thua/trận",o=>o.aga,v=>v.toFixed(2),true],
+    ["Hiệu số",o=>o.gd,v=>(v>=0?"+":"")+v,false]];
+  el.innerHTML=sets.map(([label,a,b])=>`
+    <div class="cmpb">
+      <div class="cmph">${label}</div>
+      <div class="cmpr cmpr-hd"><div class="cmpl"></div><div class="cmpv">2025</div><div class="cmpa"></div><div class="cmpv">2026</div></div>
+      ${metrics.map(([ml,get,fmt,inv,plain])=>{
+        if(ml==="Thắng-Hòa-Thua")return`<div class="cmpr"><div class="cmpl">${ml}</div><div class="cmpv">${a.w}-${a.d}-${a.l}</div><div class="cmpa"></div><div class="cmpv">${b.w}-${b.d}-${b.l}</div></div>`;
+        const va=get(a),vb=get(b),diff=vb-va;
+        let cls="cmp-same",arr="=";
+        if(!plain&&Math.abs(diff)>0.005){const good=inv?diff<0:diff>0;cls=good?"cmp-up":"cmp-down";arr=diff>0?"▲":"▼";}
+        return`<div class="cmpr"><div class="cmpl">${ml}</div><div class="cmpv">${fmt(va)}</div>
+          <div class="cmpa ${plain?"":cls}">${plain?"":arr}</div>
+          <div class="cmpv ${plain?"":cls}">${fmt(vb)}</div></div>`;
+      }).join("")}
+    </div>`).join("");
+}
+
+// Chỉ số phòng ngự của riêng hậu vệ — theo các cột của sheet "Thống kê cầu thủ":
+// AOV GA = bàn thua/trận khi có mặt (thấp là tốt), AOV GD = hiệu số/trận (cao là tốt).
+function renderDef(){
+  const el=document.getElementById("defEl");if(!el)return;
+  const ds=P.filter(p=>["CB","LB","RB","DF"].includes(p.p)&&p.m>=MIN_M)
+    .map(p=>({...p,aga:p.ga/p.m,agd:p.gd/p.m}))
+    .sort((a,b)=>a.aga-b.aga);
+  const hint=document.getElementById("defHint");
+  if(hint)hint.textContent=`Bàn thua/trận khi cầu thủ có mặt — càng thấp càng tốt. TB đội ${(T.ga/T.m).toFixed(2)}. Chỉ tính hậu vệ có từ ${MIN_M} trận.`;
+  if(!ds.length){el.innerHTML=`<p style="color:var(--tx3);font-size:11px;font-style:italic">Chưa đủ dữ liệu.</p>`;return;}
+  const mxA=Math.max(...ds.map(p=>p.aga),T.ga/T.m);
+  const gdLo=Math.min(0,...ds.map(p=>p.agd)),gdHi=Math.max(0,...ds.map(p=>p.agd));
+  el.innerHTML=ds.map(p=>{
+    const better=p.aga<T.ga/T.m;
+    const wA=Math.max(p.aga/mxA*100,3);
+    const zero=(0-gdLo)/((gdHi-gdLo)||1)*100;
+    const gx=(p.agd-gdLo)/((gdHi-gdLo)||1)*100;
+    const l=Math.min(zero,gx),w=Math.abs(gx-zero);
+    return`<div class="dfr">
+      <div class="dfn"><span class="pos ${p.p}">${p.p}</span><span class="dfnm">${p.n}</span><span class="dfm">${p.m}tr</span></div>
+      <div class="dfb"><div class="dfbf" style="width:${wA}%;background:${better?"linear-gradient(90deg,#1a5e35,var(--grn))":"linear-gradient(90deg,#8a1a1a,var(--red))"}"></div>
+        <div class="dfavg" style="left:${(T.ga/T.m)/mxA*100}%"></div></div>
+      <div class="dfv" style="color:${better?"var(--grn)":"var(--red)"}">${p.aga.toFixed(2)}</div>
+      <div class="dfg"><div class="dfgz" style="left:${zero}%"></div>
+        <div class="dfgf" style="left:${l}%;width:${Math.max(w,1.5)}%;background:${p.agd>=0?"var(--grn)":"var(--red)"}"></div></div>
+      <div class="dfv2" style="color:${p.agd>=0?"var(--grn)":"var(--red)"}">${p.agd>=0?"+":""}${p.agd.toFixed(2)}</div>
+    </div>`;
+  }).join("")+`<div class="dfleg">
+    <span><span class="dfk" style="background:var(--grn)"></span><span class="dfk" style="background:var(--red);margin-left:-2px"></span>Cột 1 · bàn thua/trận — xanh nếu thấp hơn TB đội (${(T.ga/T.m).toFixed(2)}), vạch dọc = mốc TB</span>
+    <span><span class="dfk" style="background:var(--grn)"></span>Cột 2 · hiệu số/trận</span></div>`;
+}
+
 function renderMinM(){document.querySelectorAll(".minm").forEach(e=>{e.textContent=`Chỉ tính cầu thủ có từ ${MIN_M} trận trở lên`});}
 
 function renderTrend(){
@@ -878,17 +1015,22 @@ function renderGpm(){
 }
 
 function renderGK(){
-  document.getElementById("gkEl").innerHTML=Object.entries(GKD).map(([n,d])=>`<div class="gkc">
-    <div class="gkn">${n}</div><div class="gkp">GK · LAIRAI FC</div>
-    <div class="gkg">
-      <div class="gks"><div class="gks-n" style="color:var(--red)">${d.conc}</div><div class="gks-l">Bàn thua</div></div>
-      <div class="gks"><div class="gks-n" style="color:var(--grn)">${d.h1}</div><div class="gks-l">Thua H1</div></div>
-      <div class="gks"><div class="gks-n" style="color:var(--amb)">${d.h2}</div><div class="gks-l">Thua H2</div></div>
-      <div class="gks"><div class="gks-n" style="color:var(--tl)">${d.pf}</div><div class="gks-l">Pen gặp</div></div>
-      <div class="gks"><div class="gks-n" style="color:var(--grn)">${d.ps}</div><div class="gks-l">Pen cản</div></div>
-      <div class="gks"><div class="gks-n">${(d.conc/Math.max(Object.keys(MG).filter(wk=>MG[wk].c?.some(c=>c.gk===n)).length,1)).toFixed(2)}</div><div class="gks-l">BThua/T</div></div>
+  const rows=Object.entries(GKD).map(([n,d])=>{
+    const mp=Math.max(Object.keys(MG).filter(wk=>MG[wk].c?.some(c=>c.gk===n)).length,1);
+    return{n,d,avg:d.conc/mp};
+  }).sort((a,b)=>a.avg-b.avg);
+  const mx=Math.max(...rows.map(r=>r.avg),1);
+  document.getElementById("gkEl").innerHTML=rows.map(({n,d,avg})=>`<div class="gkr">
+    <div class="gkr-n">${n}</div>
+    <div class="gkr-b"><div class="gkr-bf" style="width:${Math.max(avg/mx*100,3)}%"></div></div>
+    <div class="gkr-v">${avg.toFixed(2)}<span class="gkr-u">bt/t</span></div>
+    <div class="gkr-s">
+      <span title="Tổng bàn thua"><b style="color:var(--red)">${d.conc}</b> thua</span>
+      <span title="Thua hiệp 1"><b style="color:var(--grn)">${d.h1}</b> H1</span>
+      <span title="Thua hiệp 2"><b style="color:var(--amb)">${d.h2}</b> H2</span>
+      <span title="Penalty đối mặt · cản được"><b style="color:var(--tl)">${d.pf}</b>/<b style="color:var(--grn)">${d.ps}</b> pen</span>
     </div>
-  </div>`).join('<div style="margin-top:8px"></div>')+`<div style="font-size:9px;color:var(--tx3);margin-top:8px;font-style:italic">Bàn thua tính đủ ${T.m} tuần · Chi tiết hiệp &amp; penalty từ tuần ${DETAIL_WK}.</div>`;
+  </div>`).join("")+`<div class="gkr-f">Bàn thua tính đủ ${T.m} tuần · chi tiết hiệp &amp; penalty từ tuần ${DETAIL_WK}. Cột = bàn thua/trận, thấp là tốt.</div>`;
 }
 
 function renderHalfGa(){
@@ -1299,10 +1441,10 @@ function validateData(){
 [validateData,
  renderOv,renderWinRate,renderGoals,renderForm,renderTrend,renderMinM,
  renderScorers,renderAssists,renderPen,renderHalfGf,renderGpm,
- renderGK,renderHalfGa,
+ renderGK,renderHalfGa,renderDef,
  renderMatches,renderOpponents,
  renderPosF,renderPT,renderHeatmap,renderBubble,
- renderFm,renderVenue,renderAbsent,
+ renderFm,renderVenue,renderCmp,renderAbsent,
  renderAwards,renderSum,renderTk,
  ()=>renderNav("club")
 ].forEach(fn=>{try{fn()}catch(e){console.error("[render] "+(fn.name||"?")+": "+e.message)}});
