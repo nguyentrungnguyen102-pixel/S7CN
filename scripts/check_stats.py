@@ -350,6 +350,13 @@ def run_xlsx_crosscheck(xlsx_path, M, MG, PM, report):
             print(f"    {line}")
         if len(diffs) > 50:
             print(f"    ... and {len(diffs) - 50} more")
+        if sum(1 for d in diffs if "'lv'" in d) == len(diffs):
+            print(
+                "    ^ toàn bộ khác biệt chỉ nằm ở link xem lại (lv). Nghĩa là file xlsx"
+                " đang dùng CŨ hơn sheet thật, hoặc link trong cột O sheet 'Thống kê match'"
+                " đã được dời sang tuần khác. Tải lại sheet rồi chạy lại — đừng ghi đè bằng"
+                " --force nếu chưa đối chiếu."
+            )
 
 
 def main():

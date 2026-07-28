@@ -41,11 +41,6 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fb);line-height:1.5;
 .kp-n.or{color:var(--or)}.kp-n.grn{color:var(--grn)}.kp-n.sm{font-size:15px;letter-spacing:.3px;margin-top:4px}
 .kp-l{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--tx3);margin-top:4px;font-weight:500}
 
-.tbar{background:var(--sf2);border-bottom:1px solid var(--bd);padding:0 48px}
-.tbar-i{max-width:1440px;margin:0 auto;display:flex;align-items:center;gap:6px;padding:9px 0}
-.tlbl{font-size:9px;letter-spacing:2px;color:var(--tx3);text-transform:uppercase;font-weight:600;margin-right:6px;white-space:nowrap}
-.tb{padding:6px 18px;border-radius:6px;background:transparent;border:1px solid var(--bd);color:var(--tx3);font-size:10px;font-weight:600;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all .18s;font-family:var(--fb)}
-.tb:hover{color:var(--tx2);border-color:var(--bd2)}.tb.on{background:var(--or);border-color:var(--or);color:#fff}
 
 .snav{position:sticky;top:0;z-index:90;background:rgba(12,9,7,.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd)}
 .snav-i{max-width:1440px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none}
@@ -102,13 +97,6 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fb);line-height:1.5;
 .chip-ms{background:var(--red-d);border-color:rgba(229,69,69,.25)}.chip-c{background:var(--red-d);border-color:rgba(229,69,69,.2)}
 .chip .sc{color:var(--or);font-weight:600}.chip .as{color:var(--tl)}.chip .sm{font-size:8px;color:var(--tx3)}
 
-.gkc{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r);padding:16px;text-align:center;position:relative;overflow:hidden}
-.gkc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--or),var(--or2))}
-.gkn{font-family:var(--fd);font-size:19px;font-weight:700;color:#fff;margin-bottom:2px}
-.gkp{font-size:9px;letter-spacing:2px;color:var(--or);text-transform:uppercase;margin-bottom:10px;font-weight:600}
-.gkg{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
-.gks{background:rgba(255,255,255,.05);border-radius:5px;padding:8px 4px;text-align:center}
-.gks-n{font-family:var(--fd);font-size:17px;font-weight:700}.gks-l{font-size:7px;color:var(--tx3);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
 
 .hc{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bd);border-radius:6px;overflow:hidden;margin-bottom:9px}
 .hcc{background:var(--sf2);padding:12px;text-align:center}
@@ -149,16 +137,6 @@ tr.cl:hover td{background:var(--sf2)}
 .aw-p{font-family:var(--fd);font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
 .aw-s{font-size:10px;color:var(--or2)}.aw-d{font-size:9px;color:var(--tx3);margin-top:3px;line-height:1.5}
 
-.cmh{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-.cmhc{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--rs);padding:12px;text-align:center}
-.cmy{font-size:8px;letter-spacing:2px;color:var(--or);font-weight:600;text-transform:uppercase;margin-bottom:5px}
-.cmb{font-family:var(--fd);font-size:19px;font-weight:700}
-.cmcols{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.cmcol{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--rs);padding:10px}
-.cmt{font-size:8px;letter-spacing:2px;color:var(--or);font-weight:600;text-transform:uppercase;margin-bottom:7px}
-.cr{display:flex;justify-content:space-between;align-items:center;padding:2px 0;border-bottom:1px solid var(--bd);font-size:10px}
-.cr:last-child{border:none}
-.crl{color:var(--tx3)}.crv{font-weight:600;min-width:26px;text-align:right}
 .ig{color:var(--grn)}.ir{color:var(--red)}.ia{color:var(--amb)}
 
 .hmg{display:grid;gap:3px;align-items:center}
@@ -240,6 +218,14 @@ tr.cl:hover td{background:var(--sf2)}
 .gkr-u{font-size:8px;color:var(--tx3);margin-left:3px;font-family:var(--fb)}
 .gkr-s{grid-area:s;display:flex;gap:12px;flex-wrap:wrap;font-size:10px;color:var(--tx3)}
 .gkr-f{font-size:9px;color:var(--tx3);font-style:italic;margin-top:9px;padding-top:8px;border-top:1px solid var(--bd);line-height:1.45}
+.gkr-sp{display:flex;justify-content:space-between;font-size:10px;margin:6px 0 10px;padding-bottom:9px;border-bottom:1px solid var(--bd);color:var(--tx3)}
+.tkg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.clpb{display:none;width:100%;margin-top:9px;padding:8px;background:var(--sf3);border:1px solid var(--bd2);border-radius:var(--rs);color:var(--tx2);font-size:11px;font-weight:600;font-family:var(--fb);cursor:pointer;transition:all .15s}
+.clpb:hover{background:var(--bd);color:var(--tx)}
+@media(max-width:600px){
+  .clpb{display:block}
+  .clp.on>*:nth-child(n+1){display:""}
+}
 .cmpg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .cmpb{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--rs);padding:11px 12px}
 .cmph{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--or);margin-bottom:8px;text-align:center}
@@ -278,21 +264,67 @@ tr.cl:hover td{background:var(--sf2)}
 [data-tmpl="stats"] .grp-fm{display:none}
 [data-tmpl="match"] .grp-fm,[data-tmpl="match"] .grp-an,[data-tmpl="match"] .grp-tk{display:none}
 
-@media(max-width:1100px){.aws{grid-template-columns:repeat(3,1fr)}.cmcols{grid-template-columns:1fr 1fr}}
+@media(max-width:1100px){.aws{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:900px){
   .hero-i{flex-direction:column;text-align:center;gap:16px}.hero-kpi{width:100%}
   .content{padding:18px 16px 60px}.g2,.g3{grid-template-columns:1fr}
-  .ovs{grid-template-columns:repeat(4,1fr)}.aws{grid-template-columns:1fr 1fr}.cmcols{grid-template-columns:1fr}.sumg{grid-template-columns:1fr}
+  .ovs{grid-template-columns:repeat(4,1fr)}.aws{grid-template-columns:1fr 1fr}.sumg{grid-template-columns:1fr}
   .hero-name{font-size:38px}.tbar,.hero{padding-left:16px;padding-right:16px}.mven{display:none}
   .fmd-g{grid-template-columns:repeat(3,1fr)}
   .cmpg{grid-template-columns:1fr}
   .fmw{flex-direction:column;gap:12px}.fmw>#pitchEl{flex:none;width:100%;align-self:center}
   .fmd-b{flex-direction:column;gap:10px;align-items:stretch}.fmd-br{flex:none;max-width:100%}
-  .mx-pn{max-width:70px;font-size:8px} .wi-name{width:70px;font-size:9px}
+  
 }
-@media(max-width:480px){.ovs{grid-template-columns:repeat(2,1fr)}.aws{grid-template-columns:1fr}.mx-pn{max-width:55px;font-size:7px} .mx-c{min-width:22px;height:18px;font-size:6px} .wi-name{width:55px;font-size:8px}
+@media(max-width:480px){.ovs{grid-template-columns:repeat(2,1fr)}.aws{grid-template-columns:1fr}
   .kp{padding:14px 12px}.kp-n{font-size:22px}.kp-n.sm{font-size:13px}
   .mdt{display:none}
+}
+
+/* ===== Gọn cho điện thoại: cắt đệm, nâng cỡ chữ nhỏ, chống tràn ngang ===== */
+@media(max-width:600px){
+  /* cắt đệm — 22 thẻ, mỗi thẻ tiết kiệm ~20px */
+  .card{padding:13px}
+  .content{padding:14px 12px 48px;gap:20px}
+  .grp{gap:11px}
+  .ct{margin-bottom:9px;letter-spacing:1.5px}
+  .hero{padding:24px 14px 20px}
+  .ovc{padding:11px 4px}
+  .wi-board-item{padding:7px;margin-bottom:5px}
+  .sumb p{line-height:1.6}.sumb ul{line-height:1.7}
+  .fmd,.fmn,.cmpb{padding:10px 11px}
+  .hcc{padding:9px}
+
+  /* nâng cỡ chữ quá nhỏ */
+  .fd{width:15px;height:15px;font-size:9px}
+  .pc{font-size:8.5px}.pl{font-size:8.5px}
+  th{font-size:9px;letter-spacing:.5px}
+  .ovl{font-size:9px}.hcl{font-size:9px}.rp{font-size:9px}
+  .dfleg,.gkr-f,.gkr-sp{font-size:9.5px}
+
+  /* chống tràn: hàng hậu vệ có bề rộng cứng 302px, khung chỉ còn 246px ở màn 320 */
+  .dfn{width:92px}.dfv{width:32px}.dfv2{width:34px}
+  .dfr{gap:5px}.dfm{display:none}
+  .gkr{grid-template-columns:1fr 64px 52px}
+  .cmpv{width:46px}
+  .cbn{width:74px}
+
+  /* thẻ tổng kết: 3 cột 89px là quá hẹp */
+  .tkg{grid-template-columns:1fr 1fr}
+
+  /* ma trận nhân sự là lưới CSS, không cắt theo hàng được — giới hạn chiều cao có cuộn */
+  #matEl{max-height:420px;overflow-y:auto}
+
+  /* so sánh 2025: 3 bảng xếp chồng, siết hàng lại */
+  .cmpg{gap:9px}
+  .cmpr{padding:3px 0}
+  .cmpv{font-size:12px}
+  .cmph{margin-bottom:6px}
+}
+@media(max-width:360px){
+  .tkg{grid-template-columns:1fr}
+  .dfn{width:78px}
+  .ovs{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
@@ -328,7 +360,7 @@ tr.cl:hover td{background:var(--sf2)}
   <div class="grp grp-mt" id="grp-mt" data-screen-label="02 Trận đấu">
     <div class="ghdr"><span class="gname">Trận đấu</span><div class="gline"></div><span class="gbadge">MATCHES</span></div>
     <div class="g2">
-      <div class="card"><div class="ct">Lịch sử trận đấu</div><p class="hint">Nhấn trận có "▾ chi tiết" để xem bàn thắng · assist · penalty</p><div id="matchEl"></div></div>
+      <div class="card"><div class="ct">Lịch sử trận đấu</div><p class="hint">Nhấn trận có "▾ chi tiết" để xem bàn thắng · assist · penalty</p><div id="matchEl" class="clp" data-n="8" data-unit="trận"></div><button class="clpb" data-for="matchEl" hidden></button></div>
       <div class="card"><div class="ct">Phân tích đối thủ</div><div class="sx"><table><thead><tr id="oppTh"></tr></thead><tbody id="oppTb"></tbody></table></div></div>
     </div>
   </div>
@@ -338,7 +370,7 @@ tr.cl:hover td{background:var(--sf2)}
     <div class="card">
       <div class="ct">Thống kê cá nhân</div>
       <div style="display:flex;gap:5px;margin-bottom:11px;flex-wrap:wrap" id="posF"></div>
-      <div class="sx"><table><thead><tr id="pTh"></tr></thead><tbody id="pTb"></tbody></table></div>
+      <div class="sx"><table><thead><tr id="pTh"></tr></thead><tbody id="pTb" class="clp" data-n="10" data-unit="cầu thủ"></tbody></table></div><button class="clpb" data-for="pTb" hidden></button>
     </div>
     <div class="card">
       <div class="ct">Ma trận nhân sự</div>
@@ -368,8 +400,8 @@ tr.cl:hover td{background:var(--sf2)}
   <div class="grp grp-atk" id="grp-atk" data-screen-label="04 Tấn công">
     <div class="ghdr"><span class="gname">Tấn công</span><div class="gline"></div><span class="gbadge">ATTACK</span></div>
     <div class="g2">
-      <div class="card"><div class="ct">Vua phá lưới</div><p class="hint minm"></p><div id="scorers"></div></div>
-      <div class="card"><div class="ct">Kiến tạo · Assist</div><div id="assists"></div></div>
+      <div class="card"><div class="ct">Vua phá lưới</div><p class="hint minm"></p><div id="scorers" class="clp" data-n="8" data-unit="cầu thủ"></div><button class="clpb" data-for="scorers" hidden></button></div>
+      <div class="card"><div class="ct">Kiến tạo · Assist</div><div id="assists" class="clp" data-n="8" data-unit="cầu thủ"></div><button class="clpb" data-for="assists" hidden></button></div>
     </div>
     <div class="g3">
       <div class="card"><div class="ct">Penalty ghi bàn / hỏng</div><div id="penEl"></div></div>
@@ -381,10 +413,9 @@ tr.cl:hover td{background:var(--sf2)}
   <div class="grp grp-def" id="grp-def" data-screen-label="05 Phòng ngự">
     <div class="ghdr"><span class="gname">Phòng ngự</span><div class="gline"></div><span class="gbadge">DEFENSE</span></div>
     <div class="g2">
-      <div class="card"><div class="ct">Thủ môn</div><div id="gkEl"></div></div>
+      <div class="card"><div class="ct">Thủ môn &amp; bàn thua theo hiệp</div><div id="gkEl"></div></div>
       <div class="card"><div class="ct">Chỉ số phòng ngự · Hậu vệ</div><p class="hint" id="defHint"></p><div id="defEl"></div></div>
     </div>
-    <div class="card"><div class="ct">Bàn thua theo hiệp</div><div id="halfGa"></div></div>
   </div>
 
   <div class="grp grp-an" id="grp-an" data-screen-label="06 Phân tích">
@@ -393,10 +424,10 @@ tr.cl:hover td{background:var(--sf2)}
       <div class="card"><div class="ct">Sân nhà vs Sân khách</div><div id="venueEl"></div></div>
       <div class="card"><div class="ct">Chi tiết theo sân</div><div id="venBrkEl"></div></div>
     </div>
-    <div class="card"><div class="ct">So sánh mùa 2025 vs 2026</div><p class="hint" id="cmpHint"></p><div class="cmpg" id="cmpEl"></div></div>
+    <div class="card"><div class="ct">So sánh mùa 2025 vs 2026</div><p class="hint" id="cmpHint"></p><div class="cmpg clp" id="cmpEl" data-n="1" data-unit="bảng"></div><button class="clpb" data-for="cmpEl" hidden></button></div>
     <div class="card"><div class="ct">Ảnh hưởng khi cầu thủ vắng mặt</div>
       <p class="hint" id="absHint"></p>
-      <div class="sx"><table><thead><tr id="absTh"></tr></thead><tbody id="absTb"></tbody></table></div>
+      <div class="sx"><table><thead><tr id="absTh"></tr></thead><tbody id="absTb" class="clp" data-n="8"></tbody></table></div><button class="clpb" data-for="absTb" hidden></button>
     </div>
   </div>
 
@@ -899,12 +930,54 @@ function renderDef(){
     <span><span class="dfk" style="background:var(--grn)"></span>Cột 2 · hiệu số/trận</span></div>`;
 }
 
+// Thu gọn danh sách dài trên điện thoại: ẩn bớt hàng, có nút mở rộng.
+// Chỉ ẩn hiển thị, không đụng dữ liệu; trên máy tính hiện đủ.
+const CLP_W=600;
+function applyCollapse(){
+  const narrow=window.innerWidth<=CLP_W;
+  document.querySelectorAll(".clp").forEach(box=>{
+    const n=parseInt(box.dataset.n||"10",10);
+    // các hàng con: <tr> với bảng, hoặc mọi con trực tiếp với danh sách trận
+    const kids=[...box.children].filter(e=>!e.classList.contains("mdet"));
+    const btn=document.querySelector(`.clpb[data-for="${box.id}"]`);
+    const open=box.dataset.open==="1";
+    if(!narrow||kids.length<=n){
+      [...box.children].forEach(e=>e.style.display="");
+      if(btn)btn.hidden=true;
+      return;
+    }
+    if(btn)btn.hidden=false;
+    let shown=0;
+    [...box.children].forEach(e=>{
+      if(e.classList.contains("mdet")){e.style.display="";return;}
+      shown++;
+      e.style.display=(open||shown<=n)?"":"none";
+      // panel chi tiết đi kèm hàng bị ẩn thì ẩn theo
+      const nx=e.nextElementSibling;
+      if(nx&&nx.classList.contains("mdet"))nx.style.display=(open||shown<=n)?"":"none";
+    });
+    if(btn)btn.textContent=open?"Thu gọn":`Xem tất cả ${kids.length} ${box.dataset.unit||"dòng"}`;
+  });
+}
+function initCollapse(){
+  document.querySelectorAll(".clpb").forEach(btn=>{
+    btn.onclick=()=>{
+      const box=document.getElementById(btn.dataset.for);
+      box.dataset.open=box.dataset.open==="1"?"0":"1";
+      applyCollapse();
+    };
+  });
+  applyCollapse();
+  let t;window.addEventListener("resize",()=>{clearTimeout(t);t=setTimeout(applyCollapse,150)});
+}
+
 function renderMinM(){document.querySelectorAll(".minm").forEach(e=>{e.textContent=`Chỉ tính cầu thủ có từ ${MIN_M} trận trở lên`});}
 
 function renderTrend(){
   const el=document.getElementById("trendEl");if(!el)return;
   const n=M.length;if(!n){el.innerHTML="";return;}
-  const cw=46,W=n*cw+52,H=250,bw=cw*.30;
+  const cw=(typeof window!=="undefined"&&window.innerWidth<=600)?31:46;
+  const W=n*cw+52,H=250,bw=cw*.30;
   // MỘT khung duy nhất: cột bàn thắng lên / bàn thua xuống quanh trục 0,
   // đường hiệu số cộng dồn vẽ chồng lên cùng khung, dùng thang bên phải.
   const top=22,bot=196,mid=Math.round((top+bot)/2);
@@ -950,7 +1023,7 @@ function renderScorers(){
   document.getElementById("scorers").innerHTML=s.map((p,i)=>`<div class="scr">
     <div class="rk ${i===0?"rk1":i===1?"rk2":i===2?"rk3":"rkn"}">${i+1}</div>
     <span class="pos ${p.p}">${p.p}</span>
-    <div style="font-size:12px;font-weight:600;flex:1">${p.n}</div>
+    <div style="font-size:12px;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.n}</div>
     <div class="sb"><div class="sbf" style="width:${p.g/mx*100}%;background:linear-gradient(90deg,#8a3a0a,var(--or))"></div></div>
     <div style="font-family:var(--fd);font-size:19px;font-weight:700;color:var(--or);min-width:26px;text-align:right">${p.g}</div>
   </div>`).join("");
@@ -1020,7 +1093,11 @@ function renderGK(){
     return{n,d,avg:d.conc/mp};
   }).sort((a,b)=>a.avg-b.avg);
   const mx=Math.max(...rows.map(r=>r.avg),1);
-  document.getElementById("gkEl").innerHTML=rows.map(({n,d,avg})=>`<div class="gkr">
+  const tot=HGA.h1+HGA.h2||1;
+  const head=`<div class="hc"><div class="hcc"><div class="hcn" style="color:var(--red)">${HGA.h1}</div><div class="hcl">Thua hiệp 1</div></div><div class="hcc"><div class="hcn" style="color:var(--amb)">${HGA.h2}</div><div class="hcl">Thua hiệp 2</div></div></div>
+    <div class="wdl-bar" style="height:5px"><div class="wl" style="flex:${HGA.h1}"></div><div style="background:var(--amb);flex:${HGA.h2}"></div></div>
+    <div class="gkr-sp"><span>${(HGA.h1/tot*100).toFixed(0)}% H1</span><span>${HGA.h1+HGA.h2} bàn có dữ liệu hiệp</span><span>${(HGA.h2/tot*100).toFixed(0)}% H2</span></div>`;
+  document.getElementById("gkEl").innerHTML=head+rows.map(({n,d,avg})=>`<div class="gkr">
     <div class="gkr-n">${n}</div>
     <div class="gkr-b"><div class="gkr-bf" style="width:${Math.max(avg/mx*100,3)}%"></div></div>
     <div class="gkr-v">${avg.toFixed(2)}<span class="gkr-u">bt/t</span></div>
@@ -1033,16 +1110,6 @@ function renderGK(){
   </div>`).join("")+`<div class="gkr-f">Bàn thua tính đủ ${T.m} tuần · chi tiết hiệp &amp; penalty từ tuần ${DETAIL_WK}. Cột = bàn thua/trận, thấp là tốt.</div>`;
 }
 
-function renderHalfGa(){
-  const tot=HGA.h1+HGA.h2||1;
-  document.getElementById("halfGa").innerHTML=`
-    <div class="hc"><div class="hcc"><div class="hcn" style="color:var(--red)">${HGA.h1}</div><div class="hcl">Hiệp 1</div></div><div class="hcc"><div class="hcn" style="color:var(--amb)">${HGA.h2}</div><div class="hcl">Hiệp 2</div></div></div>
-    <div class="wdl-bar" style="height:5px"><div class="wl" style="flex:${HGA.h1}"></div><div style="background:var(--amb);flex:${HGA.h2}"></div></div>
-    <div style="display:flex;justify-content:space-between;font-size:10px;margin-top:6px;color:var(--tx3)"><span>${(HGA.h1/tot*100).toFixed(0)}% Hiệp 1</span><span>${HGA.h1+HGA.h2} bàn dữ liệu</span><span>${(HGA.h2/tot*100).toFixed(0)}% Hiệp 2</span></div>
-    <div style="margin-top:12px;border-top:1px solid var(--bd);padding-top:10px">
-      ${Object.entries(GKD).map(([n,d])=>`<div style="font-size:11px;color:var(--tx2);margin-bottom:5px"><b style="color:var(--tx)">${n}</b> · ${d.h1} thua H1 · ${d.h2} thua H2 · <span style="color:var(--tl)">${d.pf}</span> Pen gặp · <span style="color:var(--grn)">${d.ps}</span> cản</div>`).join("")}
-    </div>`;
-}
 
 function renderMatches(){
   document.getElementById("matchEl").innerHTML=M.slice().reverse().map((m,ri)=>{
@@ -1373,7 +1440,7 @@ function renderTk(){
   let run=0,max=0;M.forEach(m=>{if(m.r==="W"){run++;max=Math.max(max,run)}else run=0});
   const pen_tot=Object.values(PEN).reduce((s,v)=>s+v.sc,0);
   const pen_ms=Object.values(PEN).reduce((s,v)=>s+v.ms,0);
-  document.getElementById("tkEl").innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+  document.getElementById("tkEl").innerHTML=`<div class="tkg">
     ${[
       {l:"Thắng đậm nhất",v:`${bw.gf}–${bw.ga}`,s:`vs ${bw.vs}`,c:"grn"},
       {l:"Thua đậm nhất",v:`${lw.gf}–${lw.ga}`,s:`vs ${lw.vs}`,c:"red"},
@@ -1441,12 +1508,12 @@ function validateData(){
 [validateData,
  renderOv,renderWinRate,renderGoals,renderForm,renderTrend,renderMinM,
  renderScorers,renderAssists,renderPen,renderHalfGf,renderGpm,
- renderGK,renderHalfGa,renderDef,
+ renderGK,renderDef,
  renderMatches,renderOpponents,
  renderPosF,renderPT,renderHeatmap,renderBubble,
  renderFm,renderVenue,renderCmp,renderAbsent,
  renderAwards,renderSum,renderTk,
- ()=>renderNav("club")
+ ()=>renderNav("club"),initCollapse
 ].forEach(fn=>{try{fn()}catch(e){console.error("[render] "+(fn.name||"?")+": "+e.message)}});
 </script>
 </body>

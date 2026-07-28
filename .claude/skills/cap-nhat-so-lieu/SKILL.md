@@ -63,6 +63,17 @@ python3 scripts/check_stats.py --xlsx <đường dẫn xlsx>
 - `WebFetch` và `curl` thường bị proxy chặn (403) — chỉ tool trên mới dùng được.
 - **Chỉ báo "xong" sau khi bước này pass.** Anh Nguyên đã nhiều lần nhận việc chưa được verify — bước này tồn tại để chặn việc đó, không được bỏ qua.
 
+## Những khối KHÔNG do script sinh — đừng đụng
+
+| Khối | Nguồn | Ghi chú |
+|---|---|---|
+| `const M25=[...]` | sheet `Thống kê 2025`, lọc `Sân 11` | Dữ liệu lịch sử mùa 2025 cho phần so sánh. Script **không** sinh khối này và `find_block` khớp chính xác `^const M=` nên không đụng tới. Mùa 2025 đã đóng, không cần cập nhật. |
+| Link xem lại (`lv`) | cột **O** sheet `Thống kê match` | Từ nay `rebuild_data.py` **có** đọc. Trước đây thì không — chạy script sẽ xoá sạch link mà không báo gì. |
+
+**Chốt chặn link xem lại:** nếu script thấy link đang có trong `stats.html` mà sheet không cho ra, nó **dừng lại, không ghi gì** và in cảnh báo. Gần như luôn có nghĩa là file xlsx đang dùng cũ hơn sheet thật — tải lại sheet rồi chạy lại. Chỉ dùng `--force` sau khi đã đối chiếu cột O bằng mắt.
+
+Tương tự, nếu `check_stats.py --xlsx` báo `[FAIL]` mục 9 mà **toàn bộ** khác biệt nằm ở `lv`, đó là dấu hiệu xlsx cũ chứ không phải lỗi dữ liệu.
+
 ## Data quirks đã biết (đừng điều tra lại mỗi tuần)
 
 - `T.gf` = 71 nhưng tổng bàn theo cầu thủ = 70 → 1 bàn không quy được cho ai (tuần 14 thiếu 1 dòng `Bàn thắng` trong sheet).

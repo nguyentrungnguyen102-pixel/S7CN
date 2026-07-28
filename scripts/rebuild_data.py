@@ -110,6 +110,35 @@ def wk_num(wk_label):
     return int(wk_label.split()[1])
 
 
+def load_live_links(wb):
+    """Đọc link xem lại trận từ cột O sheet 'Thống kê match'.
+
+    Trả về {wk_num: url}. Chỉ nhận hàng có kết quả Thắng/Hòa/Thua — cột O
+    từng có link nằm nhầm ở hàng tuần Nghỉ (Tuần 5), tuần đó không có trận
+    nên không thể gắn link vào đâu.
+    """
+    if "Thống kê match" not in wb.sheetnames:
+        return {}
+    ws = wb["Thống kê match"]
+    links = {}
+    for r in range(1, ws.max_row + 1):
+        wk_cell = ws.cell(row=r, column=1).value
+        if not wk_cell or not str(wk_cell).strip().startswith("Tuần"):
+            continue
+        result = ws.cell(row=r, column=10).value  # J = Kết quả
+        url = ws.cell(row=r, column=15).value     # O = link xem lại
+        if not url or str(result).strip() not in RESULT_MAP:
+            continue
+        url = str(url).strip()
+        if not url.lower().startswith("http"):
+            continue
+        try:
+            links[wk_num(str(wk_cell))] = url
+        except Exception:
+            continue
+    return links
+
+
 def build(xlsx_path):
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")  # harmless pivotCache UserWarning
@@ -117,6 +146,7 @@ def build(xlsx_path):
 
     roster = load_roster(wb)
     weeks = load_weeks(wb)
+    live_links = load_live_links(wb)
 
     played = []  # (wk_num, rows) for weeks that were actually played
     for wk_label, rows in weeks.items():
@@ -131,17 +161,18 @@ def build(xlsx_path):
         head = rows[0]
         dt_val = head[1]
         dt = f"{dt_val.day:02d}/{dt_val.month:02d}"
-        M.append(
-            {
-                "wk": wn,
-                "dt": dt,
-                "vs": head[3],
-                "gf": int(head[6]),
-                "ga": int(head[7]),
-                "r": RESULT_MAP[head[8]],
-                "v": head[4],
-            }
-        )
+        entry = {
+            "wk": wn,
+            "dt": dt,
+            "vs": head[3],
+            "gf": int(head[6]),
+            "ga": int(head[7]),
+            "r": RESULT_MAP[head[8]],
+            "v": head[4],
+        }
+        if wn in live_links:
+            entry["lv"] = live_links[wn]
+        M.append(entry)
     week_order = [m["wk"] for m in M]
 
     # ---- attendance + goals-per-player-per-week (for PM) + MG ----
@@ -226,8 +257,9 @@ def js_str(s):
 def render_M(M):
     lines = ["const M=["]
     for m in M:
+        lv = ",lv:" + js_str(m["lv"]) if m.get("lv") else ""
         lines.append(
-            "  {{wk:{wk},dt:{dt},vs:{vs},gf:{gf},ga:{ga},r:{r},v:{v}}},".format(
+            "  {{wk:{wk},dt:{dt},vs:{vs},gf:{gf},ga:{ga},r:{r},v:{v}{lv}}},".format(
                 wk=m["wk"],
                 dt=js_str(m["dt"]),
                 vs=js_str(m["vs"]),
@@ -235,6 +267,7 @@ def render_M(M):
                 ga=m["ga"],
                 r=js_str(m["r"]),
                 v=js_str(m["v"]),
+                lv=lv,
             )
         )
     lines.append("];")
@@ -358,6 +391,8 @@ def main():
     ap.add_argument("--xlsx", default=DEFAULT_XLSX)
     ap.add_argument("--html", default=str(REPO_ROOT / "stats.html"))
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--force", action="store_true",
+                    help="ghi đè kể cả khi phát hiện link xem lại sẽ bị mất")
     args = ap.parse_args()
 
     M, PM, P, MG, implied_attendance = build(args.xlsx)
@@ -416,6 +451,21 @@ def main():
 
     html_path = Path(args.html)
     text = html_path.read_text(encoding="utf-8")
+    # Chốt chặn: không được âm thầm làm mất link xem lại đang có trong html.
+    # Xảy ra khi file xlsx cũ hơn sheet thật (link đã được dời sang tuần khác).
+    old_links = dict(re.findall(r'\{wk:(\d+),[^}]*lv:"([^"]+)"', text))
+    new_links = {str(m["wk"]): m["lv"] for m in M if m.get("lv")}
+    lost = {w: u for w, u in old_links.items() if new_links.get(w) != u}
+    if lost:
+        print("\n[CẢNH BÁO] link xem lại trong stats.html sẽ bị thay đổi/mất:")
+        for w, u in sorted(lost.items(), key=lambda x: int(x[0])):
+            print(f"  T{w}: {u}  ->  {new_links.get(w, 'KHÔNG CÒN')}")
+        print(f"  html đang có {len(old_links)} link, sheet cho ra {len(new_links)} link.")
+        print("  Nếu không cố ý: file xlsx có thể cũ hơn sheet thật. Tải lại sheet rồi chạy lại.")
+        if not args.force:
+            print("  Đã DỪNG, chưa ghi gì. Thêm --force nếu chắc chắn muốn ghi đè.")
+            return
+
     text = replace_block(text, "M", block_M)
     text = replace_block(text, "MG", block_MG)
     text = replace_block(text, "P", block_P)
