@@ -131,6 +131,12 @@ def parse_blocks(html_text):
         f"MG round-trip mismatch: {raw_gk_count} 'gk:' occurrences in raw text "
         f"vs {parsed_gk_count} parsed conceded entries"
     )
+    raw_ps_count = len(re.findall(r'\bn\s*:', raw_MG))
+    parsed_ps_count = sum(len(v.get("ps", [])) for v in MG.values())
+    assert raw_ps_count == parsed_ps_count, (
+        f"MG round-trip mismatch: {raw_ps_count} 'n:' occurrences in raw text "
+        f"vs {parsed_ps_count} parsed penalty-save entries"
+    )
 
     return M, MG, P, PM
 
@@ -182,7 +188,7 @@ def run_checks(M, MG, P, PM, report):
         f"in PM not P: {missing_in_P}; in P not PM: {missing_in_PM}" if not ok else f"{len(p_names)} names match",
     )
 
-    # 3. every sc/as/gk name in MG exists in P
+    # 3. every sc/as/gk/ps name in MG exists in P
     mg_names = set()
     for mg in MG.values():
         for g in mg.get("s", []):
@@ -191,9 +197,11 @@ def run_checks(M, MG, P, PM, report):
                 mg_names.add(g["as"])
         for c in mg.get("c", []):
             mg_names.add(c["gk"])
+        for ev in mg.get("ps", []):
+            mg_names.add(ev["n"])
     unknown = sorted(mg_names - p_names)
     report.check(
-        "3. every sc/as/gk name in MG exists in P",
+        "3. every sc/as/gk/ps name in MG exists in P",
         not unknown,
         f"unknown names: {unknown}" if unknown else f"{len(mg_names)} distinct names all known",
     )

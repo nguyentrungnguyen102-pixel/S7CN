@@ -189,7 +189,7 @@ def build(xlsx_path):
     goals_by_player = defaultdict(lambda: defaultdict(int))  # wk -> name -> count
     MG = {}
     for wn, rows in played:
-        s_list, c_list = [], []
+        s_list, c_list, ps_list = [], [], []
         for row in rows:
             kind = row[9]
             if kind == "Điểm danh":
@@ -204,8 +204,13 @@ def build(xlsx_path):
                 entry["h"] = HALF_MAP.get(row[12], None)
                 s_list.append(entry)
             elif kind == "Bàn thua":
-                c_list.append({"gk": disp(row[11]), "h": HALF_MAP.get(row[12], None)})
-        MG[wn] = {"s": s_list, "c": c_list, "pf": 0, "ps": 0}
+                entry = {"gk": disp(row[11]), "h": HALF_MAP.get(row[12], None)}
+                if row[13] == "Pen (Vào)":
+                    entry["pen"] = True
+                c_list.append(entry)
+            elif kind == "Cản Pen":
+                ps_list.append({"n": disp(row[11]), "h": HALF_MAP.get(row[12], None)})
+        MG[wn] = {"s": s_list, "c": c_list, "ps": ps_list}
 
     # Apply the implied-attendance union: scorer / assist / conceding GK
     # each imply presence, even without a Điểm danh row. Track which ones
@@ -224,6 +229,11 @@ def build(xlsx_path):
             name = c["gk"]
             if name not in attendance[wn]:
                 implied_attendance[wn].append((name, "thủ môn"))
+            attendance[wn].add(name)
+        for ev in mg["ps"]:
+            name = ev["n"]
+            if name not in attendance[wn]:
+                implied_attendance[wn].append((name, "cản pen"))
             attendance[wn].add(name)
 
     # ---- P : roster players with >=1 match, in canonical roster order ----
@@ -304,10 +314,15 @@ def render_MG(MG):
         c_parts = []
         for c in mg["c"]:
             h = "null" if c["h"] is None else c["h"]
-            c_parts.append(f"{{gk:{js_str(c['gk'])},h:{h}}}")
+            pen = ",pen:true" if c.get("pen") else ""
+            c_parts.append(f"{{gk:{js_str(c['gk'])},h:{h}{pen}}}")
+        ps_parts = []
+        for ev in mg["ps"]:
+            h = "null" if ev["h"] is None else ev["h"]
+            ps_parts.append(f"{{n:{js_str(ev['n'])},h:{h}}}")
         lines.append(
-            "  {wn}:{{s:[{s}],c:[{c}],pf:0,ps:0}},".format(
-                wn=wn, s=",".join(s_parts), c=",".join(c_parts)
+            "  {wn}:{{s:[{s}],c:[{c}],ps:[{ps}]}},".format(
+                wn=wn, s=",".join(s_parts), c=",".join(c_parts), ps=",".join(ps_parts)
             )
         )
     lines.append("};")

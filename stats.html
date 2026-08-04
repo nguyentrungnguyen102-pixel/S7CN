@@ -37,9 +37,9 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fb);line-height:1.5;
 .hero-kpi{display:flex;flex-wrap:wrap;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
 .kp{padding:16px 22px;text-align:center;border-right:1px solid var(--bd);flex:1 1 0;min-width:0}
 .kp:last-child{border:none}
-.kp-n{font-family:var(--fd);font-size:26px;font-weight:700;line-height:1}
-.kp-n.or{color:var(--or)}.kp-n.grn{color:var(--grn)}.kp-n.sm{font-size:15px;letter-spacing:.3px;margin-top:4px}
-.kp-l{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--tx3);margin-top:4px;font-weight:500}
+.kp-n{font-family:var(--fd);font-size:26px;font-weight:700;line-height:1;white-space:nowrap}
+.kp-n.or{color:var(--or)}.kp-n.grn{color:var(--grn)}.kp-n.sm{font-size:15px;letter-spacing:.3px}
+.kp-l{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--tx3);margin-top:4px;font-weight:500;white-space:nowrap}
 
 
 .snav{position:sticky;top:0;z-index:90;background:rgba(12,9,7,.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd)}
@@ -95,6 +95,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fb);line-height:1.5;
 .chip-g{background:var(--sf2);border-color:var(--bd)}.chip-pen{background:var(--amb-d);border-color:rgba(232,160,48,.25)}
 .chip-fk{background:var(--tl-d);border-color:rgba(42,139,174,.25)}
 .chip-ms{background:var(--red-d);border-color:rgba(229,69,69,.25)}.chip-c{background:var(--red-d);border-color:rgba(229,69,69,.2)}
+.chip-ps{background:var(--grn-d);border-color:rgba(60,184,112,.25)}
 .chip .sc{color:var(--or);font-weight:600}.chip .as{color:var(--tl)}.chip .sm{font-size:8px;color:var(--tx3)}
 
 
@@ -570,29 +571,29 @@ const M25=[
 ];
 
 // ===== GOAL DETAIL =====
-// s=scored [{sc,as,t:"normal"|"pen"|"fk",h:1|2|null}]  ms=missed pen  c=conceded [{gk,h,t}]  pf/ps=pen faced/saved
+// s=scored [{sc,as,t:"normal"|"pen"|"fk",h:1|2|null}]  ms=missed pen  c=conceded [{gk,h,pen?:true}]  ps=pen saved [{n,h}]
 const MG={
-  1:{s:[{sc:"Văn Quang",t:"normal",h:null},{sc:"Quốc Long",t:"normal",h:null},{sc:"Văn Chung",t:"normal",h:null},{sc:"Gia Lộc",t:"normal",h:null}],c:[{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null}],pf:0,ps:0},
-  2:{s:[{sc:"Trung Nguyên",t:"normal",h:null},{sc:"Khâm",t:"normal",h:null},{sc:"Khâm",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null}],c:[{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null}],pf:0,ps:0},
-  3:{s:[],c:[{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null}],pf:0,ps:0},
-  4:{s:[{sc:"Mai Cồ Hiếu",t:"normal",h:null},{sc:"Quốc Long",t:"normal",h:null}],c:[],pf:0,ps:0},
-  9:{s:[{sc:"Hữu Duyên",t:"normal",h:null},{sc:"Văn Chung",t:"normal",h:null},{sc:"Khâm",t:"normal",h:null}],c:[{gk:"Đức Khoa",h:null}],pf:0,ps:0},
-  10:{s:[{sc:"Văn Chung",t:"normal",h:null},{sc:"Văn Chung",t:"normal",h:null},{sc:"Khâm",t:"normal",h:null}],c:[{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null}],pf:0,ps:0},
-  11:{s:[{sc:"Khâm",t:"normal",h:null},{sc:"Khâm",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null}],c:[{gk:"Tài Ba",h:null},{gk:"Tài Ba",h:null},{gk:"Tài Ba",h:null}],pf:0,ps:0},
-  12:{s:[{sc:"Tài Ba",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null}],c:[{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null}],pf:0,ps:0},
-  14:{s:[{sc:"Cảm",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null},{sc:"Lâm",t:"normal",h:null},{sc:"Bạn mới",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null}],c:[{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null}],pf:0,ps:0},
-  15:{s:[{sc:"Trung Nguyên",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null},{sc:"Gia Lộc",t:"normal",h:null},{sc:"Lâm",t:"normal",h:null}],c:[{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null}],pf:0,ps:0},
-  16:{s:[{sc:"Quốc Long",t:"normal",h:null},{sc:"Quốc Long",t:"normal",h:null},{sc:"Văn Chung",t:"normal",h:null}],c:[{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null}],pf:0,ps:0},
-  19:{s:[{sc:"Văn Chung",t:"normal",h:null},{sc:"Văn Chung",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null},{sc:"Bạn Hoàng",t:"normal",h:null}],c:[{gk:"Thủ môn mới",h:null},{gk:"Thủ môn mới",h:null},{gk:"Thủ môn mới",h:null}],pf:0,ps:0},
-  20:{s:[{sc:"Mai Cồ Hiếu",t:"normal",h:null},{sc:"Mai Cồ Hiếu",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null},{sc:"Lâm",t:"normal",h:null},{sc:"Khâm",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null},{sc:"Hoàng Đại",t:"normal",h:null}],c:[{gk:"Tài Ba",h:null},{gk:"Tài Ba",h:null}],pf:0,ps:0},
-  21:{s:[{sc:"Văn Chung",as:"Văn Quang",t:"normal",h:1}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2}],pf:0,ps:0},
-  23:{s:[{sc:"Đức Khoa",t:"normal",h:1},{sc:"Cảm",t:"normal",h:1},{sc:"Khâm",t:"normal",h:2},{sc:"Hào",as:"Lucky Trần",t:"normal",h:2}],c:[{gk:"Thủ môn mới",h:1}],pf:0,ps:0},
-  24:{s:[{sc:"Cảm",as:"Khâm",t:"normal",h:1},{sc:"Văn Quang",as:"Khâm",t:"normal",h:1},{sc:"Cảm",as:"Trung Nguyên",t:"normal",h:2}],c:[{gk:"Đức Khoa",h:2}],pf:0,ps:0},
-  25:{s:[{sc:"Tĩnh",as:"Quốc Long",t:"normal",h:1},{sc:"Trung Nguyên",as:"Văn Quang",t:"normal",h:1},{sc:"Mai Cồ Hiếu",as:"Trung Nguyên",t:"normal",h:1},{sc:"Chí Quỹ",as:"Mai Cồ Hiếu",t:"normal",h:1},{sc:"Cảm",t:"pen",h:1},{sc:"Cảm",as:"Mai Cồ Hiếu",t:"normal",h:2}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2},{gk:"Đức Khoa",h:2}],pf:0,ps:0},
-  26:{s:[{sc:"Quốc Long",as:"Khâm",t:"normal",h:1},{sc:"Quốc Long",as:"Khâm",t:"fk",h:2},{sc:"Mai Cồ Hiếu",as:"Nguyễn Hoàng",t:"normal",h:2}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2}],pf:0,ps:0},
-  28:{s:[{sc:"Mai Cồ Hiếu",t:"normal",h:1}],c:[{gk:"Thủ môn mới",h:1},{gk:"Thủ môn mới",h:2},{gk:"Thủ môn mới",h:2},{gk:"Thủ môn mới",h:2},{gk:"Thủ môn mới",h:2},{gk:"Thủ môn mới",h:2}],pf:0,ps:0},
-  30:{s:[{sc:"Cảm",as:"Mai Cồ Hiếu",t:"normal",h:1},{sc:"Cảm",as:"Mai Cồ Hiếu",t:"normal",h:1},{sc:"Cảm",as:"Văn Chung",t:"normal",h:1},{sc:"Cảm",as:"Văn Chung",t:"normal",h:2},{sc:"Văn Chung",t:"pen",h:2},{sc:"Văn Quang",as:"Nguyên Khôi",t:"normal",h:2}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2},{gk:"Đức Khoa",h:2}],pf:0,ps:0},
-  31:{s:[{sc:"Lucky Trần",t:"normal",h:1},{sc:"Cảm",as:"Trung Nguyên",t:"normal",h:1},{sc:"Cảm",as:"Quốc Long",t:"normal",h:1}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2},{gk:"Đức Khoa",h:2}],pf:0,ps:0},
+  1:{s:[{sc:"Văn Quang",t:"normal",h:null},{sc:"Quốc Long",t:"normal",h:null},{sc:"Văn Chung",t:"normal",h:null},{sc:"Gia Lộc",t:"normal",h:null}],c:[{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null}],ps:[]},
+  2:{s:[{sc:"Trung Nguyên",t:"normal",h:null},{sc:"Khâm",t:"normal",h:null},{sc:"Khâm",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null}],c:[{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null}],ps:[]},
+  3:{s:[],c:[{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null}],ps:[]},
+  4:{s:[{sc:"Mai Cồ Hiếu",t:"normal",h:null},{sc:"Quốc Long",t:"normal",h:null}],c:[],ps:[]},
+  9:{s:[{sc:"Hữu Duyên",t:"normal",h:null},{sc:"Văn Chung",t:"normal",h:null},{sc:"Khâm",t:"normal",h:null}],c:[{gk:"Đức Khoa",h:null}],ps:[]},
+  10:{s:[{sc:"Văn Chung",t:"normal",h:null},{sc:"Văn Chung",t:"normal",h:null},{sc:"Khâm",t:"normal",h:null}],c:[{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null}],ps:[]},
+  11:{s:[{sc:"Khâm",t:"normal",h:null},{sc:"Khâm",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null}],c:[{gk:"Tài Ba",h:null},{gk:"Tài Ba",h:null},{gk:"Tài Ba",h:null}],ps:[{n:"Đức Khoa",h:1}]},
+  12:{s:[{sc:"Tài Ba",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null}],c:[{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null}],ps:[]},
+  14:{s:[{sc:"Cảm",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null},{sc:"Lâm",t:"normal",h:null},{sc:"Bạn mới",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null}],c:[{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null}],ps:[]},
+  15:{s:[{sc:"Trung Nguyên",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null},{sc:"Gia Lộc",t:"normal",h:null},{sc:"Lâm",t:"normal",h:null}],c:[{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null}],ps:[]},
+  16:{s:[{sc:"Quốc Long",t:"normal",h:null},{sc:"Quốc Long",t:"normal",h:null},{sc:"Văn Chung",t:"normal",h:null}],c:[{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null},{gk:"Đức Khoa",h:null}],ps:[]},
+  19:{s:[{sc:"Văn Chung",t:"normal",h:null},{sc:"Văn Chung",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null},{sc:"Bạn Hoàng",t:"normal",h:null}],c:[{gk:"Thủ môn mới",h:null},{gk:"Thủ môn mới",h:null},{gk:"Thủ môn mới",h:null}],ps:[]},
+  20:{s:[{sc:"Mai Cồ Hiếu",t:"normal",h:null},{sc:"Mai Cồ Hiếu",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null},{sc:"Lâm",t:"normal",h:null},{sc:"Khâm",t:"normal",h:null},{sc:"Cảm",t:"normal",h:null},{sc:"Hoàng Đại",t:"normal",h:null}],c:[{gk:"Tài Ba",h:null},{gk:"Tài Ba",h:null}],ps:[]},
+  21:{s:[{sc:"Văn Chung",as:"Văn Quang",t:"normal",h:1}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2}],ps:[]},
+  23:{s:[{sc:"Đức Khoa",t:"normal",h:1},{sc:"Cảm",t:"normal",h:1},{sc:"Khâm",t:"normal",h:2},{sc:"Hào",as:"Lucky Trần",t:"normal",h:2}],c:[{gk:"Thủ môn mới",h:1}],ps:[]},
+  24:{s:[{sc:"Cảm",as:"Khâm",t:"normal",h:1},{sc:"Văn Quang",as:"Khâm",t:"normal",h:1},{sc:"Cảm",as:"Trung Nguyên",t:"normal",h:2}],c:[{gk:"Đức Khoa",h:2}],ps:[]},
+  25:{s:[{sc:"Tĩnh",as:"Quốc Long",t:"normal",h:1},{sc:"Trung Nguyên",as:"Văn Quang",t:"normal",h:1},{sc:"Mai Cồ Hiếu",as:"Trung Nguyên",t:"normal",h:1},{sc:"Chí Quỹ",as:"Mai Cồ Hiếu",t:"normal",h:1},{sc:"Cảm",t:"pen",h:1},{sc:"Cảm",as:"Mai Cồ Hiếu",t:"normal",h:2}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2},{gk:"Đức Khoa",h:2}],ps:[]},
+  26:{s:[{sc:"Quốc Long",as:"Khâm",t:"normal",h:1},{sc:"Quốc Long",as:"Khâm",t:"fk",h:2},{sc:"Mai Cồ Hiếu",as:"Nguyễn Hoàng",t:"normal",h:2}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2}],ps:[]},
+  28:{s:[{sc:"Mai Cồ Hiếu",t:"normal",h:1}],c:[{gk:"Thủ môn mới",h:1},{gk:"Thủ môn mới",h:2},{gk:"Thủ môn mới",h:2},{gk:"Thủ môn mới",h:2},{gk:"Thủ môn mới",h:2},{gk:"Thủ môn mới",h:2}],ps:[]},
+  30:{s:[{sc:"Cảm",as:"Mai Cồ Hiếu",t:"normal",h:1},{sc:"Cảm",as:"Mai Cồ Hiếu",t:"normal",h:1},{sc:"Cảm",as:"Văn Chung",t:"normal",h:1},{sc:"Cảm",as:"Văn Chung",t:"normal",h:2},{sc:"Văn Chung",t:"pen",h:2},{sc:"Văn Quang",as:"Nguyên Khôi",t:"normal",h:2}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2},{gk:"Đức Khoa",h:2}],ps:[]},
+  31:{s:[{sc:"Lucky Trần",t:"normal",h:1},{sc:"Cảm",as:"Trung Nguyên",t:"normal",h:1},{sc:"Cảm",as:"Quốc Long",t:"normal",h:1}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2},{gk:"Đức Khoa",h:2}],ps:[{n:"Đức Khoa",h:1}]},
 };
 
 // Compute aggregates
@@ -620,8 +621,12 @@ Object.entries(MG).forEach(([wk,mg])=>{
     const d=GKD[c.gk];d.conc++;
     if(c.h===1){d.h1++;HGA.h1++;}else if(c.h===2){d.h2++;HGA.h2++;}else{d.unk++;HGA.unk++;}
     if(home){d.hc++;d.hw.add(+wk)}else{d.ac++;d.aw.add(+wk)}
+    if(c.pen)d.pf++;
   });
-  if(mg.pf)Object.values(GKD).forEach(d=>{d.pf+=mg.pf;d.ps+=mg.ps||0});
+  (mg.ps||[]).forEach(ev=>{
+    if(!GKD[ev.n])GKD[ev.n]={conc:0,h1:0,h2:0,unk:0,pf:0,ps:0,hc:0,ac:0,hw:new Set(),aw:new Set()};
+    const d=GKD[ev.n];d.ps++;d.pf++;
+  });
 });
 const AST=Object.fromEntries(Object.entries(AST_H).map(([k,v])=>[k,v.h1+v.h2]));
 
@@ -668,7 +673,7 @@ const PM={
   "Quốc Long":[1,0,0,1,0,null,0,null,0,0,2,null,0,0,null,null,0,2,0,0,0],
   "Hữu Duyên":[0,0,0,0,1,0,0,0,null,0,0,0,0,0,0,null,0,0,0,0,null],
   "Nguyễn Hoàng":[0,0,0,0,0,null,0,0,0,0,null,0,0,0,null,0,0,0,0,0,0],
-  "Đức Khoa":[0,0,0,0,0,0,null,0,0,0,0,null,null,0,1,0,0,0,null,0,0],
+  "Đức Khoa":[0,0,0,0,0,0,0,0,0,0,0,null,null,0,1,0,0,0,null,0,0],
   "D.Chí Hoàng":[0,0,null,0,null,0,null,0,null,0,0,0,null,0,0,0,0,null,null,0,null],
   "Minh Hoàng":[0,0,0,null,null,null,0,0,0,null,null,0,0,0,null,null,0,0,null,null,null],
   "Trung Nguyên":[null,1,0,0,0,0,0,0,0,1,0,0,0,0,null,0,1,0,0,0,0],
@@ -1196,7 +1201,11 @@ function renderMatches(){
       }
       if(mg.c?.length){
         det+=`<div style="font-size:8px;letter-spacing:1px;color:var(--red);margin:5px 0 3px;font-weight:700;text-transform:uppercase">Bàn thua</div>`;
-        det+=mg.c.map(c=>`<span class="chip chip-c"><span style="color:var(--tl)">${c.gk}</span>${c.h?`<span class="sm">H${c.h}</span>`:""}</span>`).join("");
+        det+=mg.c.map(c=>`<span class="chip chip-c"><span style="color:var(--tl)">${c.gk}</span>${c.pen?`<span class="sm">PEN</span>`:""}${c.h?`<span class="sm">H${c.h}</span>`:""}</span>`).join("");
+      }
+      if(mg.ps?.length){
+        det+=`<div style="font-size:8px;letter-spacing:1px;color:var(--grn);margin:5px 0 3px;font-weight:700;text-transform:uppercase">Cản Penalty</div>`;
+        det+=mg.ps.map(g=>`<span class="chip chip-ps"><span style="color:var(--grn)">${g.n}</span>${g.h?`<span class="sm">H${g.h}</span>`:""}</span>`).join("");
       }
       det+="</div>";
     }
