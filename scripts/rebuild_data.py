@@ -22,7 +22,9 @@ DEFAULT_XLSX = (
 )
 
 # Sheet name -> "Dương Chí Hoàng" is displayed elsewhere as "D.Chí Hoàng".
-DISPLAY = {"Dương Chí Hoàng": "D.Chí Hoàng"}
+# "Khanh" là lỗi gõ thiếu dấu của "Khánh" (bạn Duyên) ở Tuần 30 — cùng một
+# người, gộp lại để không tách thành hai cầu thủ.
+DISPLAY = {"Dương Chí Hoàng": "D.Chí Hoàng", "Khanh": "Khánh"}
 
 RESULT_MAP = {"Thắng": "W", "Hòa": "D", "Thua": "L"}
 GOAL_TYPE_MAP = {"Thường": "normal", "Pen (Vào)": "pen", "Sút phạt": "fk"}
@@ -231,6 +233,19 @@ def build(xlsx_path):
         if any(name in attendance[wn] for wn in week_order):
             P.append({"n": name, "p": entry["p"], "no": entry["no"], "t": entry["t"]})
 
+    # Khách chỉ có trong 'Log tuần' mà chưa có dòng nào trong 'Info' (ví dụ
+    # 'Bạn mới' ghi bàn ở T14). Bỏ họ đi thì bàn thắng nằm trong MG nhưng
+    # không quy được cho ai trong P/PM -> lệch tổng bàn. Đưa vào cuối roster
+    # dạng sub, không số áo / không vị trí, và báo ra để anh bổ sung vào Info.
+    known = {p["n"] for p in P} | {e["n"] for e in roster}
+    log_only = []
+    for wn in week_order:
+        for name in sorted(attendance[wn]):
+            if name not in known:
+                known.add(name)
+                log_only.append(name)
+                P.append({"n": name, "p": "", "no": "", "t": "sub"})
+
     # ---- PM ----
     PM = {}
     for p in P:
@@ -243,7 +258,7 @@ def build(xlsx_path):
                 arr.append(goals_by_player[wn].get(name, 0))
         PM[name] = arr
 
-    return M, PM, P, MG, implied_attendance
+    return M, PM, P, MG, implied_attendance, log_only
 
 
 # ---------------------------------------------------------------------------
@@ -395,7 +410,7 @@ def main():
                     help="ghi đè kể cả khi phát hiện link xem lại sẽ bị mất")
     args = ap.parse_args()
 
-    M, PM, P, MG, implied_attendance = build(args.xlsx)
+    M, PM, P, MG, implied_attendance, log_only = build(args.xlsx)
 
     block_M = render_M(M)
     block_MG = render_MG(MG)
@@ -431,6 +446,12 @@ def main():
         print("\n".join(mismatches))
     else:
         print("No per-week MG/M count mismatches.")
+
+    if log_only:
+        print("Cầu thủ chỉ có trong 'Log tuần', CHƯA có dòng trong sheet 'Info'"
+              " (đã tự thêm vào cuối roster dạng sub, nên bổ sung vào Info):")
+        for name in log_only:
+            print(f"  {name}")
 
     if implied_attendance:
         print("Implied-attendance warnings (no Điểm danh row, inferred from goal/assist/GK record):")

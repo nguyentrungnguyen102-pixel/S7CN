@@ -76,8 +76,10 @@ Tương tự, nếu `check_stats.py --xlsx` báo `[FAIL]` mục 9 mà **toàn b�
 
 ## Data quirks đã biết (đừng điều tra lại mỗi tuần)
 
-- `T.gf` = 71 nhưng tổng bàn theo cầu thủ = 70 → 1 bàn không quy được cho ai (tuần 14 thiếu 1 dòng `Bàn thắng` trong sheet).
-- Tuần 28: cột `GA` ghi 6 nhưng log có 7 dòng `Bàn thua` → lấy theo cột `GF/GA` làm chuẩn.
-- `Khanh` chưa có vị trí trong sheet `Info`.
+- ~~`T.gf` = 71 nhưng tổng bàn theo cầu thủ = 70 (tuần 14 thiếu 1 dòng `Bàn thắng`)~~ — **đã hết từ tuần 31**: sheet đã bổ sung dòng đó, ghi cho `Bạn mới`. Tổng khớp 74 = 74.
+- ~~Tuần 28: cột `GA` ghi 6 nhưng log có 7 dòng `Bàn thua`~~ — **đã hết từ tuần 31**, sheet đã sửa khớp.
+- ~~`Khanh` chưa có vị trí trong sheet `Info`~~ — **đã hết từ tuần 31**: `Info` giờ ghi `Khánh bạn Duyên`, vị trí LB.
+- `Khanh` (không dấu, tuần 30) và `Khánh` (có dấu, tuần 31) trong `Log tuần` là **một người**. Đã gộp bằng `DISPLAY` trong `rebuild_data.py`. Nếu sheet còn gõ lệch dấu tên khác, thêm alias vào đó chứ đừng sửa tay `stats.html`.
+- `Bạn mới` (ghi bàn tuần 14) chỉ có trong `Log tuần`, chưa có dòng trong `Info`. Script tự thêm vào cuối roster dạng sub và in `[WARN]` — chấp nhận được, nhưng nếu biết tên thật thì bổ sung vào `Info`.
 - 3 người trong roster có 0 trận nên không lên bảng: `Văn Tới`, `An`, `Tuấn`.
 - Tuần 1–20 không có dữ liệu hiệp và kiến tạo; chỉ từ tuần 21 trở đi mới có.

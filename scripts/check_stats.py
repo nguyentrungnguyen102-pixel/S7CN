@@ -302,7 +302,7 @@ def run_checks(M, MG, P, PM, report):
 def run_xlsx_crosscheck(xlsx_path, M, MG, PM, report):
     import rebuild_data as rd
 
-    xM, xPM, xP, xMG, x_implied = rd.build(xlsx_path)
+    xM, xPM, xP, xMG, x_implied, x_log_only = rd.build(xlsx_path)
 
     diffs = []
 
@@ -328,6 +328,12 @@ def run_xlsx_crosscheck(xlsx_path, M, MG, PM, report):
         a, b = PM.get(name), xPM.get(name)
         if a != b:
             diffs.append(f"PM[{name!r}]: html={a} xlsx={b}")
+
+    for name in x_log_only:
+        report.warn(
+            "roster (xlsx)",
+            f"{name} có trong 'Log tuần' nhưng chưa có dòng trong sheet 'Info'",
+        )
 
     if x_implied:
         for wk in sorted(x_implied):
