@@ -37,7 +37,7 @@ Nguồn dữ liệu:
 
 **Penalty (cản / thua):**
 - `Cản Pen`: mỗi dòng là 1 quả pen thủ môn cản được. Cột "Kiến tạo/Thủ môn" ghi tên thủ môn, cột "Loại bàn" luôn là `Pen (Cản)`. Script đọc thành `MG[tuần].ps:[{n,h}]`.
-- `Bàn thua` do đá pen: **anh cần đánh dấu cột "Loại bàn" = `Pen (Vào)`** trên đúng dòng đó (y hệt cách đánh dấu bàn thắng phạt đền) — nếu để trống, script không biết trái đó là pen. Không có cách nào tự suy luận được. Khi đã đánh dấu, script tự đọc thành cờ `pen:true` trên entry đó trong `MG[tuần].c`.
+- `Bàn thua`: cột "Loại bàn" **để trống = bàn thường** (không cần điền gì). Nếu là thua do đá pen, anh đánh dấu cột "Loại bàn" = **`Pen`** — chú ý đây là nhãn riêng cho Bàn thua, **khác** với `Pen (Vào)` (nhãn dùng cho Bàn thắng). Script nhận cả hai (`"Pen"` lẫn `"Pen (Vào)"`) trên dòng Bàn thua để không vỡ nếu gõ theo thói quen, nhưng nhãn thật anh dùng là `Pen`. Không có cách nào tự suy luận nếu để trống — phải đánh dấu tay. Khi đã đánh dấu, script tự đọc thành cờ `pen:true` trên entry đó trong `MG[tuần].c`.
 - `pf` (penalty đối mặt) và `ps` (penalty cản được) mỗi thủ môn được tính lại lúc chạy trong `stats.html` từ `ps` + số bàn thua có cờ `pen`, không phải số cứng trong data — không cần và không được sửa tay.
 
 ## Bước 3 — Kiểm tra
@@ -81,6 +81,8 @@ Tương tự, nếu `check_stats.py --xlsx` báo `[FAIL]` mục 9 mà **toàn b�
 
 **Nếu anh gửi link xem lại qua chat (không phải qua sheet):** hiện KHÔNG có tool ghi vào Google Sheets trong phiên làm việc này (chỉ có tool đọc/tải file Drive) — không tự động dán được vào cột O. Đừng vá tay `lv` thẳng vào `stats.html`: `check_stats.py --xlsx` sẽ FAIL ngay (mục 9, sai đúng như thiết kế) vì lệch với sheet, và lần `rebuild_data.py` tuần sau sẽ đứng lại vì chốt chặn coi đó là link sắp mất. Cách đúng: nhờ anh dán link vào cột O dòng tuần đó trong sheet `Thống kê match`, tải lại sheet rồi chạy lại — script sẽ tự lên, không cần nhắc.
 
+**Link thiếu `https://`:** anh hay dán link kiểu `youtube.com/live/...` (thiếu tiền tố scheme) khác với format `https://www.youtube.com/watch?v=...` các tuần cũ. `load_live_links()` tự thêm `https://` cho link thiếu scheme trước khi nhận — không cần nhắc anh phải dán đủ tiền tố nữa, chỉ cần cột O có nội dung là link thật (không rỗng, không phải text khác) là đủ.
+
 ## Data quirks đã biết (đừng điều tra lại mỗi tuần)
 
 - ~~`T.gf` = 71 nhưng tổng bàn theo cầu thủ = 70 (tuần 14 thiếu 1 dòng `Bàn thắng`)~~ — **đã hết từ tuần 31**: sheet đã bổ sung dòng đó, ghi cho `Bạn mới`. Tổng khớp 74 = 74.
@@ -91,4 +93,5 @@ Tương tự, nếu `check_stats.py --xlsx` báo `[FAIL]` mục 9 mà **toàn b�
 - 3 người trong roster có 0 trận nên không lên bảng: `Văn Tới`, `An`, `Tuấn`.
 - Tuần 1–20 không có dữ liệu hiệp và kiến tạo; chỉ từ tuần 21 trở đi mới có.
 - ~~`MG[tuần].pf`/`.ps` luôn hardcode 0 trong `rebuild_data.py`, `Cản Pen` trong Log tuần bị bỏ qua hoàn toàn~~ — **đã sửa từ tuần 31**: script đọc `Cản Pen` thành `MG[tuần].ps:[{n,h}]`, frontend tự tính `pf`/`ps` mỗi thủ môn từ đó (không còn cộng dồn nhầm vào mọi thủ môn như code cũ). Phát hiện luôn 1 quả cản pen cũ ở tuần 11 (Đức Khoa) trước giờ chưa từng lên bảng.
-- ~~`.kp-n.sm` có `margin-top:4px` làm khối KPI góc phải hero lệch hàng, và 3 cột KPI có thể tự wrap xuống 2 dòng dù đủ chỗ (do flex item không có `white-space:nowrap`)~~ — **đã sửa từ tuần 31**: bỏ margin lệch, thêm `nowrap` cho `.kp-n`/`.kp-l`. Đã test không tràn ở mọi bề rộng 320–1920px.
+- ~~`.kp-n.sm` có `margin-top:4px` làm khối KPI góc phải hero lệch hàng, và 3 cột KPI có thể tự wrap xuống 2 dòng dù đủ chỗ (do flex item không có `white-space:nowrap`)~~ — đã sửa nhưng **chưa đủ**: fix này chỉ xử lý phần lệch đo được trên desktop/headless, không phải nguyên nhân chính khiến anh vẫn thấy lệch trên máy thật.
+- ~~KPI vẫn lệch trên trình duyệt thật (Android/Chromebook) dù headless Chromium đo `top` 3 cột bằng nhau tuyệt đối~~ — **đã sửa từ tuần 31**: nguyên nhân thật là tính năng auto text-boosting của Android Chrome (phóng cỡ chữ theo heuristic riêng từng khối khi trang có `<meta viewport width=device-width>` mà thiếu `text-size-adjust:100%` để tắt). Trang trước đó không có dòng `text-size-adjust` nào. Đã thêm `-webkit-text-size-adjust:100%;text-size-adjust:100%` vào `html{}`. Không tái hiện được hành vi autosizer này trong sandbox (Chromium desktop-build không bật tính năng đó dù giả lập `devices['Pixel 7']`) nên không tự verify 100% được — đây là giới hạn môi trường, không phải dấu hiệu fix sai. Nếu anh còn thấy lệch sau khi deploy, gửi lại ảnh chụp màn hình thật để điều tra tiếp, đừng chỉ dựa vào headless test nữa.

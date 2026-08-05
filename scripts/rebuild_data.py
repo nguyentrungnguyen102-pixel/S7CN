@@ -132,8 +132,10 @@ def load_live_links(wb):
         if not url or str(result).strip() not in RESULT_MAP:
             continue
         url = str(url).strip()
-        if not url.lower().startswith("http"):
+        if not url:
             continue
+        if not url.lower().startswith(("http://", "https://")):
+            url = "https://" + url
         try:
             links[wk_num(str(wk_cell))] = url
         except Exception:
@@ -205,7 +207,7 @@ def build(xlsx_path):
                 s_list.append(entry)
             elif kind == "Bàn thua":
                 entry = {"gk": disp(row[11]), "h": HALF_MAP.get(row[12], None)}
-                if row[13] == "Pen (Vào)":
+                if row[13] in ("Pen", "Pen (Vào)"):
                     entry["pen"] = True
                 c_list.append(entry)
             elif kind == "Cản Pen":
