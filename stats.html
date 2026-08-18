@@ -529,6 +529,7 @@ const M=[
   {wk:28,dt:"12/07",vs:"Đức Ailen",gf:1,ga:6,r:"L",v:"ĐH TDTT"},
   {wk:30,dt:"26/07",vs:"Đức Ailen",gf:6,ga:3,r:"W",v:"ĐH TDTT"},
   {wk:31,dt:"02/08",vs:"Pitcity",gf:3,ga:3,r:"D",v:"Etihad Quận 12",lv:"https://youtube.com/live/HUl1K0Ty2_Q?si=syEkO3hP7iIrK8DG"},
+  {wk:33,dt:"09/08",vs:"HBC",gf:1,ga:2,r:"L",v:"ĐH TDTT"},
 ];
 
 const T=(()=>{
@@ -595,6 +596,7 @@ const MG={
   28:{s:[{sc:"Mai Cồ Hiếu",t:"normal",h:1}],c:[{gk:"Thủ môn mới",h:1},{gk:"Thủ môn mới",h:2},{gk:"Thủ môn mới",h:2},{gk:"Thủ môn mới",h:2},{gk:"Thủ môn mới",h:2},{gk:"Thủ môn mới",h:2}],ps:[]},
   30:{s:[{sc:"Cảm",as:"Mai Cồ Hiếu",t:"normal",h:1},{sc:"Cảm",as:"Mai Cồ Hiếu",t:"normal",h:1},{sc:"Cảm",as:"Văn Chung",t:"normal",h:1},{sc:"Cảm",as:"Văn Chung",t:"normal",h:2},{sc:"Văn Chung",t:"pen",h:2},{sc:"Văn Quang",as:"Nguyên Khôi",t:"normal",h:2}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2},{gk:"Đức Khoa",h:2}],ps:[]},
   31:{s:[{sc:"Lucky Trần",t:"normal",h:1},{sc:"Cảm",as:"Trung Nguyên",t:"normal",h:1},{sc:"Cảm",as:"Quốc Long",t:"normal",h:1}],c:[{gk:"Đức Khoa",h:1},{gk:"Đức Khoa",h:2},{gk:"Đức Khoa",h:2,pen:true}],ps:[{n:"Đức Khoa",h:1}]},
+  33:{s:[{sc:"Chí Quỹ",t:"normal",h:1}],c:[{gk:"Tài Ba",h:1},{gk:"Tài Ba",h:2}],ps:[]},
 };
 
 // Compute aggregates
@@ -667,37 +669,37 @@ const P=[
 ];
 
 const PM={
-  "Mai Cồ Hiếu":[0,0,0,1,0,0,0,0,0,0,0,0,2,0,0,0,1,1,1,0,0],
-  "Văn Quang":[1,0,0,0,0,null,0,null,0,0,null,null,0,0,0,1,0,0,0,1,0],
-  "Nguyên Khôi":[0,0,0,0,null,0,null,0,null,null,null,0,0,0,null,null,0,null,0,0,null],
-  "Lucky Trần":[0,0,null,0,0,0,0,0,0,null,0,null,0,0,0,0,null,null,0,0,1],
-  "Quốc Long":[1,0,0,1,0,null,0,null,0,0,2,null,0,0,null,null,0,2,0,0,0],
-  "Hữu Duyên":[0,0,0,0,1,0,0,0,null,0,0,0,0,0,0,null,0,0,0,0,null],
-  "Nguyễn Hoàng":[0,0,0,0,0,null,0,0,0,0,null,0,0,0,null,0,0,0,0,0,0],
-  "Đức Khoa":[0,0,0,0,0,0,0,0,0,0,0,null,null,0,1,0,0,0,null,0,0],
-  "D.Chí Hoàng":[0,0,null,0,null,0,null,0,null,0,0,0,null,0,0,0,0,null,null,0,null],
-  "Minh Hoàng":[0,0,0,null,null,null,0,0,0,null,null,0,0,0,null,null,0,0,null,null,null],
-  "Trung Nguyên":[null,1,0,0,0,0,0,0,0,1,0,0,0,0,null,0,1,0,0,0,0],
-  "Tài Ba":[null,0,0,0,0,0,0,1,0,0,0,null,0,0,null,0,0,0,null,0,0],
-  "Văn Chung":[1,null,0,null,1,2,null,null,0,0,1,2,0,1,0,0,null,null,0,1,0],
-  "Khâm":[null,2,0,0,1,1,2,null,null,null,0,0,1,0,1,0,null,0,0,null,0],
-  "Cảm":[null,1,0,0,null,0,1,2,3,1,0,2,3,0,1,2,2,null,null,4,2],
-  "Hữu Nghĩa":[null,null,null,null,null,null,null,null,null,null,null,0,0,0,null,0,null,0,0,null,null],
-  "Hoàng Đại":[null,null,null,null,null,null,null,0,null,0,null,null,1,null,null,null,null,null,null,null,null],
-  "Phú Bình":[null,null,null,0,0,null,0,null,null,null,0,null,null,null,null,null,null,null,null,null,null],
-  "Gia Lộc":[1,null,0,0,0,null,null,0,null,1,0,0,0,0,null,null,null,null,null,null,null],
-  "Lâm":[null,null,null,null,null,null,null,0,1,1,0,0,1,null,null,null,null,null,null,null,null],
-  "Anh Sơn":[0,null,null,null,null,0,null,null,null,0,null,null,null,null,null,null,null,null,null,null,null],
-  "Chí Quỹ":[null,0,null,null,null,null,0,null,null,null,null,null,null,null,null,null,1,null,null,null,null],
-  "Tiến":[null,null,null,null,null,null,null,0,null,0,null,null,0,null,null,null,null,null,null,null,null],
-  "Bạn Hoàng":[null,null,null,null,null,null,null,null,null,null,null,1,null,null,null,null,null,null,null,null,null],
-  "Hào":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,1,0,null,null,null,null,null],
-  "Thủ môn mới":[null,null,null,null,null,null,null,null,null,null,null,0,null,null,0,null,null,null,0,null,null],
-  "Tĩnh":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,0,null,1,null,null,null,null],
-  "Quyền":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0,null,null,null,null,null],
-  "Dương":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0,null,null,null],
-  "Khánh":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0,0],
-  "Bạn mới":[null,null,null,null,null,null,null,null,1,null,null,null,null,null,null,null,null,null,null,null,null]
+  "Mai Cồ Hiếu":[0,0,0,1,0,0,0,0,0,0,0,0,2,0,0,0,1,1,1,0,0,0],
+  "Văn Quang":[1,0,0,0,0,null,0,null,0,0,null,null,0,0,0,1,0,0,0,1,0,0],
+  "Nguyên Khôi":[0,0,0,0,null,0,null,0,null,null,null,0,0,0,null,null,0,null,0,0,null,null],
+  "Lucky Trần":[0,0,null,0,0,0,0,0,0,null,0,null,0,0,0,0,null,null,0,0,1,0],
+  "Quốc Long":[1,0,0,1,0,null,0,null,0,0,2,null,0,0,null,null,0,2,0,0,0,0],
+  "Hữu Duyên":[0,0,0,0,1,0,0,0,null,0,0,0,0,0,0,null,0,0,0,0,null,0],
+  "Nguyễn Hoàng":[0,0,0,0,0,null,0,0,0,0,null,0,0,0,null,0,0,0,0,0,0,0],
+  "Đức Khoa":[0,0,0,0,0,0,0,0,0,0,0,null,null,0,1,0,0,0,null,0,0,null],
+  "D.Chí Hoàng":[0,0,null,0,null,0,null,0,null,0,0,0,null,0,0,0,0,null,null,0,null,0],
+  "Minh Hoàng":[0,0,0,null,null,null,0,0,0,null,null,0,0,0,null,null,0,0,null,null,null,0],
+  "Trung Nguyên":[null,1,0,0,0,0,0,0,0,1,0,0,0,0,null,0,1,0,0,0,0,0],
+  "Tài Ba":[null,0,0,0,0,0,0,1,0,0,0,null,0,0,null,0,0,0,null,0,0,0],
+  "Văn Chung":[1,null,0,null,1,2,null,null,0,0,1,2,0,1,0,0,null,null,0,1,0,null],
+  "Khâm":[null,2,0,0,1,1,2,null,null,null,0,0,1,0,1,0,null,0,0,null,0,null],
+  "Cảm":[null,1,0,0,null,0,1,2,3,1,0,2,3,0,1,2,2,null,null,4,2,null],
+  "Hữu Nghĩa":[null,null,null,null,null,null,null,null,null,null,null,0,0,0,null,0,null,0,0,null,null,null],
+  "Hoàng Đại":[null,null,null,null,null,null,null,0,null,0,null,null,1,null,null,null,null,null,null,null,null,null],
+  "Phú Bình":[null,null,null,0,0,null,0,null,null,null,0,null,null,null,null,null,null,null,null,null,null,null],
+  "Gia Lộc":[1,null,0,0,0,null,null,0,null,1,0,0,0,0,null,null,null,null,null,null,null,null],
+  "Lâm":[null,null,null,null,null,null,null,0,1,1,0,0,1,null,null,null,null,null,null,null,null,null],
+  "Anh Sơn":[0,null,null,null,null,0,null,null,null,0,null,null,null,null,null,null,null,null,null,null,null,null],
+  "Chí Quỹ":[null,0,null,null,null,null,0,null,null,null,null,null,null,null,null,null,1,null,null,null,null,1],
+  "Tiến":[null,null,null,null,null,null,null,0,null,0,null,null,0,null,null,null,null,null,null,null,null,null],
+  "Bạn Hoàng":[null,null,null,null,null,null,null,null,null,null,null,1,null,null,null,null,null,null,null,null,null,null],
+  "Hào":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,1,0,null,null,null,null,null,null],
+  "Thủ môn mới":[null,null,null,null,null,null,null,null,null,null,null,0,null,null,0,null,null,null,0,null,null,null],
+  "Tĩnh":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,0,null,1,null,null,null,null,0],
+  "Quyền":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0,null,null,null,null,null,null],
+  "Dương":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0,null,null,null,null],
+  "Khánh":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0,0,null],
+  "Bạn mới":[null,null,null,null,null,null,null,null,1,null,null,null,null,null,null,null,null,null,null,null,null,null]
 };
 
 P.forEach(p=>{
