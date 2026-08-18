@@ -85,6 +85,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fb);line-height:1.5;
 .mwk{font-size:9px;color:var(--tx3);letter-spacing:1px;font-weight:700;width:22px;flex-shrink:0;font-family:var(--fd)}
 .mdt{font-size:10px;color:var(--tx3);width:36px;flex-shrink:0}
 .mvs{flex:1;font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.matt{font-size:9px;color:var(--tx2);background:var(--sf3);border-radius:10px;padding:2px 6px;min-width:28px;text-align:center;flex-shrink:0;white-space:nowrap}
 .msc{font-family:var(--fd);font-size:14px;font-weight:700;min-width:44px;text-align:center}
 .rp{font-size:8px;font-weight:700;padding:2px 7px;border-radius:14px;min-width:40px;text-align:center}
 .rW{background:var(--grn-d);color:var(--grn)}.rD{background:var(--amb-d);color:var(--amb)}.rL{background:var(--red-d);color:var(--red)}
@@ -1185,6 +1186,7 @@ function togGKD(btn){
 
 
 function renderMatches(){
+  const attByIdx=M.map((_,i)=>Object.values(PM).filter(arr=>arr[i]!==null).length);
   document.getElementById("matchEl").innerHTML=M.slice().reverse().map((m,ri)=>{
     const idx=M.length-1-ri,mg=MG[m.wk];
     const col=m.r==="W"?"var(--grn)":m.r==="D"?"var(--amb)":"var(--red)";
@@ -1213,6 +1215,7 @@ function renderMatches(){
       <div class="mwk">T${m.wk}</div>
       <div class="mdt">${m.dt}</div>
       <div class="mvs">${m.vs}${mg?`<span style="font-size:8px;color:var(--tl);margin-left:5px">▾ chi tiết</span>`:""}${m.lv?`<a class="lv" href="${m.lv}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Xem lại trận đấu">▶ LIVE</a>`:""}</div>
+      <div class="matt" title="Số cầu thủ tham gia">👥${attByIdx[idx]}</div>
       <div class="msc" style="color:${col}">${m.gf}–${m.ga}</div>
       <div class="rp r${m.r}">${m.r==="W"?"THẮNG":m.r==="D"?"HÒA":"THUA"}</div>
       <div class="mven">${m.v}</div>
