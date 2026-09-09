@@ -27,8 +27,14 @@ DEFAULT_XLSX = (
 DISPLAY = {"Dương Chí Hoàng": "D.Chí Hoàng", "Khanh": "Khánh"}
 
 RESULT_MAP = {"Thắng": "W", "Hòa": "D", "Thua": "L"}
-GOAL_TYPE_MAP = {"Thường": "normal", "Pen (Vào)": "pen", "Sút phạt": "fk"}
+GOAL_TYPE_MAP = {"thường": "normal", "pen (vào)": "pen", "sút phạt": "fk"}
 HALF_MAP = {"H1": 1, "H2": 2, None: None}
+
+
+def goal_type(loai_ban):
+    """Tra loại bàn thắng, không phân biệt hoa/thường — sheet gõ lệch case
+    (vd 'Sút Phạt' vs 'Sút phạt') vẫn khớp đúng thay vì rơi về 'normal'."""
+    return GOAL_TYPE_MAP.get(str(loai_ban or "").strip().lower(), "normal")
 
 
 def disp(name):
@@ -153,11 +159,17 @@ def build(xlsx_path):
     live_links = load_live_links(wb)
 
     played = []  # (wk_num, rows) for weeks that were actually played
+    skipped_other_court = []  # (wk_num, court) for weeks excluded — not Sân 11
     for wk_label, rows in weeks.items():
         if all(r[9] == "Nghỉ" for r in rows):
             continue  # week off, skip entirely
+        court = rows[0][5]
+        if court != "Sân 11":
+            skipped_other_court.append((wk_num(wk_label), court))
+            continue  # trận sân khác (vd Sân 7) — chỉ tham khảo, không tính vào số liệu Sân 11
         played.append((wk_num(wk_label), rows))
     played.sort(key=lambda t: t[0])
+    skipped_other_court.sort(key=lambda t: t[0])
 
     # ---- M ----
     M = []
@@ -202,12 +214,12 @@ def build(xlsx_path):
                 entry = {"sc": name}
                 if row[11]:
                     entry["as"] = disp(row[11])
-                entry["t"] = GOAL_TYPE_MAP.get(row[13], "normal")
+                entry["t"] = goal_type(row[13])
                 entry["h"] = HALF_MAP.get(row[12], None)
                 s_list.append(entry)
             elif kind == "Bàn thua":
                 entry = {"gk": disp(row[11]), "h": HALF_MAP.get(row[12], None)}
-                if row[13] in ("Pen", "Pen (Vào)"):
+                if str(row[13] or "").strip().lower() in ("pen", "pen (vào)"):
                     entry["pen"] = True
                 c_list.append(entry)
             elif kind == "Cản Pen":
@@ -270,7 +282,7 @@ def build(xlsx_path):
                 arr.append(goals_by_player[wn].get(name, 0))
         PM[name] = arr
 
-    return M, PM, P, MG, implied_attendance, log_only
+    return M, PM, P, MG, implied_attendance, log_only, skipped_other_court
 
 
 # ---------------------------------------------------------------------------
@@ -427,7 +439,7 @@ def main():
                     help="ghi đè kể cả khi phát hiện link xem lại sẽ bị mất")
     args = ap.parse_args()
 
-    M, PM, P, MG, implied_attendance, log_only = build(args.xlsx)
+    M, PM, P, MG, implied_attendance, log_only, skipped_other_court = build(args.xlsx)
 
     block_M = render_M(M)
     block_MG = render_MG(MG)
@@ -452,6 +464,10 @@ def main():
             mismatches.append(f"  wk{wn}: len(MG.c)={len(mg['c'])} != M.ga={m['ga']}")
 
     print(f"Matches: {len(M)}")
+    if skipped_other_court:
+        print("Trận KHÔNG tính vào số liệu (không phải Sân 11 — chỉ tham khảo):")
+        for wn, court in skipped_other_court:
+            print(f"  T{wn}: {court!r}")
     print(f"Players: {len(P)} (main={n_main}, sub={n_sub})")
     print(f"Total goals in PM: {total_pm_goals}")
     print(f"Total goals in MG: {total_mg_goals}")
