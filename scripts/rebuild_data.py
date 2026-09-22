@@ -61,26 +61,23 @@ def load_roster(wb):
     Row 0 is the header. col0 TT / col1 Họ và tên / col2 Biệt danh /
     col3 Số áo / col4 Vị trí (all 0-based).
 
-    The sheet has a run of rows (Info rows 20-23 in the current export)
-    that carry a leftover Số áo value but no Họ và tên / Biệt danh - these
-    are not player rows and are skipped. Reading stops at the first row
-    where Họ và tên, Biệt danh, Số áo and Vị trí are ALL empty (the real
-    end-of-roster blank block), which is what actually yields the
-    documented 18 main + 15 sub = 33 rows.
+    The sheet has rows with a leftover Số áo value but no Họ và tên /
+    Biệt danh, and occasional fully-blank stray rows (a one-off gap
+    between real players, not the true end of the roster) - scan to
+    ws.max_row and skip any row lacking a Biệt danh instead of stopping
+    at the first blank row, or a stray gap silently drops every real
+    player listed after it (happened to "Hoàng Đại" once already).
     """
     ws = wb["Info"]
     main, subs = [], []
     for r in range(2, ws.max_row + 1):
         tt = ws.cell(row=r, column=1).value
-        hoten = ws.cell(row=r, column=2).value
         biet = ws.cell(row=r, column=3).value
         no = ws.cell(row=r, column=4).value
         pos = ws.cell(row=r, column=5).value
 
-        if hoten is None and biet is None and no is None and pos is None:
-            break  # fully blank row => end of roster block
         if biet is None:
-            continue  # orphan row, no join key, not a real player
+            continue  # orphan or blank row, no join key, not a real player
 
         entry = {"n": disp(biet), "p": pos or "", "no": fmt_no(no)}
         if isinstance(tt, (int, float)):
