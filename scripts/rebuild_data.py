@@ -168,6 +168,26 @@ def build(xlsx_path):
     played.sort(key=lambda t: t[0])
     skipped_other_court.sort(key=lambda t: t[0])
 
+    # ---- M7 : trận sân khác, chỉ để hiển thị tham khảo, KHÔNG vào M/PM/MG ----
+    M7 = []
+    for wn, _court in skipped_other_court:
+        rows = weeks[f"Tuần {wn}"]
+        head = rows[0]
+        names = set()
+        for r in rows:
+            if r[9] == "Điểm danh" and r[10]:
+                names.add(disp(r[10]))
+            elif r[9] == "Bàn thắng":
+                names.update(disp(x) for x in (r[10], r[11]) if x)
+            elif r[9] in ("Bàn thua", "Cản Pen") and r[11]:
+                names.add(disp(r[11]))
+        dt_val = head[1]
+        M7.append({
+            "wk": wn, "dt": f"{dt_val.day:02d}/{dt_val.month:02d}", "vs": head[3],
+            "gf": int(head[6]), "ga": int(head[7]), "r": RESULT_MAP[head[8]],
+            "v": head[4], "san": head[5], "att": len(names),
+        })
+
     # ---- M ----
     M = []
     for wn, rows in played:
@@ -279,7 +299,7 @@ def build(xlsx_path):
                 arr.append(goals_by_player[wn].get(name, 0))
         PM[name] = arr
 
-    return M, PM, P, MG, implied_attendance, log_only, skipped_other_court
+    return M, PM, P, MG, implied_attendance, log_only, skipped_other_court, M7
 
 
 # ---------------------------------------------------------------------------
@@ -304,6 +324,19 @@ def render_M(M):
                 r=js_str(m["r"]),
                 v=js_str(m["v"]),
                 lv=lv,
+            )
+        )
+    lines.append("];")
+    return "\n".join(lines)
+
+
+def render_M7(M7):
+    lines = ["const M7=["]
+    for m in M7:
+        lines.append(
+            "  {{wk:{wk},dt:{dt},vs:{vs},gf:{gf},ga:{ga},r:{r},v:{v},san:{san},att:{att}}},".format(
+                wk=m["wk"], dt=js_str(m["dt"]), vs=js_str(m["vs"]), gf=m["gf"], ga=m["ga"],
+                r=js_str(m["r"]), v=js_str(m["v"]), san=js_str(m["san"]), att=m["att"],
             )
         )
     lines.append("];")
@@ -436,9 +469,10 @@ def main():
                     help="ghi đè kể cả khi phát hiện link xem lại sẽ bị mất")
     args = ap.parse_args()
 
-    M, PM, P, MG, implied_attendance, log_only, skipped_other_court = build(args.xlsx)
+    M, PM, P, MG, implied_attendance, log_only, skipped_other_court, M7 = build(args.xlsx)
 
     block_M = render_M(M)
+    block_M7 = render_M7(M7)
     block_MG = render_MG(MG)
     block_P = render_P(P)
     block_PM = render_PM(PM)
@@ -518,6 +552,7 @@ def main():
             return
 
     text = replace_block(text, "M", block_M)
+    text = replace_block(text, "M7", block_M7)
     text = replace_block(text, "MG", block_MG)
     text = replace_block(text, "P", block_P)
     text = replace_block(text, "PM", block_PM)

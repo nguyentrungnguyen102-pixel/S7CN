@@ -307,10 +307,10 @@ def run_checks(M, MG, P, PM, report):
     return
 
 
-def run_xlsx_crosscheck(xlsx_path, M, MG, PM, report):
+def run_xlsx_crosscheck(xlsx_path, M, MG, PM, report, M7=None):
     import rebuild_data as rd
 
-    xM, xPM, xP, xMG, x_implied, x_log_only, x_skipped_court = rd.build(xlsx_path)
+    xM, xPM, xP, xMG, x_implied, x_log_only, x_skipped_court, xM7 = rd.build(xlsx_path)
 
     diffs = []
 
@@ -342,6 +342,10 @@ def run_xlsx_crosscheck(xlsx_path, M, MG, PM, report):
             "roster (xlsx)",
             f"{name} có trong 'Log tuần' nhưng chưa có dòng trong sheet 'Info'",
         )
+
+    # M7 (trận sân khác, tham khảo) cũng phải khớp sheet
+    if M7 is not None and M7 != xM7:
+        diffs.append(f"M7: html={M7} xlsx={xM7}")
 
     for wn, court in x_skipped_court:
         report.warn(
@@ -376,6 +380,22 @@ def run_xlsx_crosscheck(xlsx_path, M, MG, PM, report):
             )
 
 
+def check_positions(html_text, P, report):
+    """Mã vị trí trong P phải có trong bảng POS của stats.html, nếu không
+    cầu thủ đó mất màu, lọt khỏi bộ lọc tuyến và không bao giờ vào đội hình."""
+    m = re.search(r"^const POS=\{(.*?)^\};", html_text, re.MULTILINE | re.DOTALL)
+    if not m:
+        report.check("10. bảng POS tồn tại trong stats.html", False, "không tìm thấy const POS={...}")
+        return
+    known = set(re.findall(r"\b([A-Z]{2,3}):\{", m.group(1)))
+    unknown = sorted({p["p"] for p in P if p["p"] and p["p"] not in known})
+    for code in unknown:
+        names = [p["n"] for p in P if p["p"] == code]
+        report.warn("10. vị trí lạ", f"{code} ({', '.join(names)}) chưa có trong bảng POS — thêm vào stats.html")
+    if not unknown:
+        report.check("10. mọi mã vị trí đều có trong bảng POS", True, f"{len(known)} mã đã khai báo")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--html", default=str(REPO_ROOT / "stats.html"))
@@ -387,9 +407,15 @@ def main():
 
     report = Report()
     run_checks(M, MG, P, PM, report)
+    check_positions(html_text, P, report)
 
     if args.xlsx:
-        run_xlsx_crosscheck(args.xlsx, M, MG, PM, report)
+        m7_raw = None
+        try:
+            m7_raw = js_to_json(find_block(html_text, "M7"))
+        except ValueError:
+            pass
+        run_xlsx_crosscheck(args.xlsx, M, MG, PM, report, m7_raw)
 
     print()
     if report.hard_fail:

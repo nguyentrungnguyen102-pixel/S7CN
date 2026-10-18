@@ -1,25 +1,28 @@
 ---
 name: cap-nhat-so-lieu
-description: Cập nhật số liệu bóng đá LAIRAI FC từ Google Sheet lên stats.html rồi deploy. Dùng khi anh Nguyên nói "check số liệu", "cập nhật số liệu", "cập nhật tuần N", "chạy lại số liệu", hoặc đưa link Google Sheet của đội.
+description: Cập nhật số liệu bóng đá LAIRAI FC từ Google Sheet lên stats.html rồi deploy. Dùng khi anh Nguyên nói "check số liệu", "cập nhật số liệu", "cập nhật tuần mới", "cập nhật tuần N", "chạy lại số liệu", hoặc đưa link Google Sheet của đội.
 ---
 
 # Cập nhật số liệu LAIRAI FC
 
 Quy trình 6 bước, làm tuần tự, không nhảy bước. Phân công: **Opus lập kế hoạch và kiểm tra, Sonnet thực thi.**
+Thay đổi giao diện/cách tính (không phải cập nhật tuần thường lệ): **trình plan cho anh duyệt trước rồi mới làm.**
 
 ## Bước 1 — Lấy sheet
 
 - Sheet ID: `1Ai6iYdSR4uXXduFNLvKvl9mwh9Sm2ZQZy0DaKyqPG68`
 - Gọi `mcp__Google_Drive__download_file_content` với `exportMimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"`.
-- Kết quả là base64 trong payload JSON `{content,...}`. Nếu file lớn, tool ghi ra file và trả về đường dẫn — decode bằng `base64.b64decode`, lưu thành `.xlsx`, rồi đọc bằng `openpyxl(data_only=True)`.
+- Kết quả quá lớn nên tool ghi ra file JSON `{content,...}` — decode `base64.b64decode(content)` ra `.xlsx` trong **một thư mục riêng** trong scratchpad, đọc bằng `openpyxl.load_workbook(..., data_only=True)`, chạy Python với `-I`.
+- Cài openpyxl bằng `python3 -m pip install openpyxl` — `pip` trần có thể trỏ sang Python khác (đã gặp: pip 3.13, python3 là 3.11).
 
-⚠️ **Cảnh báo quan trọng:**
+⚠️ **Không được làm:**
 | Không được làm | Vì sao |
 |---|---|
 | Dùng `mcp__Google_Drive__read_file_content` | Âm thầm cắt cụt ở ~2.500 ô/sheet, làm mất "Log tuần" từ Tuần 15 trở đi, không báo lỗi |
 | Fetch URL export CSV (`docs.google.com/.../export?format=csv`) | Proxy sandbox chặn, trả `http 000` |
+| Load xlsx **không** kèm `data_only=True` rồi `save()` | openpyxl không tính lại công thức → mất sạch giá trị cache của sheet `Thống kê match` (mất cả link xem lại) |
 
-6 lần automation trước trong repo này đã fail đúng vì lý do trên, để lại các branch `claude/kind-gates-*` đã bị bỏ.
+**Trước khi dựng dữ liệu, nhìn nhanh các tuần mới nhất** (số dòng mỗi tuần + `Loại sân`). Đã từng gặp: anh nhập nhầm khiến cả một tuần cũ bị reset về `Nghỉ`, hoặc trận mới bị gắn nhầm số tuần. Thấy bất thường → hỏi anh, đừng chạy `--force`.
 
 ## Bước 2 — Dựng lại dữ liệu
 
@@ -27,18 +30,21 @@ Quy trình 6 bước, làm tuần tự, không nhảy bước. Phân công: **Op
 python3 scripts/rebuild_data.py --xlsx <đường dẫn xlsx>
 ```
 
-- Script này regenerate toàn bộ `M`, `PM`, `P`, `MG` trong `stats.html` từ sheet.
-- **Không bao giờ sửa tay số liệu trong `stats.html`** — đây chính là nguyên nhân của mọi lỗi trước đây.
+- Script regenerate toàn bộ `M`, `M7`, `PM`, `P`, `MG` trong `stats.html` từ sheet.
+- **Không bao giờ sửa tay số liệu trong `stats.html`** — đây là nguyên nhân của mọi lỗi trước đây. Sheet sai thì nhờ anh sửa sheet; cần vá gấp thì vá **bản xlsx nháp cục bộ** rồi chạy script (vẫn qua đủ kiểm tra).
 
 Nguồn dữ liệu:
 - Sheet **`Log tuần`**: mỗi dòng là 1 sự kiện — `Điểm danh` / `Bàn thắng` / `Bàn thua` / `Cản Pen` / `Nghỉ`.
-- Sheet **`Info`**: roster — `TT` là số (chính thức) → `t:"main"`; `TT` là chữ `Sub` → `t:"sub"`.
-- Quy tắc điểm danh ngầm định: cầu thủ được ghi nhận là người ghi bàn, kiến tạo, thủ môn, hoặc cản pen trong tuần đó thì tính là có mặt, dù không có dòng `Điểm danh`.
+- Sheet **`Info`**: roster — `TT` là số → chính thức (`t:"main"`); `TT` là `Sub` → `t:"sub"`. Script quét đến hết sheet, bỏ qua dòng không có Biệt danh (dòng trống lẻ chen giữa không còn làm rơi người phía sau).
+- Điểm danh ngầm định: ai ghi bàn, kiến tạo, bắt chính hoặc cản pen trong tuần thì tính là có mặt dù thiếu dòng `Điểm danh`.
 
-**Penalty (cản / thua):**
-- `Cản Pen`: mỗi dòng là 1 quả pen thủ môn cản được. Cột "Kiến tạo/Thủ môn" ghi tên thủ môn, cột "Loại bàn" luôn là `Pen (Cản)`. Script đọc thành `MG[tuần].ps:[{n,h}]`.
-- `Bàn thua`: cột "Loại bàn" **để trống = bàn thường** (không cần điền gì). Nếu là thua do đá pen, anh đánh dấu cột "Loại bàn" = **`Pen`** — chú ý đây là nhãn riêng cho Bàn thua, **khác** với `Pen (Vào)` (nhãn dùng cho Bàn thắng). Script nhận cả hai (`"Pen"` lẫn `"Pen (Vào)"`) trên dòng Bàn thua để không vỡ nếu gõ theo thói quen, nhưng nhãn thật anh dùng là `Pen`. Không có cách nào tự suy luận nếu để trống — phải đánh dấu tay. Khi đã đánh dấu, script tự đọc thành cờ `pen:true` trên entry đó trong `MG[tuần].c`.
-- `pf` (penalty đối mặt) và `ps` (penalty cản được) mỗi thủ môn được tính lại lúc chạy trong `stats.html` từ `ps` + số bàn thua có cờ `pen`, không phải số cứng trong data — không cần và không được sửa tay.
+**Chỉ Sân 11 được tính.** Tuần có `Loại sân` ≠ `Sân 11` (vd Sân 7) bị loại khỏi `M/PM/P/MG`, script in rõ tuần nào bị loại, `check_stats` báo `[WARN]`. Các trận này vào khối riêng `M7` → thẻ "Sân khác · tham khảo" ở mục Trận đấu, **không tính vào bất kỳ số liệu nào**.
+
+**Loại bàn** (so khớp không phân biệt hoa/thường):
+- Bàn thắng: `Thường` / `Pen (Vào)` / `Sút phạt`.
+- Bàn thua: **để trống = bàn thường**; thua do pen anh ghi **`Pen`** (script nhận cả `Pen (Vào)`). Không đánh dấu thì không suy luận được.
+- `Cản Pen`: cột "Kiến tạo/Thủ môn" là thủ môn, "Loại bàn" là `Pen (Cản)` → `MG[tuần].ps`.
+- `pf`/`ps` mỗi thủ môn và **sạch lưới** được tính lúc chạy trong `stats.html`, không có số cứng nào để sửa.
 
 ## Bước 3 — Kiểm tra
 
@@ -46,52 +52,84 @@ Nguồn dữ liệu:
 python3 scripts/check_stats.py --xlsx <đường dẫn xlsx>
 ```
 
-- Phải exit 0.
-- `[WARN]` chấp nhận được (báo lỗ hổng dữ liệu sheet để anh tự sửa).
-- Có `[FAIL]` thì phải xử lý xong mới đi tiếp.
+- Phải exit 0. Có `[FAIL]` thì xử lý xong mới đi tiếp. `[WARN]` chấp nhận được (lỗ hổng dữ liệu sheet để anh tự sửa).
+- **Mục 10 — vị trí lạ**: sheet `Info` có mã vị trí chưa khai báo trong bảng `POS` của `stats.html` → `[WARN]`. Gặp cảnh báo này thì **phải thêm mã vào `POS`** (xem mục Vị trí bên dưới), nếu không cầu thủ đó mất màu, lọt khỏi bộ lọc tuyến và không bao giờ vào đội hình tiêu biểu.
 
 ## Bước 4 — Commit & push
 
-- Push thẳng lên `main`. Repo này deploy từ `main` duy nhất, không có branch tính năng (chủ ý thiết kế).
+- Push lên `main` (`git push origin HEAD:main` — **không** dùng `git push origin main` khi đang đứng ở branch khác, nó đẩy branch `main` cục bộ đã cũ và bị từ chối). Đồng thời push cùng commit lên branch làm việc được chỉ định.
 
 ## Bước 5 — Deploy
 
-- Vercel project `s7cn`, team `nguyennt102`, project id `prj_0AMCUSgmUwDkFDAR9ievquRiTkoH`.
-- Dùng `mcp__Vercel__deploy_to_vercel`.
-- Netlify **không dùng nữa** — đã hết quota, config đã xóa. Không đề xuất lại Netlify.
+- Project Vercel `s7cn` nối thẳng GitHub: **push lên `main` là tự deploy production**, không cần `deploy_to_vercel`.
+- Xác nhận bằng `mcp__Vercel__list_deployments` (project `prj_0AMCUSgmUwDkFDAR9ievquRiTkoH`, team `nguyennt102`, `since` = lúc push): bản `target:"production"` phải `READY` và đúng SHA vừa push.
+- Netlify **không dùng nữa** — đã hết quota. Không đề xuất lại.
 
 ## Bước 6 — Xác minh production (bắt buộc)
 
-- Fetch URL đã deploy bằng `mcp__Vercel__web_fetch_vercel_url`, xác nhận trang thật sự hiển thị số liệu mới:
-  - hero KPI (số trận / W·D·L / điểm)
-  - tuần mới nhất trong danh sách trận
-- `WebFetch` và `curl` thường bị proxy chặn (403) — chỉ tool trên mới dùng được.
-- **Chỉ báo "xong" sau khi bước này pass.** Anh Nguyên đã nhiều lần nhận việc chưa được verify — bước này tồn tại để chặn việc đó, không được bỏ qua.
+1. `curl -s -o <scratchpad>/prod.html https://s7cn.vercel.app/stats.html` → HTTP 200 và `diff -q` khớp byte-for-byte với `stats.html` vừa build.
+2. Render bản production bằng Playwright (`playwright-core`, `executablePath:'/opt/pw-browsers/chromium'`), bắt cả `pageerror` lẫn `console.error` (mỗi khối render lỗi bị nuốt, chỉ log ra console). Kiểm tra:
+   - hero KPI (số trận / W·D·L / điểm) và tuần mới nhất đứng đầu danh sách trận;
+   - **giả lập điện thoại** (`devices['Pixel 7']`): mọi trận có link xem lại đều hiện nút ▶ LIVE khi danh sách đang thu gọn, không tràn ngang;
+   - trận sân khác không lẫn vào danh sách chính.
+   Lỗi `ERR_TUNNEL_CONNECTION_FAILED` trong console là do sandbox không tải được font/CDN — bỏ qua.
+3. **Chỉ báo "xong" sau khi bước này pass.**
+
+## Vị trí — một bảng duy nhất
+
+`const POS={...}` ngay đầu script trong `stats.html` là **nguồn duy nhất**: mỗi mã có nhóm `g` (FW/MF/DF/GK → màu, bộ lọc tuyến, giải thưởng) và `slot` (ô trên sơ đồ đội hình tiêu biểu). Mọi chỗ khác gọi `posGrp()` / `posSlot()`, không được viết lại danh sách mã ở chỗ khác.
+
+| Nhóm | Mã |
+|---|---|
+| GK | GK |
+| DF | CB, DF, LB, LWB, RB, RWB |
+| MF | CM, MF, DM, CDM, AM, CAM (ô giữa) · LM (cánh trái) · RM (cánh phải) |
+| FW | LW, RW, ST, CF, FW |
+
+Anh thêm mã mới vào sheet → `check_stats` mục 10 báo → thêm 1 dòng vào `POS` (và tên tiếng Việt vào `POSVI`).
+
+## Vinh danh — 5 hạng mục, cách tính
+
+MVP / Hậu vệ / Tiền vệ chỉ xét cầu thủ **chính thức ra sân ≥ 50% số trận** (`AW_MIN_MP`). Mỗi chỉ số quy về 0–1 trong nhóm đủ điều kiện rồi cộng trọng số. Kiến tạo chỉ có từ tuần 21 nên chia cho số trận có dữ liệu chi tiết.
+
+| Giải | Cách tính |
+|---|---|
+| MVP | 35% (bàn + kiến tạo)/trận · 30% PPG · 20% chuyên cần · 15% bàn thua/trận khi có mặt (thấp là tốt) |
+| Vua phá lưới | Nhiều bàn nhất, xét cả sub; bằng bàn thì ít trận hơn xếp trên |
+| Iron Man | Nhiều trận nhất, xét cả sub |
+| Hậu vệ xuất sắc | Nhóm DF · 40% bàn thua/trận (thấp là tốt) · 25% PPG · 20% chuyên cần · 15% tỉ lệ sạch lưới |
+| Tiền vệ xuất sắc | Nhóm MF · 45% (bàn + kiến tạo)/trận · 30% PPG · 25% chuyên cần |
+
+Bảng "Win Impact" ở mục Phân tích **cố ý** giữ công thức riêng (chuyên cần × win × PPG — "ai đá nhiều, thắng nhiều"), không phải MVP.
 
 ## Những khối KHÔNG do script sinh — đừng đụng
 
 | Khối | Nguồn | Ghi chú |
 |---|---|---|
-| `const M25=[...]` | sheet `Thống kê 2025`, lọc `Sân 11` | Dữ liệu lịch sử mùa 2025 cho phần so sánh. Script **không** sinh khối này và `find_block` khớp chính xác `^const M=` nên không đụng tới. Mùa 2025 đã đóng, không cần cập nhật. |
-| Link xem lại (`lv`) | cột **O** sheet `Thống kê match` | Từ nay `rebuild_data.py` **có** đọc. Trước đây thì không — chạy script sẽ xoá sạch link mà không báo gì. |
+| `const M25=[...]` | sheet `Thống kê 2025`, lọc `Sân 11` | Lịch sử mùa 2025 cho phần so sánh. Mùa đã đóng. `find_block` khớp chính xác `^const M=` nên không đụng tới (cũng không đụng `M7`). |
+| `const POS={...}`, `POSVI` | tay | Sửa khi có mã vị trí mới (xem trên). |
 
-**Chốt chặn link xem lại:** nếu script thấy link đang có trong `stats.html` mà sheet không cho ra, nó **dừng lại, không ghi gì** và in cảnh báo. Gần như luôn có nghĩa là file xlsx đang dùng cũ hơn sheet thật — tải lại sheet rồi chạy lại. Chỉ dùng `--force` sau khi đã đối chiếu cột O bằng mắt.
+## Link xem lại (`lv`)
 
-Tương tự, nếu `check_stats.py --xlsx` báo `[FAIL]` mục 9 mà **toàn bộ** khác biệt nằm ở `lv`, đó là dấu hiệu xlsx cũ chứ không phải lỗi dữ liệu.
-
-**Nếu anh gửi link xem lại qua chat (không phải qua sheet):** hiện KHÔNG có tool ghi vào Google Sheets trong phiên làm việc này (chỉ có tool đọc/tải file Drive) — không tự động dán được vào cột O. Đừng vá tay `lv` thẳng vào `stats.html`: `check_stats.py --xlsx` sẽ FAIL ngay (mục 9, sai đúng như thiết kế) vì lệch với sheet, và lần `rebuild_data.py` tuần sau sẽ đứng lại vì chốt chặn coi đó là link sắp mất. Cách đúng: nhờ anh dán link vào cột O dòng tuần đó trong sheet `Thống kê match`, tải lại sheet rồi chạy lại — script sẽ tự lên, không cần nhắc.
-
-**Link thiếu `https://`:** anh hay dán link kiểu `youtube.com/live/...` (thiếu tiền tố scheme) khác với format `https://www.youtube.com/watch?v=...` các tuần cũ. `load_live_links()` tự thêm `https://` cho link thiếu scheme trước khi nhận — không cần nhắc anh phải dán đủ tiền tố nữa, chỉ cần cột O có nội dung là link thật (không rỗng, không phải text khác) là đủ.
+- Nguồn: cột **O** sheet `Thống kê match`; chỉ nhận hàng có Kết quả Thắng/Hòa/Thua. Link thiếu `https://` được tự thêm.
+- **Chốt chặn:** link đang có trong `stats.html` mà sheet không cho ra → script **dừng, không ghi gì**. Gần như luôn là xlsx cũ — tải lại sheet rồi chạy lại. Chỉ `--force` sau khi đối chiếu cột O bằng mắt. `check_stats` mục 9 FAIL mà toàn bộ khác biệt nằm ở `lv` cũng là dấu hiệu xlsx cũ.
+- Anh gửi link qua chat: **không** có tool ghi Google Sheets → nhờ anh dán vào cột O rồi chạy lại. Đừng vá tay `lv` vào `stats.html` (check FAIL và lần sau chốt chặn đứng lại).
+- Hiển thị: trận có link gắn `data-keep="1"` nên **luôn hiện khi danh sách thu gọn trên điện thoại**; đầu thẻ có dòng "▶ N trận có video xem lại".
 
 ## Data quirks đã biết (đừng điều tra lại mỗi tuần)
 
-- ~~`T.gf` = 71 nhưng tổng bàn theo cầu thủ = 70 (tuần 14 thiếu 1 dòng `Bàn thắng`)~~ — **đã hết từ tuần 31**: sheet đã bổ sung dòng đó, ghi cho `Bạn mới`. Tổng khớp 74 = 74.
-- ~~Tuần 28: cột `GA` ghi 6 nhưng log có 7 dòng `Bàn thua`~~ — **đã hết từ tuần 31**, sheet đã sửa khớp.
-- ~~`Khanh` chưa có vị trí trong sheet `Info`~~ — **đã hết từ tuần 31**: `Info` giờ ghi `Khánh bạn Duyên`, vị trí LB.
-- `Khanh` (không dấu, tuần 30) và `Khánh` (có dấu, tuần 31) trong `Log tuần` là **một người**. Đã gộp bằng `DISPLAY` trong `rebuild_data.py`. Nếu sheet còn gõ lệch dấu tên khác, thêm alias vào đó chứ đừng sửa tay `stats.html`.
-- `Bạn mới` (ghi bàn tuần 14) chỉ có trong `Log tuần`, chưa có dòng trong `Info`. Script tự thêm vào cuối roster dạng sub và in `[WARN]` — chấp nhận được, nhưng nếu biết tên thật thì bổ sung vào `Info`.
-- 3 người trong roster có 0 trận nên không lên bảng: `Văn Tới`, `An`, `Tuấn`.
-- Tuần 1–20 không có dữ liệu hiệp và kiến tạo; chỉ từ tuần 21 trở đi mới có.
-- ~~`MG[tuần].pf`/`.ps` luôn hardcode 0 trong `rebuild_data.py`, `Cản Pen` trong Log tuần bị bỏ qua hoàn toàn~~ — **đã sửa từ tuần 31**: script đọc `Cản Pen` thành `MG[tuần].ps:[{n,h}]`, frontend tự tính `pf`/`ps` mỗi thủ môn từ đó (không còn cộng dồn nhầm vào mọi thủ môn như code cũ). Phát hiện luôn 1 quả cản pen cũ ở tuần 11 (Đức Khoa) trước giờ chưa từng lên bảng.
-- ~~`.kp-n.sm` có `margin-top:4px` làm khối KPI góc phải hero lệch hàng, và 3 cột KPI có thể tự wrap xuống 2 dòng dù đủ chỗ (do flex item không có `white-space:nowrap`)~~ — đã sửa nhưng **chưa đủ**: fix này chỉ xử lý phần lệch đo được trên desktop/headless, không phải nguyên nhân chính khiến anh vẫn thấy lệch trên máy thật.
-- ~~KPI vẫn lệch trên trình duyệt thật (Android/Chromebook) dù headless Chromium đo `top` 3 cột bằng nhau tuyệt đối~~ — **đã sửa từ tuần 31**: nguyên nhân thật là tính năng auto text-boosting của Android Chrome (phóng cỡ chữ theo heuristic riêng từng khối khi trang có `<meta viewport width=device-width>` mà thiếu `text-size-adjust:100%` để tắt). Trang trước đó không có dòng `text-size-adjust` nào. Đã thêm `-webkit-text-size-adjust:100%;text-size-adjust:100%` vào `html{}`. Không tái hiện được hành vi autosizer này trong sandbox (Chromium desktop-build không bật tính năng đó dù giả lập `devices['Pixel 7']`) nên không tự verify 100% được — đây là giới hạn môi trường, không phải dấu hiệu fix sai. Nếu anh còn thấy lệch sau khi deploy, gửi lại ảnh chụp màn hình thật để điều tra tiếp, đừng chỉ dựa vào headless test nữa.
+- `Khanh` (T30) và `Khánh` là một người — gộp bằng `DISPLAY` trong `rebuild_data.py`. Sheet gõ lệch tên khác thì thêm alias vào đó.
+- `Bạn mới` (ghi bàn T14) chưa có dòng trong `Info` → tự thêm dạng sub + `[WARN]`. Biết tên thật thì bổ sung `Info`.
+- 3 người roster có 0 trận nên không lên bảng: `Văn Tới`, `An`, `Tuấn`.
+- Tuần 1–20 không có dữ liệu hiệp và kiến tạo; chỉ từ tuần 21.
+- Trận sạch lưới không có dòng "Bàn thua" nên thủ môn được suy ra từ người có vị trí GK có mặt; nếu ≥2 thủ môn cùng có mặt thì chỉ tính vào tổng đội.
+
+## Lịch sử lỗi đã sửa (để không lặp lại)
+
+- T31: script bỏ qua `Cản Pen`, `pf/ps` luôn 0 và cộng dồn nhầm mọi thủ môn → đã sửa.
+- T31: KPI hero lệch trên Android thật do thiếu `text-size-adjust:100%` (headless không tái hiện được) → đã thêm. Anh còn thấy lệch thì xin ảnh chụp thật.
+- T31: nhãn `Pen` (bàn thua) và link thiếu `https://` bị bỏ qua → đã sửa.
+- T36: trận Sân 7 lẫn vào Log tuần, script chưa lọc theo sân → thêm chốt lọc Sân 11 + khối `M7`.
+- T36: `Sút Phạt` viết hoa không khớp → so khớp không phân biệt hoa/thường.
+- T38: dòng trống lẻ trong `Info` làm rơi `Hoàng Đại` → `load_roster()` không dừng ở dòng trống nữa.
+- T42: vị trí `AM`/`RM` không có màu, Tài Ba (AM) không bao giờ vào đội hình tiêu biểu do ánh xạ vị trí rải rác 9 chỗ → gom về `POS`; Vinh danh tính lại (MVP trước đây tính win% 2 lần và bỏ qua bàn thắng; Hậu vệ trao cho người 6 trận); link xem lại bị ẩn trên mobile khi thu gọn → luôn hiện.

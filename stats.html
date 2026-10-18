@@ -139,6 +139,7 @@ tr.cl:hover td{background:var(--sf2)}
 .aw-t{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--or);font-weight:600;margin-bottom:6px;line-height:1.5}
 .aw-p{font-family:var(--fd);font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
 .aw-s{font-size:10px;color:var(--or2)}.aw-d{font-size:9px;color:var(--tx3);margin-top:3px;line-height:1.5}
+.aw-f{font-size:8px;color:var(--tx3);margin-top:8px;padding-top:7px;border-top:1px dashed var(--bd);line-height:1.5;opacity:.85}
 
 .ig{color:var(--grn)}.ir{color:var(--red)}.ia{color:var(--amb)}
 
@@ -398,9 +399,10 @@ tr.cl:hover td{background:var(--sf2)}
   <div class="grp grp-mt" id="grp-mt" data-screen-label="02 Trận đấu">
     <div class="ghdr"><span class="gname">Trận đấu</span><div class="gline"></div><span class="gbadge">MATCHES</span></div>
     <div class="g2">
-      <div class="card"><div class="ct">Lịch sử trận đấu</div><p class="hint">Nhấn trận có "▾ chi tiết" để xem bàn thắng · assist · penalty</p><div id="matchEl" class="clp" data-n="8" data-unit="trận"></div><button class="clpb" data-for="matchEl" hidden></button></div>
+      <div class="card"><div class="ct">Lịch sử trận đấu</div><p class="hint">Nhấn trận có "▾ chi tiết" để xem bàn thắng · assist · penalty<span id="lvHint"></span></p><div id="matchEl" class="clp" data-n="8" data-unit="trận"></div><button class="clpb" data-for="matchEl" hidden></button></div>
       <div class="card"><div class="ct">Phân tích đối thủ</div><div class="sx"><table><thead><tr id="oppTh"></tr></thead><tbody id="oppTb"></tbody></table></div></div>
     </div>
+    <div class="card" id="m7Card" hidden><div class="ct">Sân khác · tham khảo</div><p class="hint">Trận không phải Sân 11 — chỉ để tham khảo, <b>không tính</b> vào bất kỳ số liệu, bảng xếp hạng hay giải thưởng nào trên trang.</p><div id="m7El"></div></div>
   </div>
 
   <div class="grp grp-pl" id="grp-pl" data-screen-label="03 Cầu thủ">
@@ -507,6 +509,22 @@ tr.cl:hover td{background:var(--sf2)}
 // ===== CORE DATA =====
 const HOME_VENUE="Giga Arena",MIN_M=3,FORM_N=5,BXI_MIN=5;
 
+// Nguồn duy nhất cho mọi thứ phụ thuộc vị trí (màu, bộ lọc, đội hình, giải).
+// Mã mới trong sheet Info phải thêm vào đây — check_stats.py cảnh báo nếu thiếu.
+// slot = ô trên sơ đồ đội hình tiêu biểu mà vị trí đó được xếp vào.
+const POS={
+  GK:{g:"GK",slot:"gk"},
+  CB:{g:"DF",slot:"cb"},DF:{g:"DF",slot:"cb"},
+  LB:{g:"DF",slot:"lb"},LWB:{g:"DF",slot:"lb"},
+  RB:{g:"DF",slot:"rb"},RWB:{g:"DF",slot:"rb"},
+  CM:{g:"MF",slot:"cm"},MF:{g:"MF",slot:"cm"},DM:{g:"MF",slot:"cm"},CDM:{g:"MF",slot:"cm"},AM:{g:"MF",slot:"cm"},CAM:{g:"MF",slot:"cm"},
+  LM:{g:"MF",slot:"lw"},RM:{g:"MF",slot:"rw"},
+  LW:{g:"FW",slot:"lw"},RW:{g:"FW",slot:"rw"},
+  ST:{g:"FW",slot:"st"},CF:{g:"FW",slot:"st"},FW:{g:"FW",slot:"st"},
+};
+const posGrp=p=>POS[p]?.g||"";
+const posSlot=p=>POS[p]?.slot||"";
+
 const M=[
   {wk:1,dt:"04/01",vs:"Thiết Bị Việt FC",gf:4,ga:2,r:"W",v:"Etihad Quận 12"},
   {wk:2,dt:"11/01",vs:"Long Xuyên FC",gf:4,ga:2,r:"W",v:"Giga Arena"},
@@ -535,6 +553,10 @@ const M=[
   {wk:38,dt:"20/09",vs:"Thiện Hùng FC",gf:5,ga:0,r:"W",v:"ĐH TDTT"},
   {wk:40,dt:"04/10",vs:"Huda FC",gf:2,ga:2,r:"D",v:"Giga Arena"},
   {wk:42,dt:"18/10",vs:"Samba FC",gf:2,ga:2,r:"D",v:"Etihad Quận 12"},
+];
+// Trận sân khác (vd Sân 7) — chỉ tham khảo, không tính vào bất kỳ số liệu nào. Script sinh.
+const M7=[
+  {wk:35,dt:"30/08",vs:"Sân cáp",gf:10,ga:6,r:"W",v:"Giga Arena",san:"Sân 7",att:5},
 ];
 
 const T=(()=>{
@@ -731,16 +753,8 @@ P.forEach(p=>{
 
 function genBXI(){
   const main=P.filter(p=>p.t==="main"&&p.m>=BXI_MIN).sort((a,b)=>b.m-a.m);
-  const pools={
-    gk:main.filter(p=>p.p==="GK"),
-    lb:main.filter(p=>p.p==="LB"),
-    cb:main.filter(p=>p.p==="CB"),
-    rb:main.filter(p=>p.p==="RB"),
-    cm:main.filter(p=>p.p==="CM"),
-    lw:main.filter(p=>["LW","LM"].includes(p.p)),
-    rw:main.filter(p=>p.p==="RW"),
-    st:main.filter(p=>p.p==="ST")
-  };
+  const pools={gk:[],lb:[],cb:[],rb:[],cm:[],lw:[],rw:[],st:[]};
+  main.forEach(p=>{const k=posSlot(p.p);if(pools[k])pools[k].push(p);});
   // Khi một tuyến ít người hơn số chỗ của sơ đồ, mượn từ tuyến gần nhất
   // thay vì lặp lại một người hai lần trên cùng sân.
   const FALLBACK={st:["lw","rw","cm"],lw:["st","cm","rw"],rw:["st","cm","lw"],
@@ -921,7 +935,7 @@ function renderAbsent(){
     const cp=dp>.2?"ab-bad":dp<-.2?"ab-good":"ab-neu";
     const v=dp>.3?"Vắng → đội yếu rõ":dp<-.3?"Vắng → đội không giảm":"Ảnh hưởng ít";
     const cv=dp>.3?"ab-bad":dp<-.3?"ab-good":"ab-neu";
-    return`<tr><td style="font-weight:600">${p.n}</td><td><span class="pos ${p.p}">${p.p}</span></td>
+    return`<tr><td style="font-weight:600">${p.n}</td><td><span class="pos ${posGrp(p.p)}">${p.p}</span></td>
       <td>${p.m}</td><td>${a.m}</td>
       <td>${(p.wp*100).toFixed(0)}%</td><td>${(a.wp*100).toFixed(0)}%</td>
       <td class="${cw}">${dw>0?"+":""}${(dw*100).toFixed(0)}%</td>
@@ -975,7 +989,7 @@ function renderCmp(){
 // AOV GA = bàn thua/trận khi có mặt (thấp là tốt), AOV GD = hiệu số/trận (cao là tốt).
 function renderDef(){
   const el=document.getElementById("defEl");if(!el)return;
-  const ds=P.filter(p=>["CB","LB","RB","DF"].includes(p.p)&&p.m>=MIN_M)
+  const ds=P.filter(p=>posGrp(p.p)==="DF"&&p.m>=MIN_M)
     .map(p=>({...p,aga:p.ga/p.m,agd:p.gd/p.m}))
     .sort((a,b)=>a.aga-b.aga);
   const hint=document.getElementById("defHint");
@@ -990,7 +1004,7 @@ function renderDef(){
     const gx=(p.agd-gdLo)/((gdHi-gdLo)||1)*100;
     const l=Math.min(zero,gx),w=Math.abs(gx-zero);
     return`<div class="dfr">
-      <div class="dfn"><span class="pos ${p.p}">${p.p}</span><span class="dfnm">${p.n}</span><span class="dfm">${p.m}tr</span></div>
+      <div class="dfn"><span class="pos ${posGrp(p.p)}">${p.p}</span><span class="dfnm">${p.n}</span><span class="dfm">${p.m}tr</span></div>
       <div class="dfb"><div class="dfbf" style="width:${wA}%;background:${better?"linear-gradient(90deg,#1a5e35,var(--grn))":"linear-gradient(90deg,#8a1a1a,var(--red))"}"></div>
         <div class="dfavg" style="left:${(T.ga/T.m)/mxA*100}%"></div></div>
       <div class="dfv" style="color:${better?"var(--grn)":"var(--red)"}">${p.aga.toFixed(2)}</div>
@@ -1024,10 +1038,12 @@ function applyCollapse(){
     [...box.children].forEach(e=>{
       if(e.classList.contains("mdet")){e.style.display="";return;}
       shown++;
-      e.style.display=(open||shown<=n)?"":"none";
+      // data-keep: hàng luôn hiện kể cả khi thu gọn (vd trận có link xem lại)
+      const vis=open||shown<=n||e.dataset.keep==="1";
+      e.style.display=vis?"":"none";
       // panel chi tiết đi kèm hàng bị ẩn thì ẩn theo
       const nx=e.nextElementSibling;
-      if(nx&&nx.classList.contains("mdet"))nx.style.display=(open||shown<=n)?"":"none";
+      if(nx&&nx.classList.contains("mdet"))nx.style.display=vis?"":"none";
     });
     if(btn)btn.textContent=open?"Thu gọn":`Xem tất cả ${kids.length} ${box.dataset.unit||"dòng"}`;
   });
@@ -1095,7 +1111,7 @@ function renderScorers(){
   const s=P.filter(p=>p.g>0&&p.m>=MIN_M).sort((a,b)=>b.g-a.g),mx=s[0]?.g||1;
   document.getElementById("scorers").innerHTML=s.map((p,i)=>`<div class="scr">
     <div class="rk ${i===0?"rk1":i===1?"rk2":i===2?"rk3":"rkn"}">${i+1}</div>
-    <span class="pos ${p.p}">${p.p}</span>
+    <span class="pos ${posGrp(p.p)}">${p.p}</span>
     <div style="font-size:12px;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.n}</div>
     <div class="sb"><div class="sbf" style="width:${p.g/mx*100}%;background:linear-gradient(90deg,#8a3a0a,var(--or))"></div></div>
     <div style="font-family:var(--fd);font-size:19px;font-weight:700;color:var(--or);min-width:26px;text-align:right">${p.g}</div>
@@ -1107,7 +1123,7 @@ function renderAssists(){
   document.getElementById("assists").innerHTML=!s.length?`<p style="color:var(--tx3);font-size:11px;font-style:italic">Cập nhật từ tuần ${DETAIL_WK}.</p>`:
     s.map(([n,v],i)=>{const p=P.find(x=>x.n===n),tot=v.h1+v.h2;return`<div class="scr">
       <div class="rk ${i===0?"rk1":i===1?"rk2":i===2?"rk3":"rkn"}">${i+1}</div>
-      ${p?`<span class="pos ${p.p}">${p.p}</span>`:""}
+      ${p?`<span class="pos ${posGrp(p.p)}">${p.p}</span>`:""}
       <div style="font-size:12px;font-weight:600;flex:1">${n}</div>
       <div style="flex:2">
         <div class="bw" style="height:10px;display:flex;overflow:hidden;border-radius:3px">
@@ -1160,10 +1176,23 @@ function renderGpm(){
   document.getElementById("gpmEl").innerHTML=s.map(p=>`<div class="cb"><div class="cbn">${p.n}</div><div class="cbw"><div class="bw"><div class="b bor" style="width:${p.gpm/mx*100}%">${p.gpm.toFixed(2)}</div></div></div><div class="cbv">${p.g}</div></div>`).join("");
 }
 
+// Trận sạch lưới không có dòng "Bàn thua" nên không biết ai bắt chính qua MG.
+// Gán cho thủ môn (theo vị trí trong Info) có mặt trận đó; nếu có ≥2 thủ môn
+// cùng có mặt thì không gán được cho ai, chỉ tính vào tổng của đội.
+const CS={},CSW={};let CS_TEAM=0,CS_UNK=0;
+M.forEach((m,i)=>{
+  if(m.ga!==0)return;
+  CS_TEAM++;
+  const g=P.filter(p=>posGrp(p.p)==="GK"&&PM[p.n]&&PM[p.n][i]!==null);
+  if(g.length===1){CS[g[0].n]=(CS[g[0].n]||0)+1;(CSW[g[0].n]=CSW[g[0].n]||[]).push(m.wk);}else CS_UNK++;
+});
 function renderGK(){
+  Object.keys(CS).forEach(n=>{if(!GKD[n])GKD[n]={conc:0,h1:0,h2:0,unk:0,pf:0,ps:0,hc:0,ac:0,hw:new Set(),aw:new Set()};
+    CSW[n].forEach(wk=>(isHomeWk(wk)?GKD[n].hw:GKD[n].aw).add(wk));});
   const rows=Object.entries(GKD).map(([n,d])=>{
-    const mp=Math.max(Object.keys(MG).filter(wk=>MG[wk].c?.some(c=>c.gk===n)).length,1);
-    return{n,d,avg:d.conc/mp};
+    // số trận bắt = trận có thủng lưới + trận giữ sạch lưới
+    const mp=Math.max(Object.keys(MG).filter(wk=>MG[wk].c?.some(c=>c.gk===n)).length+(CS[n]||0),1);
+    return{n,d,mp,cs:CS[n]||0,avg:d.conc/mp};
   }).sort((a,b)=>a.avg-b.avg);
   const mx=Math.max(...rows.map(r=>r.avg),1);
   // Tổng gồm cả bàn chưa rõ hiệp — trước đây chỉ cộng h1+h2 nên dải hiệp
@@ -1174,17 +1203,19 @@ function renderGK(){
   const head=`<div class="hc hc3"><div class="hcc"><div class="hcn" style="color:var(--red)">${HGA.h1}</div><div class="hcl">Thua hiệp 1</div></div><div class="hcc"><div class="hcn" style="color:var(--amb)">${HGA.h2}</div><div class="hcl">Thua hiệp 2</div></div><div class="hcc"><div class="hcn" style="color:var(--tx3)">${HGA.unk}</div><div class="hcl">Chưa rõ hiệp</div></div></div>
     <div class="wdl-bar" style="height:5px"><div class="wl" style="flex:${HGA.h1}"></div><div style="background:var(--amb);flex:${HGA.h2}"></div><div style="background:var(--bd2);flex:${HGA.unk}"></div></div>
     <div class="gkr-sp"><span><b style="color:var(--red)">${HGA.h1}</b> H1 · <b style="color:var(--amb)">${HGA.h2}</b> H2 · <b style="color:var(--tx3)">${HGA.unk}</b> chưa rõ</span><span>tổng <b style="color:var(--red)">${tot}</b> bàn thua</span></div>
+    <div class="gkr-sp"><span>Giữ sạch lưới: <b style="color:var(--grn)">${CS_TEAM}</b>/${T.m} trận (${(CS_TEAM/T.m*100).toFixed(0)}%)</span>${CS_UNK?`<span>${CS_UNK} trận có ≥2 thủ môn, chưa rõ ai bắt</span>`:""}</div>
     <button class="gkd-t" onclick="togGKD(this)">Chi tiết theo sân ▾</button>
     <div class="gkd-p" hidden>
       <div class="gkd-r"><span class="gkd-l">Sân nhà · ${HOME_VENUE}</span><span class="gkd-m"><b style="color:var(--red)">${hga}</b> thua / ${hm.length} trận</span><span class="gkd-v">${(hga/(hm.length||1)).toFixed(2)} bt/t</span></div>
       <div class="gkd-r"><span class="gkd-l">Sân khách</span><span class="gkd-m"><b style="color:var(--red)">${aga}</b> thua / ${am.length} trận</span><span class="gkd-v">${(aga/(am.length||1)).toFixed(2)} bt/t</span></div>
     </div>`;
-  document.getElementById("gkEl").innerHTML=head+rows.map(({n,d,avg})=>`<div class="gkr">
+  document.getElementById("gkEl").innerHTML=head+rows.map(({n,d,mp,cs,avg})=>`<div class="gkr">
     <div class="gkr-n">${n}</div>
     <div class="gkr-b"><div class="gkr-bf" style="width:${Math.max(avg/mx*100,3)}%"></div></div>
     <div class="gkr-v">${avg.toFixed(2)}<span class="gkr-u">bt/t</span></div>
     <div class="gkr-s">
-      <span title="Tổng bàn thua"><b style="color:var(--red)">${d.conc}</b> thua</span>
+      <span title="Tổng bàn thua / số trận bắt"><b style="color:var(--red)">${d.conc}</b> thua / ${mp}T</span>
+      <span title="Trận giữ sạch lưới"><b style="color:var(--grn)">${cs}</b> sạch lưới</span>
       <span title="Thua hiệp 1"><b style="color:var(--grn)">${d.h1}</b> H1</span>
       <span title="Thua hiệp 2"><b style="color:var(--amb)">${d.h2}</b> H2</span>
       <span title="Bàn thua chưa có dữ liệu hiệp"><b style="color:var(--tx3)">${d.unk}</b> chưa rõ</span>
@@ -1199,8 +1230,26 @@ function togGKD(btn){
 }
 
 
+function renderM7(){
+  if(typeof M7==="undefined"||!M7.length)return;
+  document.getElementById("m7Card").hidden=false;
+  document.getElementById("m7El").innerHTML=M7.slice().reverse().map(m=>{
+    const col=m.r==="W"?"var(--grn)":m.r==="D"?"var(--amb)":"var(--red)";
+    return`<div class="mr" style="cursor:default;opacity:.85">
+      <div class="mwk">T${m.wk}</div>
+      <div class="mdt">${m.dt}</div>
+      <div class="mvs">${m.vs}<span style="font-size:8px;color:var(--tx3);margin-left:5px">${m.san}</span></div>
+      <div class="matt" title="Số cầu thủ tham gia">👥${m.att}</div>
+      <div class="msc" style="color:${col}">${m.gf}–${m.ga}</div>
+      <div class="rp r${m.r}">${m.r==="W"?"THẮNG":m.r==="D"?"HÒA":"THUA"}</div>
+      <div class="mven">${m.v}</div>
+    </div>`;
+  }).join("");
+}
 function renderMatches(){
   const attByIdx=M.map((_,i)=>Object.values(PM).filter(arr=>arr[i]!==null).length);
+  const nLv=M.filter(m=>m.lv).length;
+  document.getElementById("lvHint").innerHTML=nLv?` · <b style="color:var(--red)">▶ ${nLv} trận có video xem lại</b> (luôn hiện kể cả khi thu gọn)`:"";
   document.getElementById("matchEl").innerHTML=M.slice().reverse().map((m,ri)=>{
     const idx=M.length-1-ri,mg=MG[m.wk];
     const col=m.r==="W"?"var(--grn)":m.r==="D"?"var(--amb)":"var(--red)";
@@ -1225,7 +1274,7 @@ function renderMatches(){
       }
       det+="</div>";
     }
-    return`<div class="mr" onclick="togDet(${idx})">
+    return`<div class="mr"${m.lv?' data-keep="1"':""} onclick="togDet(${idx})">
       <div class="mwk">T${m.wk}</div>
       <div class="mdt">${m.dt}</div>
       <div class="mvs">${m.vs}${mg?`<span style="font-size:8px;color:var(--tl);margin-left:5px">▾ chi tiết</span>`:""}${m.lv?`<a class="lv" href="${m.lv}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Xem lại trận đấu">▶ LIVE</a>`:""}</div>
@@ -1249,7 +1298,6 @@ function renderOpponents(){
 }
 
 let curPos="ALL";
-const posGroups={FW:["FW","LW","RW","ST"],MF:["MF","CM","LM"],DF:["DF","CB","LB","RB"],GK:["GK"]};
 function renderPosF(){
   const tabs=["ALL","FW","MF","DF","GK"],names={ALL:"Tất cả",FW:"Tiền đạo",MF:"Tiền vệ",DF:"Hậu vệ",GK:"Thủ môn"};
   document.getElementById("posF").innerHTML=tabs.map(t=>`<button class="twb${t===curPos?" on":""}" style="min-width:64px" onclick="curPos='${t}';renderPosF();renderPT()">${names[t]}</button>`).join("");
@@ -1263,13 +1311,13 @@ function renderPT(){
   const h=["#","Tên","POS","Áo","Trận","%T","Bàn","Ast","%Win","Phong độ","W","D","L","GD","Đ/T"];
   document.getElementById("pTh").innerHTML=h.map(x=>`<th>${x}</th>`).join("");
   const lb={W:"T",D:"H",L:"B",N:"·"};
-  const f=curPos==="ALL"?P.filter(p=>p.m>0):P.filter(p=>posGroups[curPos]?.includes(p.p)&&p.m>0);
+  const f=curPos==="ALL"?P.filter(p=>p.m>0):P.filter(p=>posGrp(p.p)===curPos&&p.m>0);
   document.getElementById("pTb").innerHTML=f.sort((a,b)=>b.m-a.m||b.g-a.g).map((p,i)=>{
     const ppg=(p.w*3+p.d)/p.m,ast=AST[p.n]||0,c=ppg>=T.ppg?"ig":ppg>=1.5?"ia":"ir";
     return`<tr class="cl" onclick="togPD(this,'${p.n}')">
       <td style="color:var(--tx3)">${i+1}</td>
       <td><b>${p.n}</b>${p.t==="sub"?`<span style="font-size:8px;color:var(--or)"> Sub</span>`:""}<span style="font-size:8px;color:var(--tx3)"> ▾</span></td>
-      <td><span class="pos ${p.p}">${p.p}</span></td>
+      <td><span class="pos ${posGrp(p.p)}">${p.p}</span></td>
       <td style="color:var(--tx3)">${p.no||"—"}</td>
       <td><b>${p.m}</b></td>
       <td style="color:var(--tx2)">${(p.mp*100).toFixed(0)}%</td>
@@ -1369,7 +1417,7 @@ function renderPV(){
   html+=`<div class="pv-h">Cầu thủ</div>`+cols.map(c=>`<div class="pv-h" style="text-align:center">${c.label}</div>`).join("");
   rows.forEach(r=>{
     const pObj=P.find(x=>x.n===r.n);
-    html+=`<div class="pv-n">${pObj?`<span style="font-size:8px;font-weight:700;color:${posClr[pObj.p]||"#64748b"};flex-shrink:0">${pObj.p}</span>`:""}<span class="pv-nt">${r.n}</span></div>`;
+    html+=`<div class="pv-n">${pObj?`<span style="font-size:8px;font-weight:700;color:${posClr[posGrp(pObj.p)]||"#64748b"};flex-shrink:0">${pObj.p}</span>`:""}<span class="pv-nt">${r.n}</span></div>`;
     r.cells.forEach(c=>{
       if(!c.mp){html+=`<div class="pv-c pv-na" title="Chưa đá trận nào ở sân này">—</div>`;return}
       const thin=c.mp<MIN_VC;
@@ -1401,7 +1449,7 @@ function renderHeatmap(){
   // Player rows
   names.forEach(name=>{
     const row=PM[name];const pObj=P.find(x=>x.n===name);
-    const pc=pObj?(posClr[pObj.p]||'#64748b'):'#64748b';
+    const pc=pObj?(posClr[posGrp(pObj.p)]||'#64748b'):'#64748b';
     const pts=row.filter(v=>v!==null).length;
     html+=`<div style="font-size:10px;font-weight:600;color:var(--tx);padding:4px;display:flex;align-items:center;gap:4px;overflow:hidden">`;
     if(pObj) html+=`<span style="font-size:8px;font-weight:700;color:${pc};flex-shrink:0">${pObj.p}</span>`;
@@ -1435,7 +1483,7 @@ function renderBubble(){
     const yMax=Math.max(80,Math.ceil(Math.max(...ps.map(p=>p.wp*100),0)));
     CR.cBubble=new Chart(cel,{
       type:'bubble',
-      data:{datasets:[{label:'Win Impact',data:ps.map(p=>({x:p.mp*100,y:p.wp*100,r:Math.max(((p.w*3+p.d)/p.m)*8,5),label:p.n,pos:p.p})),backgroundColor:ps.map(p=>posC[p.p]||'rgba(107,114,128,.8)'),borderColor:'rgba(255,255,255,.15)',borderWidth:1}]},
+      data:{datasets:[{label:'Win Impact',data:ps.map(p=>({x:p.mp*100,y:p.wp*100,r:Math.max(((p.w*3+p.d)/p.m)*8,5),label:p.n,pos:p.p})),backgroundColor:ps.map(p=>posC[posGrp(p.p)]||'rgba(107,114,128,.8)'),borderColor:'rgba(255,255,255,.15)',borderWidth:1}]},
       options:{responsive:true,maintainAspectRatio:false,
         scales:{x:{title:{display:true,text:'Chuyên Cần (%) →',color:'#64748b',font:{size:10}},grid:{color:'rgba(255,255,255,.04)'},min:0,max:105},y:{title:{display:true,text:'↑ Tỷ Lệ Thắng (%)',color:'#64748b',font:{size:10}},grid:{color:'rgba(255,255,255,.04)'},min:0,max:yMax}},
         plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw.label} · Chuyên cần:${c.raw.x.toFixed(0)}% · Win:${c.raw.y.toFixed(0)}%`}}},
@@ -1449,13 +1497,15 @@ function renderBubble(){
     const mx=wiScore(sorted[0]);
     bel.innerHTML=sorted.map((p,i)=>{
       const wi=wiScore(p);
-      const pc=posClr[p.p]||'#64748b';
+      const pc=posClr[posGrp(p.p)]||'#64748b';
       return`<div class="wi-board-item"><span class="wi-rank${i<3?' top':''}" style="color:${i<3?'#fbbf24':'var(--tx3)'}">${i+1}</span><span class="wi-pos-badge" style="color:${pc}">${p.p}</span><span style="font-weight:700;font-size:12px;color:var(--tx);flex:1">${p.n}</span><div style="text-align:right"><div class="wi-score">${(wi*100).toFixed(0)}</div><div class="wi-score-label">Win Score</div></div></div>`;
     }).join('');
   }
 }
 
-const POSVI={GK:"Thủ môn",CB:"Trung vệ",LB:"Hậu vệ trái",RB:"Hậu vệ phải",LM:"Tiền vệ trái",CM:"Tiền vệ trung tâm",RM:"Tiền vệ phải",LW:"Tiền đạo cánh trái",RW:"Tiền đạo cánh phải",ST:"Tiền đạo cắm"};
+const POSVI={GK:"Thủ môn",CB:"Trung vệ",DF:"Hậu vệ",LB:"Hậu vệ trái",RB:"Hậu vệ phải",LWB:"Hậu vệ cánh trái",RWB:"Hậu vệ cánh phải",
+  DM:"Tiền vệ phòng ngự",CDM:"Tiền vệ phòng ngự",CM:"Tiền vệ trung tâm",MF:"Tiền vệ",AM:"Tiền vệ tấn công",CAM:"Tiền vệ tấn công",LM:"Tiền vệ trái",RM:"Tiền vệ phải",
+  LW:"Tiền đạo cánh trái",RW:"Tiền đạo cánh phải",ST:"Tiền đạo cắm",CF:"Trung phong",FW:"Tiền đạo"};
 
 // Lý do được chọn: xếp hạng trong nhóm cùng vị trí theo số trận
 function bxiWhy(p){
@@ -1486,8 +1536,7 @@ function fmNote(fm,lineup){
   bits.push(`Trung bình ${avgM}/${T.m} trận mỗi người, tỷ lệ thắng ${avgW}%.`);
   if(byG[0]&&byG[0].g>0)bits.push(`Đóng góp ${goals}/${T.gf} bàn của đội, dẫn đầu là ${byG[0].n} (${byG[0].g} bàn).`);
   bits.push(`Chuyên cần nhất: ${byM[0].n} (${byM[0].m} trận).`);
-  const SLOTPOS={gk:["GK"],lb:["LB"],cb:["CB"],rb:["RB"],cm:["CM"],lw:["LW","LM"],rw:["RW"],st:["ST"]};
-  const borrowed=lineup.filter(s=>s.slot&&SLOTPOS[s.slot]&&!SLOTPOS[s.slot].includes(s.p));
+  const borrowed=lineup.filter(s=>s.slot&&posSlot(s.p)!==s.slot);
   if(borrowed.length)bits.push(`${borrowed.map(s=>`${s.n} (${s.p}) được kéo sang đá ${SLOTVI[s.slot]||s.slot}`).join("; ")} vì tuyến đó không đủ người đạt ${BXI_MIN} trận.`);
   return`<p class="fmn-i">${FM_IDEA[fm]||""}</p><p class="fmn-s">${bits.join(" ")}</p>`;
 }
@@ -1504,7 +1553,7 @@ function renderFmDesc(){
   const ast=AST[p.n]||0,form=getForm(p.n),lb={W:"T",D:"H",L:"B",N:"–"};
   el.innerHTML=`<div class="fmd">
     <div class="fmd-h">
-      <div class="pc pc-${p.p.toLowerCase()} fmd-av">${p.n}</div>
+      <div class="pc pc-${(posGrp(p.p)||"mf").toLowerCase()} fmd-av">${p.n}</div>
       <div style="flex:1;min-width:0">
         <div class="fmd-n">${p.n}${p.no?`<span class="fmd-no">#${p.no}</span>`:""}</div>
         <div class="fmd-p">${POSVI[p.p]||p.p} · ${p.p}</div>
@@ -1528,7 +1577,7 @@ function renderFm(){
   document.getElementById("fmTabs").innerHTML=Object.keys(bxi).map(f=>`<button class="twb${f===curF?" on":""}" style="padding:6px 20px;font-family:var(--fd);font-size:13px" onclick="curF='${f}';curP=null;renderFm()">${f}</button>`).join("");
   document.getElementById("pitchEl").innerHTML=`<div class="pw"><div class="pt">
     <div class="pml"></div><div class="pmc"></div><div class="pmbt"></div><div class="pmbb"></div>
-    ${bxi[curF].map(s=>`<div class="pp" data-n="${s.n}" onclick="selFm('${s.n.replace(/'/g,"\\'")}')" title="${s.n} · ${POSVI[s.p]||s.p}"><div class="pc pc-${s.p.toLowerCase()}">${s.n}</div><div class="pl">${s.p}</div></div>`).join("")}
+    ${bxi[curF].map(s=>`<div class="pp" data-n="${s.n}" onclick="selFm('${s.n.replace(/'/g,"\\'")}')" title="${s.n} · ${POSVI[s.p]||s.p}"><div class="pc pc-${(posGrp(s.p)||"mf").toLowerCase()}">${s.n}</div><div class="pl">${s.p}</div></div>`).join("")}
   </div></div>`;
   document.querySelectorAll("#pitchEl .pp").forEach((e,i)=>{const s=bxi[curF][i];e.style.top=s.top;e.style.left=s.left});
   const nb=document.getElementById("fmNoteEl");
@@ -1555,22 +1604,52 @@ function renderVenue(){
     </div>`}).join("");
 }
 
+// Chỉ số phụ cho giải: assist chỉ có từ DETAIL_WK nên chia cho số trận có
+// dữ liệu chi tiết, không chia cả mùa (nếu không, ai đá nhiều trận đầu mùa bị thiệt).
+function awStat(p){
+  const idx=PM[p.n].map((v,i)=>v!==null?i:-1).filter(i=>i>=0);
+  const mDet=idx.filter(i=>M[i].wk>=DETAIL_WK).length;
+  const a=AST[p.n]||0, cs=idx.filter(i=>M[i].ga===0).length;
+  return {p,a,cs,ppg:(p.w*3+p.d)/p.m,gapm:p.ga/p.m,csr:cs/p.m,
+    ctb:p.g/p.m+(mDet?a/mDet:0)};
+}
+// Chuẩn hoá 0–1 trong nhóm đủ điều kiện rồi cộng theo trọng số; low=true: thấp là tốt.
+function awRank(rows,w){
+  const keys=Object.keys(w);
+  const rg=Object.fromEntries(keys.map(k=>{const v=rows.map(r=>r[k]);return[k,[Math.min(...v),Math.max(...v)]]}));
+  const LOW={gapm:1};
+  rows.forEach(r=>{r.score=keys.reduce((s,k)=>{const[lo,hi]=rg[k];const n=hi===lo?1:(r[k]-lo)/(hi-lo);return s+w[k]*(LOW[k]?1-n:n)},0)});
+  return [...rows].sort((a,b)=>b.score-a.score);
+}
+const AW_MIN_MP=.5;
 function renderAwards(){
-  const main=P.filter(p=>p.t==="main"&&p.m>=MIN_M);
-  const mvp=[...main].sort((a,b)=>(b.mp*b.wp*((b.w*3+b.d)/b.m))-(a.mp*a.wp*((a.w*3+a.d)/a.m)))[0];
-  const scorer=[...main].sort((a,b)=>b.g-a.g||b.g/b.m-a.g/a.m)[0];
-  const iron=[...main].sort((a,b)=>b.mp-a.mp||b.m-a.m)[0];
-  const defs=main.filter(p=>["CB","LB","RB","DF"].includes(p.p));
-  const bdef=defs.length?[...defs].sort((a,b)=>b.wp-a.wp||b.gd-a.gd)[0]:main[0];
-  const mids=main.filter(p=>["CM","LM","RM","MF"].includes(p.p));
-  const bmid=mids.length?[...mids].sort((a,b)=>(b.g+(AST[b.n]||0))-(a.g+(AST[a.n]||0))||b.wp-a.wp)[0]:main[0];
-  document.getElementById("awEl").innerHTML=[
-    {t:"MVP\nXuất sắc nhất",p:mvp.n,s:`${mvp.m}T · ${(mvp.wp*100).toFixed(0)}% win`,d:`PPG ${((mvp.w*3+mvp.d)/mvp.m).toFixed(2)}`},
-    {t:"Vua phá lưới\nTop Scorer",p:scorer.n,s:`${scorer.g} bàn / ${scorer.m} trận`,d:`${(scorer.g/scorer.m).toFixed(2)} bàn/trận`},
-    {t:"Chiến binh thép\nIron Man",p:iron.n,s:`${iron.m}/${T.m} trận · ${(iron.mp*100).toFixed(0)}%`,d:iron.mp===1?"Ra sân đầy đủ mọi trận":`Chuyên cần nhất đội`},
-    {t:"Hậu vệ xuất sắc\nBest Defender",p:bdef.n,s:`${(bdef.wp*100).toFixed(0)}% win · GD +${bdef.gd}`,d:`${bdef.m}T · ${bdef.w}W ${bdef.d}D ${bdef.l}L`},
-    {t:"Tiền vệ xuất sắc\nBest Midfielder",p:bmid.n,s:`${bmid.g}B · Ast ${AST[bmid.n]||0}`,d:`PPG ${((bmid.w*3+bmid.d)/bmid.m).toFixed(2)}`},
-  ].map(a=>`<div class="aw"><div class="aw-t">${a.t.replace("\n","<br>")}</div><div class="aw-p">${a.p}</div><div class="aw-s">${a.s}</div><div class="aw-d">${a.d}</div></div>`).join("");
+  // MVP / hậu vệ / tiền vệ: chính thức, đá ≥ 50% số trận — tránh vài trận may mắn đoạt giải.
+  let elig=P.filter(p=>p.t==="main"&&p.mp>=AW_MIN_MP);
+  if(!elig.length)elig=P.filter(p=>p.t==="main"&&p.m>=MIN_M);
+  const st=elig.map(awStat);
+  const mvp=awRank(st.map(r=>({...r,mp:r.p.mp})),{ctb:.35,ppg:.30,mp:.20,gapm:.15})[0];
+  const defs=st.filter(r=>posGrp(r.p.p)==="DF").map(r=>({...r,mp:r.p.mp}));
+  const bdef=defs.length?awRank(defs,{gapm:.40,ppg:.25,mp:.20,csr:.15})[0]:null;
+  const mids=st.filter(r=>posGrp(r.p.p)==="MF").map(r=>({...r,mp:r.p.mp}));
+  const bmid=mids.length?awRank(mids,{ctb:.45,ppg:.30,mp:.25})[0]:null;
+  // Vua phá lưới / Iron Man: xét cả sub.
+  const scorer=[...P].filter(p=>p.m>0).sort((a,b)=>b.g-a.g||a.m-b.m)[0];
+  const iron=[...P].sort((a,b)=>b.m-a.m||(a.t==="main"?-1:1))[0];
+  const sgn=v=>(v>0?"+":"")+v;
+  const cards=[
+    {t:"MVP\nXuất sắc nhất",r:mvp,s:x=>`${x.p.g}B · ${x.a}A · PPG ${x.ppg.toFixed(2)}`,d:x=>`${x.p.m}/${T.m} trận · ${(x.p.wp*100).toFixed(0)}% win`,
+      f:"35% bàn+kiến tạo/trận · 30% PPG · 20% chuyên cần · 15% bàn thua/trận khi có mặt"},
+    {t:"Vua phá lưới\nTop Scorer",r:{p:scorer},s:x=>`${x.p.g} bàn / ${x.p.m} trận`,d:x=>`${(x.p.g/x.p.m).toFixed(2)} bàn/trận`,
+      f:"Nhiều bàn nhất, xét cả sub · bằng bàn thì ít trận hơn xếp trên"},
+    {t:"Chiến binh thép\nIron Man",r:{p:iron},s:x=>`${x.p.m}/${T.m} trận · ${(x.p.mp*100).toFixed(0)}%`,d:x=>x.p.mp===1?"Ra sân đầy đủ mọi trận":"Chuyên cần nhất đội",
+      f:"Nhiều trận có mặt nhất, xét cả sub"},
+    {t:"Hậu vệ xuất sắc\nBest Defender",r:bdef,s:x=>`${x.gapm.toFixed(2)} bàn thua/trận · ${x.cs} sạch lưới`,d:x=>`${x.p.m}T · ${x.p.w}W ${x.p.d}D ${x.p.l}L · HS ${sgn(x.p.gd)}`,
+      f:"40% bàn thua/trận (thấp là tốt) · 25% PPG · 20% chuyên cần · 15% tỉ lệ sạch lưới"},
+    {t:"Tiền vệ xuất sắc\nBest Midfielder",r:bmid,s:x=>`${x.p.g}B · ${x.a}A`,d:x=>`${x.p.m}T · PPG ${x.ppg.toFixed(2)}`,
+      f:`45% bàn+kiến tạo/trận (kiến tạo tính từ tuần ${DETAIL_WK}) · 30% PPG · 25% chuyên cần`},
+  ];
+  document.getElementById("awEl").innerHTML=cards.map(c=>`<div class="aw"><div class="aw-t">${c.t.replace("\n","<br>")}</div>${c.r?`<div class="aw-p">${c.r.p.n}</div><div class="aw-s">${c.s(c.r)}</div><div class="aw-d">${c.d(c.r)}</div>`:`<div class="aw-d">Chưa đủ cầu thủ đạt điều kiện</div>`}<div class="aw-f">${c.f}</div></div>`).join("")
+    +`<p class="hint" style="grid-column:1/-1;margin:4px 0 0">MVP, Hậu vệ, Tiền vệ: chỉ xét cầu thủ chính thức ra sân ≥ ${AW_MIN_MP*100}% số trận. Mỗi chỉ số được quy về thang 0–1 trong nhóm đủ điều kiện trước khi cộng trọng số.</p>`;
 }
 
 function renderSum(){
@@ -1591,7 +1670,7 @@ function renderSum(){
         <li>Nâng PPG từ ${T.ppg.toFixed(2)} lên ≥ 2.00</li>
         <li>Duy trì bộ ba ${P.filter(p=>p.g>0&&p.m>=MIN_M).sort((a,b)=>b.g-a.g).slice(0,3).map(p=>p.n).join(" – ")}</li>
         <li>Nhập đầy đủ dữ liệu goal detail mỗi tuần</li>
-        <li>Theo dõi thêm GK cản penalty</li>
+        <li>Tăng số trận giữ sạch lưới (hiện ${CS_TEAM}/${T.m} trận)</li>
       </ul>
     </div>
   </div>`;
@@ -1673,7 +1752,7 @@ function validateData(){
  renderOv,renderWinRate,renderGoals,renderForm,renderTrend,renderMinM,
  renderScorers,renderAssists,renderPen,renderHalfGf,renderGpm,
  renderGK,renderDef,
- renderMatches,renderOpponents,
+ renderMatches,renderM7,renderOpponents,
  renderPosF,renderPT,renderHeatmap,renderBubble,
  renderFm,renderVenue,renderCmp,renderAbsent,
  renderAwards,renderSum,renderTk,
