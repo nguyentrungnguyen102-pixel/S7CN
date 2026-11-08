@@ -24,7 +24,12 @@ DEFAULT_XLSX = (
 # Sheet name -> "Dương Chí Hoàng" is displayed elsewhere as "D.Chí Hoàng".
 # "Khanh" là lỗi gõ thiếu dấu của "Khánh" (bạn Duyên) ở Tuần 30 — cùng một
 # người, gộp lại để không tách thành hai cầu thủ.
-DISPLAY = {"Dương Chí Hoàng": "D.Chí Hoàng", "Khanh": "Khánh"}
+# "Bạn Hoàng" (T19) chính là "Hoạt" — Info đã đổi sang tên thật nhưng Log tuần cũ vẫn ghi tên cũ.
+DISPLAY = {"Dương Chí Hoàng": "D.Chí Hoàng", "Khanh": "Khánh", "Bạn Hoàng": "Hoạt"}
+
+# Số áo trong Info cần bỏ qua: hai dòng này từng là dòng rác còn sót Số áo
+# (3 trùng Tài Ba, 20), anh điền tên sub mới vào nên số cũ bị kéo theo.
+NO_OVERRIDE = {"Bạn Cảm": "", "Cháu a Hòa": ""}
 
 RESULT_MAP = {"Thắng": "W", "Hòa": "D", "Thua": "L"}
 GOAL_TYPE_MAP = {"thường": "normal", "pen (vào)": "pen", "sút phạt": "fk"}
@@ -79,7 +84,8 @@ def load_roster(wb):
         if biet is None:
             continue  # orphan or blank row, no join key, not a real player
 
-        entry = {"n": disp(biet), "p": pos or "", "no": fmt_no(no)}
+        name = disp(biet)
+        entry = {"n": name, "p": pos or "", "no": NO_OVERRIDE.get(name, fmt_no(no))}
         if isinstance(tt, (int, float)):
             entry["_tt"] = int(tt)
             entry["t"] = "main"

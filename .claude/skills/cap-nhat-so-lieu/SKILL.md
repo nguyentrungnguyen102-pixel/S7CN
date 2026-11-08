@@ -118,11 +118,12 @@ Bảng "Win Impact" ở mục Phân tích **cố ý** giữ công thức riêng 
 
 ## Data quirks đã biết (đừng điều tra lại mỗi tuần)
 
-- `Khanh` (T30) và `Khánh` là một người — gộp bằng `DISPLAY` trong `rebuild_data.py`. Sheet gõ lệch tên khác thì thêm alias vào đó.
+- Một người mang 2 tên trong `Log tuần` → gộp bằng `DISPLAY` trong `rebuild_data.py`: `Khanh`→`Khánh` (T30), `Bạn Hoàng`→`Hoạt` (T19; Info đã đổi sang tên thật). **Dấu hiệu cần hỏi anh:** một tên cũ có trận đột nhiên hiện `[WARN] roster ... chưa có dòng trong Info` — thường là dòng Info của người đó vừa bị đổi tên/ghi đè. Hỏi "có phải một người không" trước khi gộp.
+- Số áo sai trong `Info` (vd sub mới điền vào dòng rác còn sót số cũ) → ghi đè bằng `NO_OVERRIDE` trong `rebuild_data.py` (hiện: `Bạn Cảm`, `Cháu a Hòa` → trống). Đừng sửa tay `stats.html`.
 - `Bạn mới` (ghi bàn T14) chưa có dòng trong `Info` → tự thêm dạng sub + `[WARN]`. Biết tên thật thì bổ sung `Info`.
 - 3 người roster có 0 trận nên không lên bảng: `Văn Tới`, `An`, `Tuấn`.
 - Tuần 1–20 không có dữ liệu hiệp và kiến tạo; chỉ từ tuần 21.
-- Trận sạch lưới không có dòng "Bàn thua" nên thủ môn được suy ra từ người có vị trí GK có mặt; nếu ≥2 thủ môn cùng có mặt thì chỉ tính vào tổng đội.
+- Trận sạch lưới không có dòng "Bàn thua" nên thủ môn được suy ra từ người có vị trí GK có mặt; nếu không có thủ môn nào điểm danh (vd T44) hoặc ≥2 thủ môn cùng có mặt thì chỉ tính vào tổng đội.
 
 ## Lịch sử lỗi đã sửa (để không lặp lại)
 
