@@ -133,4 +133,5 @@ Bảng "Win Impact" ở mục Phân tích **cố ý** giữ công thức riêng 
 - T36: trận Sân 7 lẫn vào Log tuần, script chưa lọc theo sân → thêm chốt lọc Sân 11 + khối `M7`.
 - T36: `Sút Phạt` viết hoa không khớp → so khớp không phân biệt hoa/thường.
 - T38: dòng trống lẻ trong `Info` làm rơi `Hoàng Đại` → `load_roster()` không dừng ở dòng trống nữa.
+- T46: cầu thủ chỉ có dòng `Cản Pen` mà không có trận bắt chính (Cảm) bị tính mặc định 1 trận và đứng đầu bảng thủ môn với 0.00 bt/t → nay hiện "— chỉ cản pen", xếp cuối.
 - T42: vị trí `AM`/`RM` không có màu, Tài Ba (AM) không bao giờ vào đội hình tiêu biểu do ánh xạ vị trí rải rác 9 chỗ → gom về `POS`; Vinh danh tính lại (MVP trước đây tính win% 2 lần và bỏ qua bàn thắng; Hậu vệ trao cho người 6 trận); link xem lại bị ẩn trên mobile khi thu gọn → luôn hiện.
